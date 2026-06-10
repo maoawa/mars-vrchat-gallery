@@ -1,0 +1,397 @@
+[
+  {
+    "id": 1,
+    "filename": "VRChat_2026-06-04_01-53-03.png",
+    "captured": "2026-06-04T01:53:03",
+    "world": "prismics.avatar.search",
+    "description": "My very first photo in VRChat, where [[cyan]] taught me how to pick my favourite avatars.",
+    "friend": ["cyan"]
+  },
+  {
+    "id": 2,
+    "filename": "VRChat_2026-06-04_22-35-28.png",
+    "captured": "2026-06-04T22:35:28",
+    "world": "prismics.avatar.search",
+    "description": "[[eric]] picked his avatar.",
+    "friend": ["eric"],
+    "parent": 4
+  },
+  {
+    "id": 3,
+    "filename": "VRChat_2026-06-04_22-36-07.png",
+    "captured": "2026-06-04T22:36:07",
+    "world": "prismics.avatar.search",
+    "description": "[[zihao]] is considering which avatar to pick.",
+    "friend": ["zihao"],
+    "parent": 4
+  },
+  {
+    "id": 4,
+    "filename": "VRChat_2026-06-04_22-59-40.png",
+    "captured": "2026-06-04T22:59:40",
+    "world": "chinese.memes.museum",
+    "description": "I invited two of my best friends to play VRChat together. I brought them to pick their avatars. Then we visited Chinese Memes Museums, a well-known VRChat world in China.",
+    "friend": ["eric", "zihao"],
+    "linked": [2, 3]
+  },
+  {
+    "id": 5,
+    "filename": "VRChat_2026-06-05_00-04-18.png",
+    "captured": "2026-06-05T00:04:18",
+    "world": "english.hub",
+    "description": "Me and [[eric]] met a group of Chinese and had fun together.",
+    "friend": ["eric", "wushishan"]
+  },
+  {
+    "id": 6,
+    "filename": "VRChat_2026-06-05_00-04-48.png",
+    "captured": "2026-06-05T00:04:48",
+    "world": "english.hub",
+    "description": "",
+    "friend": ["kurono"]
+  },
+  {
+    "id": 7,
+    "filename": "VRChat_2026-06-05_18-08-32.png",
+    "captured": "2026-06-05T18:08:32",
+    "world": "learn.mandarin",
+    "description": "Met an American in Learn Mandarin world and we talked about human's future.",
+    "friend": ["waffle"],
+    "linked": [8]
+  },
+  {
+    "id": 8,
+    "filename": "VRChat_2026-06-05_18-33-33.png",
+    "captured": "2026-06-05T18:33:33",
+    "world": "learn.mandarin",
+    "description": "",
+    "friend": [""],
+    "parent": 7
+  },
+  {
+    "id": 9,
+    "filename": "VRChat_2026-06-05_21-23-57.png",
+    "captured": "2026-06-05T21:23:57",
+    "world": "",
+    "description": "",
+    "friend": [""],
+    "parent": 10
+  },
+  {
+    "id": 10,
+    "filename": "VRChat_2026-06-05_21-40-38.png",
+    "captured": "2026-06-05T21:40:38",
+    "world": "",
+    "description": "I met a guy who designs all his avatars and outfits by himself with his own \"brand\".",
+    "friend": ["luse"],
+    "linked": [9]
+  },
+  {
+    "id": 11,
+    "filename": "VRChat_2026-06-06_00-50-32.png",
+    "captured": "2026-06-06T00:50:32",
+    "world": "karaoke.central",
+    "description": "Tried a karaoke world in VRChat, and surprisingly got two friends who listen to me.",
+    "friend": [""]
+  },
+  {
+    "id": 12,
+    "filename": "VRChat_2026-06-06_21-54-36.png",
+    "captured": "2026-06-06T21:54:36",
+    "world": "english.hub",
+    "description": "",
+    "friend": ["yuan"]
+  },
+  {
+    "id": 13,
+    "filename": "VRChat_2026-06-06_22-57-54.png",
+    "captured": "2026-06-06T22:57:54",
+    "world": "english.hub",
+    "description": "So cuuute! Also met Dan Heng, a character from the same game with my avatar.",
+    "friend": [""]
+  },
+  {
+    "id": 14,
+    "filename": "VRChat_2026-06-06_23-03-09.png",
+    "captured": "2026-06-06T23:03:09",
+    "world": "english.hub",
+    "description": "So cuuuuuute again!!",
+    "friend": [""]
+  },
+  {
+    "id": 15,
+    "filename": "VRChat_2026-06-06_23-30-36.png",
+    "captured": "2026-06-06T23:30:36",
+    "world": "english.hub",
+    "description": "I met a 13-year-old Chinese boy who's surprisingly able to speak English fluently in this age.",
+    "friend": [""]
+  },
+  {
+    "id": 16,
+    "filename": "VRChat_2026-06-06_23-54-44.png",
+    "captured": "2026-06-06T23:54:44",
+    "world": "english.hub",
+    "description": "Someone's handing out areca nut. But we're good boy and shouldn't accept.",
+    "friend": [""]
+  },
+  {
+    "id": 17,
+    "filename": "VRChat_2026-06-07_00-02-02.png",
+    "captured": "2026-06-07T00:02:02",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""]
+  },
+  {
+    "id": 18,
+    "filename": "VRChat_2026-06-07_13-22-41.png",
+    "captured": "2026-06-07T13:22:41",
+    "world": "english.hub",
+    "description": "",
+    "friend": ["yuan", "fabio"]
+  },
+  {
+    "id": 19,
+    "filename": "VRChat_2026-06-07_14-55-39.png",
+    "captured": "2026-06-07T14:55:39",
+    "world": "english.hub",
+    "description": "I saw those photo prints showing circuit board. And met a friend who's designing his 3rd version of full body tracking solutions. That's pro.",
+    "friend": ["aiko"]
+  },
+  {
+    "id": 20,
+    "filename": "VRChat_2026-06-07_22-59-21.png",
+    "captured": "2026-06-07T22:59:21",
+    "world": "english.hub",
+    "description": "That day is the first day of the Gaokao, the National College Entrance Examination, which is the most important exam for every student in mainland China. [[ziyou]], [[unknown_cn]] and I introduced this to some foreign friends. And we wrote \"Good luck on the Gaokao!\".",
+    "friend": ["ziyou", "unknown_cn", "kurono"]
+  },
+  {
+    "id": 21,
+    "filename": "VRChat_2026-06-07_23-03-49.png",
+    "captured": "2026-06-07T23:03:49",
+    "world": "english.hub",
+    "description": "",
+    "friend": ["ziyou"],
+    "parent": 22
+  },
+  {
+    "id": 22,
+    "filename": "VRChat_2026-06-07_23-56-17.png",
+    "captured": "2026-06-07T23:56:17",
+    "world": "english.hub",
+    "description": "",
+    "friend": ["ziyou"],
+    "linked": [21]
+  },
+  {
+    "id": 23,
+    "filename": "VRChat_2026-06-08_00-01-28.png",
+    "captured": "2026-06-08T00:01:28",
+    "world": "english.hub",
+    "description": "A person with soldier avatar caught my eyes, and I walked to him to greet. I later learned that he was a 72-year-old British gentleman.",
+    "friend": ["tucke"]
+  },
+  {
+    "id": 24,
+    "filename": "VRChat_2026-06-08_14-07-34.png",
+    "captured": "2026-06-08T14:07:34",
+    "world": "english.hub",
+    "description": "I met a polyglot from South Korea. He can speak many languages even Latin.",
+    "friend": [""]
+  },
+  {
+    "id": 25,
+    "filename": "VRChat_2026-06-08_15-35-13.png",
+    "captured": "2026-06-08T15:35:13",
+    "world": "english.hub",
+    "description": "",
+    "friend": ["unknown_cn", "infj_cloud", "wangyue"]
+  },
+  {
+    "id": 26,
+    "filename": "VRChat_2026-06-08_16-48-41.png",
+    "captured": "2026-06-08T16:48:41",
+    "world": "english.hub",
+    "description": "This must be the most impressive experience so far. A group of Chinese met some American people. And we talked about many topics to high school life to law differences. And in the end we even discussed a math question and physics question!?",
+    "friend": ["tony", "wangyue", "linus"],
+    "linked": [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+  },
+  {
+    "id": 27,
+    "filename": "VRChat_2026-06-08_16-55-05.png",
+    "captured": "2026-06-08T16:55:05",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 28,
+    "filename": "VRChat_2026-06-08_16-55-50.png",
+    "captured": "2026-06-08T16:55:50",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 29,
+    "filename": "VRChat_2026-06-08_16-56-35.png",
+    "captured": "2026-06-08T16:56:35",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 30,
+    "filename": "VRChat_2026-06-08_16-57-25.png",
+    "captured": "2026-06-08T16:57:25",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 31,
+    "filename": "VRChat_2026-06-08_17-03-26.png",
+    "captured": "2026-06-08T17:03:26",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 32,
+    "filename": "VRChat_2026-06-08_17-07-29.png",
+    "captured": "2026-06-08T17:07:29",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 33,
+    "filename": "VRChat_2026-06-08_17-12-18.png",
+    "captured": "2026-06-08T17:12:18",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 34,
+    "filename": "VRChat_2026-06-08_17-12-47.png",
+    "captured": "2026-06-08T17:12:47",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 35,
+    "filename": "VRChat_2026-06-08_17-21-29.png",
+    "captured": "2026-06-08T17:21:29",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 36,
+    "filename": "VRChat_2026-06-08_17-21-38.png",
+    "captured": "2026-06-08T17:21:38",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 37,
+    "filename": "VRChat_2026-06-08_17-21-52.png",
+    "captured": "2026-06-08T17:21:52",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 38,
+    "filename": "VRChat_2026-06-08_17-22-31.png",
+    "captured": "2026-06-08T17:22:31",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 39,
+    "filename": "VRChat_2026-06-08_17-29-34.png",
+    "captured": "2026-06-08T17:29:34",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 40,
+    "filename": "VRChat_2026-06-08_17-31-36.png",
+    "captured": "2026-06-08T17:31:36",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 41,
+    "filename": "VRChat_2026-06-08_17-35-47.png",
+    "captured": "2026-06-08T17:35:47",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 26
+  },
+  {
+    "id": 42,
+    "filename": "VRChat_2026-06-09_00-06-29.png",
+    "captured": "2026-06-09T00:06:29",
+    "world": "english.hub",
+    "description": "Burgercats stack!",
+    "friend": [""],
+    "linked": [44]
+  },
+  {
+    "id": 43,
+    "filename": "VRChat_2026-06-09_00-18-00.png",
+    "captured": "2026-06-09T00:18:00",
+    "world": "english.hub",
+    "description": "",
+    "friend": ["tony", "linlin"]
+  },
+  {
+    "id": 44,
+    "filename": "VRChat_2026-06-09_00-25-03.png",
+    "captured": "2026-06-09T00:25:03",
+    "world": "english.hub",
+    "description": "",
+    "friend": [""],
+    "parent": 42
+  },
+  {
+    "id": 45,
+    "filename": "VRChat_2026-06-09_00-42-56.png",
+    "captured": "2026-06-09T00:42:56",
+    "world": "english.hub",
+    "description": "",
+    "friend": ["wangyue"]
+  },
+  {
+    "id": 46,
+    "filename": "VRChat_2026-06-09_01-14-57.png",
+    "captured": "2026-06-09T01:14:57",
+    "world": "english.hub",
+    "description": "Great to see [[infj_cloud]] again, we talked about the future of programming and ourselves.",
+    "friend": ["infj_cloud", "wangyue"]
+  }
+]
