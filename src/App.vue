@@ -6,6 +6,7 @@ import imagesData from './data/images.json'
 import worldsData from './data/worlds.json'
 import type { Friend, GalleryImage, GalleryRow, World } from './types'
 import { daysSinceVrchatStart, formatGalleryDate, photoPath, thumbnailPath } from './utils/gallery'
+import parseAsOffsetDate from './utils/utils.ts'
 
 type GalleryFilter =
   | {
@@ -203,12 +204,15 @@ function formatLinkedDate(photo: GalleryImage, parentPhoto: GalleryImage) {
 }
 
 function isSameGalleryDay(photo: GalleryImage, parentPhoto: GalleryImage) {
-  return photo.captured.slice(0, 10) === parentPhoto.captured.slice(0, 10)
+  const d1 = parseAsOffsetDate(photo.captured);
+  const d2 = parseAsOffsetDate(parentPhoto.captured);
+  return d1.toDateString() === d2.toDateString();
 }
 
 function formatTime(capturedAt: string) {
-  const [, timePart = '00:00:00'] = capturedAt.split('T')
-  const [hours = 0, minutes = 0] = timePart.split(':').map(Number)
+  const date = parseAsOffsetDate(capturedAt);
+  const hours = date.getHours()
+  const minutes = date.getMinutes()
   const meridiem = hours >= 12 ? 'PM' : 'AM'
   const hour12 = hours % 12 || 12
 

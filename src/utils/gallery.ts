@@ -1,3 +1,5 @@
+import parseAsOffsetDate from "./utils"
+
 const monthNames = [
   'January',
   'February',
@@ -25,13 +27,16 @@ export function thumbnailPath(filename: string) {
 }
 
 export function formatGalleryDate(capturedAt: string) {
-  const [datePart, timePart = '00:00:00'] = capturedAt.split('T')
-  const [year, month, day] = datePart.split('-').map(Number)
-  const [hours = 0, minutes = 0] = timePart.split(':').map(Number)
+  const date = parseAsOffsetDate(capturedAt)
+  const month = monthNames[date.getMonth()]
+  const day = date.getDate()
+  const year = date.getFullYear()
+  const hours = date.getHours()
+  const minutes = date.getMinutes()
   const meridiem = hours >= 12 ? 'PM' : 'AM'
   const hour12 = hours % 12 || 12
 
-  return `${monthNames[month - 1]} ${day} ${year} at ${hour12}:${String(minutes).padStart(2, '0')} ${meridiem}`
+  return `${month} ${day} ${year} at ${hour12}:${String(minutes).padStart(2, '0')} ${meridiem}`
 }
 
 export function daysSinceVrchatStart(now = Date.now()) {
