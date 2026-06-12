@@ -5,7 +5,7 @@ import friendsData from './data/friends.json'
 import imagesData from './data/images.json'
 import worldsData from './data/worlds.json'
 import { detectPreferredLanguage, languageCopy, type Language } from './i18n'
-import { icons, type SocialIcon } from './icons.ts'
+import { icons, type Icon } from './icons'
 import type { Friend, GalleryImage, GalleryRow, World } from './types'
 import { parseAsGalleryDate } from './utils/date'
 import { daysSinceVrchatStart, formatGalleryDate, photoPath, thumbnailPath } from './utils/gallery'
@@ -19,6 +19,10 @@ type GalleryFilter =
       type: 'friend'
       id: string
     }
+type DescriptionPart =
+  | { type: 'text'; text: string }
+  | { type: 'emphasis'; text: string }
+  | { type: 'friend'; id: string; name: string }
 
 const friends = friendsData as Friend[]
 const worlds = worldsData as World[]
@@ -27,7 +31,7 @@ const photos = [...(imagesData as GalleryImage[])].sort((a, b) => b.captured.loc
 const friendsById = new Map(friends.map((friend) => [friend.id, friend]))
 const worldsById = new Map(worlds.map((world) => [world.id, world]))
 const photosById = new Map(photos.map((photo) => [photo.id, photo]))
-const socialLinks: Array<{ label: string; icon: SocialIcon; href: string }> = [
+const socialLinks: Array<{ label: string; icon: Icon; href: string }> = [
   { label: 'GitHub', icon: 'github', href: 'https://github.com/maoawa/mars-vrchat-gallery' },
   { label: 'X', icon: 'x', href: 'https://twitter.com/winmemzqwq' },
   { label: 'Telegram', icon: 'telegram', href: 'https://t.me/maoawa' },
@@ -62,14 +66,14 @@ const contactButtons = computed(() => [
   {
     id: 'wechat' as const,
     label: copy.value.wechat,
-    icon: 'wechat' as SocialIcon,
+    icon: 'wechat' as Icon,
     number: '12133206888',
     qrPath: '/wechat-qr.jpg',
   },
   {
     id: 'qq' as const,
     label: copy.value.qq,
-    icon: 'qq' as SocialIcon,
+    icon: 'qq' as Icon,
     number: '1874985948',
     qrPath: '/qq-qr.jpg',
   },
@@ -195,26 +199,40 @@ function photoAlt(photo: GalleryImage) {
 }
 
 function descriptionParts(description: string) {
-  const parts: Array<{ type: 'text'; text: string } | { type: 'friend'; id: string; name: string }> = []
+  const parts: DescriptionPart[] = []
   const friendReferencePattern = /\[\[([a-zA-Z0-9_-]+)\]\]/g
-  let lastIndex = 0
-  let match: RegExpExecArray | null
+  const emphasisPattern = /\*([^*\n]+)\*/g
+  let cursor = 0
 
-  while ((match = friendReferencePattern.exec(description))) {
-    if (match.index > lastIndex) {
-      parts.push({ type: 'text', text: description.slice(lastIndex, match.index) })
+  while (cursor < description.length) {
+    friendReferencePattern.lastIndex = cursor
+    emphasisPattern.lastIndex = cursor
+
+    const friendMatch = friendReferencePattern.exec(description)
+    const emphasisMatch = emphasisPattern.exec(description)
+    const nextMatch =
+      friendMatch && (!emphasisMatch || friendMatch.index <= emphasisMatch.index) ? friendMatch : emphasisMatch
+
+    if (!nextMatch) {
+      parts.push({ type: 'text', text: description.slice(cursor) })
+      break
     }
 
-    parts.push({
-      type: 'friend',
-      id: match[1],
-      name: friendName(match[1]),
-    })
-    lastIndex = match.index + match[0].length
-  }
+    if (nextMatch.index > cursor) {
+      parts.push({ type: 'text', text: description.slice(cursor, nextMatch.index) })
+    }
 
-  if (lastIndex < description.length) {
-    parts.push({ type: 'text', text: description.slice(lastIndex) })
+    if (nextMatch === friendMatch) {
+      parts.push({
+        type: 'friend',
+        id: nextMatch[1],
+        name: friendName(nextMatch[1]),
+      })
+    } else {
+      parts.push({ type: 'emphasis', text: nextMatch[1] })
+    }
+
+    cursor = nextMatch.index + nextMatch[0].length
   }
 
   return parts
@@ -472,8 +490,16 @@ onBeforeUnmount(() => {
           <div class="photo-kicker">
             <span class="photo-number">#{{ randomOuting.photo.id }}</span>
             <time :datetime="randomOuting.photo.captured">{{ formatDate(randomOuting.photo.captured) }}</time>
-            <button v-if="hasWorld(randomOuting.photo)" type="button" @click="applyWorldFilter(randomOuting.photo.world)">
-              {{ worldName(randomOuting.photo.world) }}
+            <button
+              v-if="hasWorld(randomOuting.photo)"
+              class="world-link"
+              type="button"
+              @click="applyWorldFilter(randomOuting.photo.world)"
+            >
+              <svg aria-hidden="true" class="world-pin" :viewBox="icons.pin.viewBox">
+                <path v-for="path in icons.pin.paths" :key="path" :d="path" />
+              </svg>
+              <span>{{ worldName(randomOuting.photo.world) }}</span>
             </button>
           </div>
 
@@ -487,6 +513,7 @@ onBeforeUnmount(() => {
               >
                 {{ part.name }}
               </button>
+              <em v-else-if="part.type === 'emphasis'">{{ part.text }}</em>
               <template v-else>{{ part.text }}</template>
             </template>
           </p>
@@ -550,8 +577,16 @@ onBeforeUnmount(() => {
           <div class="photo-kicker">
             <span class="photo-number">#{{ entry.row.photo.id }}</span>
             <time :datetime="entry.row.photo.captured">{{ formatDate(entry.row.photo.captured) }}</time>
-            <button v-if="hasWorld(entry.row.photo)" type="button" @click="applyWorldFilter(entry.row.photo.world)">
-              {{ worldName(entry.row.photo.world) }}
+            <button
+              v-if="hasWorld(entry.row.photo)"
+              class="world-link"
+              type="button"
+              @click="applyWorldFilter(entry.row.photo.world)"
+            >
+              <svg aria-hidden="true" class="world-pin" :viewBox="icons.pin.viewBox">
+                <path v-for="path in icons.pin.paths" :key="path" :d="path" />
+              </svg>
+              <span>{{ worldName(entry.row.photo.world) }}</span>
             </button>
           </div>
 
@@ -565,6 +600,7 @@ onBeforeUnmount(() => {
               >
                 {{ part.name }}
               </button>
+              <em v-else-if="part.type === 'emphasis'">{{ part.text }}</em>
               <template v-else>{{ part.text }}</template>
             </template>
           </p>
@@ -597,7 +633,10 @@ onBeforeUnmount(() => {
                 <span>{{ formatLinkedDate(linkedPhoto, entry.row.photo) }}</span>
                 <span class="linked-number">#{{ linkedPhoto.id }}</span>
                 <span v-if="hasWorld(linkedPhoto) && linkedPhoto.world !== entry.row.photo.world" class="linked-world">
-                  {{ worldName(linkedPhoto.world) }}
+                  <svg aria-hidden="true" class="world-pin" :viewBox="icons.pin.viewBox">
+                    <path v-for="path in icons.pin.paths" :key="path" :d="path" />
+                  </svg>
+                  <span>{{ worldName(linkedPhoto.world) }}</span>
                 </span>
               </span>
             </button>
@@ -692,8 +731,16 @@ onBeforeUnmount(() => {
           <div>
             <span>#{{ activePhoto.id }}</span>
             <time :datetime="activePhoto.captured">{{ formatDate(activePhoto.captured) }}</time>
-            <button v-if="hasWorld(activePhoto)" type="button" @click="applyWorldFilter(activePhoto.world, true)">
-              {{ worldName(activePhoto.world) }}
+            <button
+              v-if="hasWorld(activePhoto)"
+              class="world-link"
+              type="button"
+              @click="applyWorldFilter(activePhoto.world, true)"
+            >
+              <svg aria-hidden="true" class="world-pin" :viewBox="icons.pin.viewBox">
+                <path v-for="path in icons.pin.paths" :key="path" :d="path" />
+              </svg>
+              <span>{{ worldName(activePhoto.world) }}</span>
             </button>
           </div>
           <p v-if="hasDescription(activePhoto)">
@@ -706,6 +753,7 @@ onBeforeUnmount(() => {
               >
                 {{ part.name }}
               </button>
+              <em v-else-if="part.type === 'emphasis'">{{ part.text }}</em>
               <template v-else>{{ part.text }}</template>
             </template>
           </p>

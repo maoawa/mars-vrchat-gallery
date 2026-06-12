@@ -1,4 +1,4 @@
-export type SocialIcon =
+export type Icon =
   | 'github'
   | 'x'
   | 'telegram'
@@ -8,13 +8,14 @@ export type SocialIcon =
   | 'email'
   | 'wechat'
   | 'qq'
+  | 'pin'
 
-export interface SocialIconSvg {
+export interface IconSvg {
   viewBox: string
   paths: string[]
 }
 
-export const icons: Record<SocialIcon, SocialIconSvg> = {
+export const icons: Record<Icon, IconSvg> = {
   github: {
     viewBox: '0 0 640 640',
     paths: [
@@ -67,6 +68,12 @@ export const icons: Record<SocialIcon, SocialIconSvg> = {
     viewBox: '0 0 640 640',
     paths: [
       'M530.1 484.4C518.6 485.8 485.2 431.7 485.2 431.7C485.2 463 469.1 503.9 434.2 533.5C451 538.7 489 552.7 480 567.9C472.7 580.2 354.5 575.8 320.4 571.9C286.3 575.7 168.1 580.2 160.8 567.9C151.8 552.7 189.7 538.7 206.6 533.5C171.7 504 155.5 463.1 155.5 431.7C155.5 431.7 122.2 485.8 110.6 484.4C105.2 483.8 98.2 454.8 119.9 384.7C130.2 351.7 141.9 324.2 160 278.9C156.9 162 205.2 63.9 320.3 63.9C434 63.9 483.5 160 480.6 278.9C498.7 324.1 510.5 351.8 520.7 384.7C542.5 454.8 535.4 483.8 530 484.4z',
+    ],
+  },
+  pin: {
+    viewBox: '0 0 640 640',
+    paths: [
+      'M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z',
     ],
   },
 }

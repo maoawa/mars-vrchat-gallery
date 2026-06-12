@@ -487,5 +487,35 @@
     "description_zh": "我们围坐在夜晚海滩的篝火旁，那种感觉真是太美妙了。",
     "friend": ["sunrise", "kumoshiii", "tony", "tea"],
     "parent": 49
+  },
+  {
+    "id": 52,
+    "filename": "VRChat_2026-06-13_02-47-54.png",
+    "captured": "2026-06-13T02:47:54",
+    "world": "learn.mandarin",
+    "description_en": "[[disguiser]] is playing piano and singing for us, both in Chinese and English!",
+    "description_zh": "[[disguiser]] 在为我们弹唱中文和英文歌！",
+    "friend": ["persimmon", "disguiser"],
+    "parent": 54
+  },
+  {
+    "id": 53,
+    "filename": "VRChat_2026-06-13_02-48-00.png",
+    "captured": "2026-06-13T02:48:00",
+    "world": "learn.mandarin",
+    "description_en": "[[disguiser]] is playing piano and singing for us, both in Chinese and English!",
+    "description_zh": "[[disguiser]] 在为我们弹唱中文和英文歌！",
+    "friend": ["persimmon", "disguiser"],
+    "parent": 54
+  },
+  {
+    "id": 54,
+    "filename": "VRChat_2026-06-13_02-56-26.png",
+    "captured": "2026-06-13T02:56:26",
+    "world": "learn.mandarin",
+    "description_en": "American person in Learn Mandarin world! I met [[disguiser]] studying Chinese here. To my surprise, his Chinese, including pronunciations, is pretty awesome. And he can even sing many traditional Chinese songs like *The Moon Represents My Heart*. We had a lot of fun.",
+    "description_zh": "在学中文的世界里遇到了一位美国朋友 [[disguiser]]。令我惊讶的是，他的中文水平相当了得，发音也非常地道。他甚至还能唱许多传统的中文歌曲，比如《月亮代表我的心》，我们相处得非常愉快。",
+    "friend": ["disguiser", "persimmon"],
+    "linked": [52, 53]
   }
 ]

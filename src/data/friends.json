@@ -100,5 +100,14 @@
     "id": "lime",
     "name_en": "Lime",
     "name_zh": "Lime柠"
+  },
+  {
+    "id": "disguiser",
+    "name_en": "Disguiser"
+  },
+  {
+    "id": "persimmon",
+    "name_en": "Persimmon",
+    "name_zh": "Persimmon柿子"
   }
 ]

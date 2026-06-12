@@ -121,13 +121,11 @@ h1 {
 .lede a {
   color: #9fd2bd;
   font-weight: 700;
-  text-decoration-color: rgba(159, 210, 189, 0.46);
-  text-underline-offset: 4px;
+  text-decoration: none;
 }
 
 .lede a:hover {
   color: #c7f0df;
-  text-decoration-color: #c7f0df;
 }
 
 .lede-cn,
@@ -341,10 +339,9 @@ h1 {
 .lightbox-caption button {
   padding: 0;
   border: 0;
-  border-bottom: 1px solid rgba(159, 210, 189, 0.46);
   border-radius: 0;
   background: transparent;
-  color: #9fd2bd;
+  color: #8ebeff;
   font-weight: 700;
   line-height: inherit;
   cursor: pointer;
@@ -354,8 +351,26 @@ h1 {
 .friend-row button:hover,
 .description-friend:hover,
 .lightbox-caption button:hover {
-  color: #c7f0df;
-  border-bottom-color: #c7f0df;
+  color: #cfe0ff;
+}
+
+.world-link {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+  color: #c7a6ff !important;
+}
+
+.world-link:hover {
+  color: #dfcfff !important;
+}
+
+.world-pin {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 0.9em;
+  height: 0.9em;
+  fill: currentColor;
 }
 
 .photo-number,
@@ -445,11 +460,13 @@ h1 {
 
 .linked-world {
   display: inline-flex;
+  gap: 5px;
+  align-items: center;
   max-width: 100%;
   padding: 3px 8px;
-  border: 1px solid rgba(159, 210, 189, 0.24);
+  border: 1px solid rgba(199, 166, 255, 0.28);
   border-radius: 999px;
-  color: #9fd2bd;
+  color: #c7a6ff;
   overflow-wrap: anywhere;
 }
 
