@@ -23,5 +23,10 @@
     "id": "karaoke.central",
     "name_en": "Karaoke Central",
     "name_zh": "卡拉 OK 中心"
+  },
+  {
+    "id": "noctiluca",
+    "name_en": "Noctiluca",
+    "name_zh": "夜光虫"
   }
 ]

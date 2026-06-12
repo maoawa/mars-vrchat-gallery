@@ -457,5 +457,35 @@
     "friend": ["infj_cloud", "dr_nykterstein"],
     "description_en": "Got a new friend from Kazakstan who speaks English, local language Kazakh and Russian fluently. And even Chinese!",
     "description_zh": "交到了一位来自哈萨克斯坦的新朋友，他能流利地说英语、当地语言哈萨克语和俄语，甚至还会中文！"
+  },
+  {
+    "id": 49,
+    "filename": "VRChat_2026-06-12_21-52-43.png",
+    "captured": "2026-06-12T21:52:43",
+    "world": "noctiluca",
+    "description_en": "I met two friendly American people. Then my friends, them, their friends and I gathered on the night beach. We talked about much things, shared own experiences in learning languages and more.",
+    "description_zh": "我遇到了两个很友好的美国人。然后我和我的朋友们，还有他们以及他们的朋友们，一起聚在夜晚的海滩上。我们聊了很多事情，分享了各自学习语言的经历等等。",
+    "friend": ["tea", "lime", "sunrise", "kumoshiii", "eric_yang"],
+    "linked": [50, 51]
+  },
+  {
+    "id": 50,
+    "filename": "VRChat_2026-06-12_22-04-43.png",
+    "captured": "2026-06-12T22:04:43",
+    "world": "noctiluca",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["kumoshiii", "sunrise", "tea"],
+    "parent": 49
+  },
+  {
+    "id": 51,
+    "filename": "VRChat_2026-06-12_22-46-37.png",
+    "captured": "2026-06-12T22:46:37",
+    "world": "noctiluca",
+    "description_en": "We sit around the campfire on the night beach, such an amazing vibe.",
+    "description_zh": "我们围坐在夜晚海滩的篝火旁，那种感觉真是太美妙了。",
+    "friend": ["sunrise", "kumoshiii", "tony", "tea"],
+    "parent": 49
   }
 ]

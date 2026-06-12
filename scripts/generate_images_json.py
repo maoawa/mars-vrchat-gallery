@@ -8,11 +8,13 @@ import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Union
 
 
 PHOTO_PATTERN = re.compile(
     r"^VRChat_(?P<date>\d{4}-\d{2}-\d{2})_(?P<hour>\d{2})-(?P<minute>\d{2})-(?P<second>\d{2})\.png$"
 )
+DEFAULT_OUTPUT = Path(__file__).resolve().parent.parent / "src/data/images.json"
 
 
 @dataclass(frozen=True)
@@ -22,7 +24,7 @@ class PhotoEntry:
 
 
 JsonObject = dict[str, object]
-JsonValue = JsonObject | list[object] | str | int | float | bool | None
+JsonValue = Union[JsonObject, list[object], str, int, float, bool, None]
 
 
 def parse_photo(filename: str) -> PhotoEntry | None:
@@ -149,7 +151,7 @@ def main() -> None:
         "--output-dir",
         dest="output",
         type=Path,
-        default=Path("src/data"),
+        default=None,
         help="Directory where images.json will be written. A .json path is also accepted.",
     )
     parser.add_argument(
@@ -166,9 +168,9 @@ def main() -> None:
     args = parser.parse_args()
 
     input_dir = args.input_dir
-    output = args.output_file or (
-        args.output if args.output.suffix.lower() == ".json" else args.output / "images.json"
-    )
+    output = args.output_file or DEFAULT_OUTPUT
+    if args.output:
+        output = args.output if args.output.suffix.lower() == ".json" else args.output / "images.json"
     if not input_dir.is_dir():
         raise SystemExit(f"Input directory does not exist: {input_dir}")
 

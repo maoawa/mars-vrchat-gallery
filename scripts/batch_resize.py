@@ -71,12 +71,13 @@ def main() -> None:
         "--output-dir",
         dest="output_dir",
         type=Path,
-        default=Path("thumbnails"),
-        help="Directory where resized thumbnails will be written.",
+        default=None,
+        help="Directory where resized thumbnails will be written. Defaults to INPUT/thumbnails.",
     )
     args = parser.parse_args()
 
-    resize_screenshots(args.input_dir, args.output_dir)
+    output_dir = args.output_dir or args.input_dir / "thumbnails"
+    resize_screenshots(args.input_dir, output_dir)
 
 
 if __name__ == "__main__":

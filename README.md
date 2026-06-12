@@ -37,12 +37,16 @@ With custom folders:
 
 ```bash
 python3 scripts/generate_images_json.py --input public/photos --output src/data
-python3 scripts/batch_rename.py --input raw-photos --output public/photos
-python3 scripts/batch_resize.py --input public/photos --output public/photos/thumbnails
+python3 scripts/batch_rename.py --input raw-photos
+python3 scripts/batch_resize.py --input public/photos
 ```
 
-The script reads the current `src/data/images.json`, skips filenames already in
-the file, and appends new templates with the next available numeric ids.
+`batch_rename.py` renames files in place. `batch_resize.py` writes to
+`INPUT/thumbnails/` unless `--output` is provided.
+
+`generate_images_json.py` writes to `src/data/images.json` by default. The
+script reads the current JSON file, skips filenames already in the file, and
+appends new templates with the next available numeric ids.
 
 Preview without writing:
 
