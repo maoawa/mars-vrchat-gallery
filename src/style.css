@@ -240,11 +240,9 @@ h1 {
   cursor: zoom-in;
 }
 
-.random-outing__linked span {
-  padding: 0 10px 10px;
+.random-outing__linked .linked-caption {
   font-size: 0.82rem;
   font-weight: 700;
-  text-align: left;
 }
 
 .section-divider {
@@ -358,7 +356,14 @@ h1 {
   display: inline-flex;
   gap: 2px;
   align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: #c7a6ff !important;
+  font: inherit;
+  font-weight: 700;
+  line-height: inherit;
+  cursor: pointer;
 }
 
 .world-link:hover {
@@ -456,6 +461,10 @@ h1 {
   font-size: 0.84rem;
   line-height: 1.35;
   text-align: left;
+}
+
+.linked-date {
+  color: #f4d6aa;
 }
 
 .linked-world {

@@ -109,5 +109,17 @@
     "id": "persimmon",
     "name_en": "Persimmon",
     "name_zh": "Persimmon柿子"
+  },
+  {
+    "id": "nina",
+    "name_en": "Nina"
+  },
+  {
+    "id": "rami",
+    "name_en": "RAMI"
+  },
+  {
+    "id": "fenixg",
+    "name_en": "Fenixg"
   }
 ]

@@ -21,8 +21,10 @@ type GalleryFilter =
     }
 type DescriptionPart =
   | { type: 'text'; text: string }
+  | { type: 'break' }
   | { type: 'emphasis'; text: string }
   | { type: 'friend'; id: string; name: string }
+  | { type: 'world'; id: string; name: string }
 
 const friends = friendsData as Friend[]
 const worlds = worldsData as World[]
@@ -200,39 +202,67 @@ function photoAlt(photo: GalleryImage) {
 
 function descriptionParts(description: string) {
   const parts: DescriptionPart[] = []
-  const friendReferencePattern = /\[\[([a-zA-Z0-9_-]+)\]\]/g
+  const friendPattern = /\[\[([a-zA-Z0-9_-]+)\]\]/g
+  const worldPattern = /\{\{([a-zA-Z0-9_.-]+)\}\}/g
   const emphasisPattern = /\*([^*\n]+)\*/g
+  const breakPattern = /<br\s*\/?>/gi
   let cursor = 0
 
   while (cursor < description.length) {
-    friendReferencePattern.lastIndex = cursor
+    friendPattern.lastIndex = cursor
+    worldPattern.lastIndex = cursor
     emphasisPattern.lastIndex = cursor
+    breakPattern.lastIndex = cursor
 
-    const friendMatch = friendReferencePattern.exec(description)
+    const friendMatch = friendPattern.exec(description)
+    const worldMatch = worldPattern.exec(description)
     const emphasisMatch = emphasisPattern.exec(description)
-    const nextMatch =
-      friendMatch && (!emphasisMatch || friendMatch.index <= emphasisMatch.index) ? friendMatch : emphasisMatch
+    const breakMatch = breakPattern.exec(description)
+    const matches = [
+      friendMatch ? { kind: 'friend' as const, match: friendMatch } : null,
+      worldMatch ? { kind: 'world' as const, match: worldMatch } : null,
+      emphasisMatch ? { kind: 'emphasis' as const, match: emphasisMatch } : null,
+      breakMatch ? { kind: 'break' as const, match: breakMatch } : null,
+    ].filter((item): item is NonNullable<typeof item> => Boolean(item))
+    const nextMatch = matches.sort((a, b) => a.match.index - b.match.index)[0]
 
     if (!nextMatch) {
       parts.push({ type: 'text', text: description.slice(cursor) })
       break
     }
 
-    if (nextMatch.index > cursor) {
-      parts.push({ type: 'text', text: description.slice(cursor, nextMatch.index) })
+    if (nextMatch.match.index > cursor) {
+      parts.push({ type: 'text', text: description.slice(cursor, nextMatch.match.index) })
     }
 
-    if (nextMatch === friendMatch) {
+    if (nextMatch.kind === 'friend') {
       parts.push({
         type: 'friend',
-        id: nextMatch[1],
-        name: friendName(nextMatch[1]),
+        id: nextMatch.match[1],
+        name: friendName(nextMatch.match[1]),
+      })
+    } else if (nextMatch.kind === 'world') {
+      const worldId = nextMatch.match[1]
+
+      parts.push(
+        worldsById.has(worldId)
+          ? {
+              type: 'world',
+              id: worldId,
+              name: worldName(worldId),
+            }
+          : { type: 'text', text: nextMatch.match[0] },
+      )
+    } else if (nextMatch.kind === 'emphasis') {
+      parts.push({
+        type: 'emphasis',
+        text: nextMatch.match[1],
       })
     } else {
-      parts.push({ type: 'emphasis', text: nextMatch[1] })
+      parts.push({ type: 'break' })
     }
 
-    cursor = nextMatch.index + nextMatch[0].length
+    cursor = nextMatch.match.index + nextMatch.match[0].length
   }
 
   return parts
@@ -513,6 +543,15 @@ onBeforeUnmount(() => {
               >
                 {{ part.name }}
               </button>
+              <button
+                v-else-if="part.type === 'world'"
+                type="button"
+                class="world-link"
+                @click="applyWorldFilter(part.id)"
+              >
+                <span>{{ part.name }}</span>
+              </button>
+              <br v-else-if="part.type === 'break'" />
               <em v-else-if="part.type === 'emphasis'">{{ part.text }}</em>
               <template v-else>{{ part.text }}</template>
             </template>
@@ -539,7 +578,19 @@ onBeforeUnmount(() => {
               @click="openPhoto(linkedPhoto.id, randomOutingPhotos)"
             >
               <LazyPhoto :src="thumbnailPath(linkedPhoto.filename)" :alt="photoAlt(linkedPhoto)" />
-              <span>#{{ linkedPhoto.id }}</span>
+              <span class="linked-caption">
+                <span class="linked-date">{{ formatLinkedDate(linkedPhoto, randomOuting.photo) }}</span>
+                <span class="linked-number">#{{ linkedPhoto.id }}</span>
+                <span
+                  v-if="hasWorld(linkedPhoto) && linkedPhoto.world !== randomOuting.photo.world"
+                  class="linked-world"
+                >
+                  <svg aria-hidden="true" class="world-pin" :viewBox="icons.pin.viewBox">
+                    <path v-for="path in icons.pin.paths" :key="path" :d="path" />
+                  </svg>
+                  <span>{{ worldName(linkedPhoto.world) }}</span>
+                </span>
+              </span>
             </button>
           </div>
         </div>
@@ -600,6 +651,15 @@ onBeforeUnmount(() => {
               >
                 {{ part.name }}
               </button>
+              <button
+                v-else-if="part.type === 'world'"
+                type="button"
+                class="world-link"
+                @click="applyWorldFilter(part.id)"
+              >
+                <span>{{ part.name }}</span>
+              </button>
+              <br v-else-if="part.type === 'break'" />
               <em v-else-if="part.type === 'emphasis'">{{ part.text }}</em>
               <template v-else>{{ part.text }}</template>
             </template>
@@ -630,7 +690,7 @@ onBeforeUnmount(() => {
             >
               <LazyPhoto :src="thumbnailPath(linkedPhoto.filename)" :alt="photoAlt(linkedPhoto)" />
               <span class="linked-caption">
-                <span>{{ formatLinkedDate(linkedPhoto, entry.row.photo) }}</span>
+                <span class="linked-date">{{ formatLinkedDate(linkedPhoto, entry.row.photo) }}</span>
                 <span class="linked-number">#{{ linkedPhoto.id }}</span>
                 <span v-if="hasWorld(linkedPhoto) && linkedPhoto.world !== entry.row.photo.world" class="linked-world">
                   <svg aria-hidden="true" class="world-pin" :viewBox="icons.pin.viewBox">
@@ -753,6 +813,15 @@ onBeforeUnmount(() => {
               >
                 {{ part.name }}
               </button>
+              <button
+                v-else-if="part.type === 'world'"
+                type="button"
+                class="world-link"
+                @click="applyWorldFilter(part.id, true)"
+              >
+                <span>{{ part.name }}</span>
+              </button>
+              <br v-else-if="part.type === 'break'" />
               <em v-else-if="part.type === 'emphasis'">{{ part.text }}</em>
               <template v-else>{{ part.text }}</template>
             </template>

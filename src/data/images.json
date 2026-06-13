@@ -517,5 +517,32 @@
     "description_zh": "在学中文的世界里遇到了一位美国朋友 [[disguiser]]。令我惊讶的是，他的中文水平相当了得，发音也非常地道。他甚至还能唱许多传统的中文歌曲，比如《月亮代表我的心》，我们相处得非常愉快。",
     "friend": ["disguiser", "persimmon"],
     "linked": [52, 53]
+  },
+  {
+    "id": 55,
+    "filename": "VRChat_2026-06-13_17-55-46.png",
+    "captured": "2026-06-13T17:55:46",
+    "world": "the.black.cat",
+    "description_en": "It's great to see [[aiko]] again! He invited me to {{the.black.cat}} and I met many new friends here!",
+    "description_zh": "很高兴再次见到[[aiko]]！他邀请我进入了{{the.black.cat}}世界，我在这里遇见了许多新朋友！",
+    "friend": ["nina", "aiko"]
+  },
+  {
+    "id": 56,
+    "filename": "VRChat_2026-06-13_21-31-19.png",
+    "captured": "2026-06-13T21:31:19",
+    "world": "english.hub",
+    "description_en": "A new French friend [[rami]] is here, and he showed us he can say some trending Chinese memes on the internet.",
+    "description_zh": "这里有一个新的法国朋友 [[rami]]，他向我们展示了他会说的一些中文梗。<br>「康神开播了？」「我要验牌！」",
+    "friend": ["rami", "fenixg", "kurono", "tea", "unknown_cn"]
+  },
+  {
+    "id": 57,
+    "filename": "VRChat_2026-06-13_21-35-16.png",
+    "captured": "2026-06-13T21:35:16",
+    "world": "english.hub",
+    "description_en": "Old friends and new friends around! I printed a QR code of this gallery website on the wall, and one of them suggested that we should take an ad picture of that.",
+    "description_zh": "这里既有老朋友，也有新朋友！我在墙上贴了这个画廊网站的二维码，其中一位朋友提议我们以此为背景拍一张广告风格的照片。",
+    "friend": ["unknown_cn", "fenixg", "kurono", "tea"]
   }
 ]
