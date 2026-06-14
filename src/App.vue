@@ -579,6 +579,46 @@ onBeforeUnmount(() => {
       </p>
     </header>
 
+    <section class="birthday-invite" aria-labelledby="birthday-invite-title">
+      <div class="birthday-invite__media">
+        <img
+          class="birthday-invite__image"
+          src="https://api.maao.cc/vrchat/mars-17th-birthday-horizontal.png"
+          alt="Mars is turning 17 birthday party invitation"
+          width="1600"
+          height="900"
+        />
+      </div>
+
+      <div class="birthday-invite__body">
+        <div class="birthday-invite__heading">
+          <p>Birthday Party</p>
+          <h2 id="birthday-invite-title">🎉 Mars is Turning 17! 🎂</h2>
+        </div>
+
+        <p class="birthday-invite__copy">
+          I'd love to invite my friends to celebrate my birthday together in VRChat.
+        </p>
+
+        <div class="birthday-invite__schedule" aria-label="Party start times">
+          <span>🗓 June 15 at 11:30 PM CST (UTC+8)</span>
+          <span>🕞 3:30 PM UTC</span>
+          <span>🕠 5:30 PM CEST</span>
+          <span>🕦 11:30 AM EDT</span>
+          <span>🕣 8:30 AM PDT</span>
+        </div>
+
+        <p class="birthday-invite__activities">
+          ✨ Games · 📸 Photos · 🎁 Fun &amp; Chill · 📖 Mars life story sharing
+        </p>
+
+        <div class="birthday-invite__footer">
+          <p>See you in my VRChat instance! ❤️</p>
+          <a href="https://mars-17th-birthday.pages.dev">Learn more</a>
+        </div>
+      </div>
+    </section>
+
     <section v-if="randomOuting" class="random-outing" aria-label="Random outing">
       <div class="random-outing__header">
         <p>{{ copy.randomMemory }}</p>
