@@ -108,7 +108,7 @@
   {
     "id": "persimmon",
     "name_en": "Persimmon",
-    "name_zh": "Persimmon柿子"
+    "name_zh": "柿子"
   },
   {
     "id": "nina",
@@ -121,5 +121,27 @@
   {
     "id": "fenixg",
     "name_en": "Fenixg"
+  },
+  {
+    "id": "claire",
+    "name_en": "Claire"
+  },
+  {
+    "id": "david",
+    "name_en": "David"
+  },
+  {
+    "id": "lanlan",
+    "name_en": "Lanlan",
+    "name_zh": "揽揽"
+  },
+  {
+    "id": "mark",
+    "name_en": "Mark"
+  },
+  {
+    "id": "tofu",
+    "name_en": "Tofu",
+    "name_zh": "豆腐"
   }
 ]

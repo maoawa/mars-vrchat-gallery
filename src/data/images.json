@@ -544,5 +544,23 @@
     "description_en": "Old friends and new friends around! I printed a QR code of this gallery website on the wall, and one of them suggested that we should take an ad picture of that.",
     "description_zh": "这里既有老朋友，也有新朋友！我在墙上贴了这个画廊网站的二维码，其中一位朋友提议我们以此为背景拍一张广告风格的照片。",
     "friend": ["unknown_cn", "fenixg", "kurono", "tea"]
+  },
+  {
+    "id": 58,
+    "filename": "VRChat_2026-06-14_14-52-52.png",
+    "captured": "2026-06-14T14:52:52",
+    "world": "learn.mandarin",
+    "description_en": "I met a couple from Canada and the UK who were trying to learn Chinese, and their Chinese was surprisingly good. Later I became their Chinese teacher teaching them slangs and more :)",
+    "description_zh": "我遇见了一对来自加拿大和英国的情侣，他们正在尝试学中文，并且他们的中文出乎意料地不错。然后我就成了他们的中文老师，教他们一些俚语等等 :)",
+    "friend": ["claire", "lanlan", "david"]
+  },
+  {
+    "id": 59,
+    "filename": "VRChat_2026-06-14_23-58-35.png",
+    "captured": "2026-06-14T23:58:35",
+    "world": "english.hub",
+    "description_en": "So I'm gonna turn 17 tomorrow! I decided to hold a birthday party and was inviting my friends to join. I also got two new friends unexpectedly!",
+    "description_zh": "所以我每天就要17岁了！我决定举办一个生日派对并且在邀请我的朋友们加入，还出乎意料地认识了两个新朋友！",
+    "friend": ["persimmon", "unknown_cn", "mark", "infj_cloud", "tofu"]
   }
 ]

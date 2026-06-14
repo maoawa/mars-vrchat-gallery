@@ -633,7 +633,7 @@ h1 {
 }
 
 .lightbox-button {
- position: absolute;
+  position: absolute;
   z-index: 2;
   display: grid;
   place-items: center;
@@ -646,7 +646,6 @@ h1 {
   font-weight: 800;
   line-height: 1;
   cursor: pointer;
-  font:icon;
 }
 
 .lightbox-button:hover {
@@ -704,32 +703,22 @@ h1 {
 
 .lightbox-zoom-surface {
   position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 100%; 
-  max-height: 100%;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  min-width: 100%;
+  min-height: 100%;
+  touch-action: none;
 }
 
 .lightbox-stage {
-  display: grid;
+  display: block;
   flex: 1 1 auto;
-  place-items: center;
   min-height: 0;
   height: min(68vh, 760px);
   overflow: auto;
   overscroll-behavior: contain;
   background: #070708;
-}
-
-.lightbox-zoom-surface {
-  display: grid;
-  flex: 0 0 auto;
-  place-items: center;
-  position: relative;
-  min-width: 100%;
-  min-height: 100%;
 }
 
 .lightbox-image {
@@ -739,6 +728,7 @@ h1 {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  user-select: none;
 }
 
 .lightbox-caption {

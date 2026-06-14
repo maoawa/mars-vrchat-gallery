@@ -60,16 +60,13 @@ const galleryColumnCount = ref(1)
 const lightboxStage = ref<HTMLElement | null>(null)
 const activeQrContactId = ref<'wechat' | 'qq' | null>(null)
 
-// --- Drag & Zoom State ---
 const zoomLevel = ref(1)
-const panX = ref(0)
-const panY = ref(0)
 const isDragging = ref(false)
 
 let startClientX = 0
 let startClientY = 0
-let startPanX = 0
-let startPanY = 0
+let startScrollLeft = 0
+let startScrollTop = 0
 
 let clockTimer: number | undefined
 
@@ -162,24 +159,22 @@ const activeFilterLabel = computed(() => {
   return friendName(activeFilter.value.id)
 })
 
-// --- Dynamic Zoom Styles ---
-const scrollZoomStyle = computed(() => {
-  if (zoomLevel.value > 1) {
+const zoomSurfaceStyle = computed(() => ({
+  width: `${zoomLevel.value * 100}%`,
+  height: `${zoomLevel.value * 100}%`,
+}))
+
+const lightboxImageStyle = computed(() => {
+  if (zoomLevel.value <= 1) {
     return {
-      transform: `scale(${zoomLevel.value}) translate(${panX.value}px, ${panY.value}px)`,
-      transition: isDragging.value ? 'none' : 'transform 0.1s ease-out',
-      cursor: isDragging.value ? 'grabbing' : 'grab',
-      willChange: 'transform'
+      cursor: 'zoom-in',
     }
   }
-  
+
   return {
-    transform: 'scale(1) translate(0px, 0px)',
-    transition: 'transform 0.2s ease',
-    cursor: 'auto'
+    cursor: isDragging.value ? 'grabbing' : 'grab',
   }
 })
-const lightboxImage = ref<HTMLImageElement | null>(null)
 
 function hasWorld(photo: GalleryImage) {
   return photo.world.trim().length > 0
@@ -380,90 +375,70 @@ function closeQrContact() {
   activeQrContactId.value = null
 }
 
-// Function to calculate bounds and snap the image back if it goes too far
-function clampPan() {
-  if (!lightboxImage.value || zoomLevel.value <= 1) {
-    if (zoomLevel.value <= 1) {
-      panX.value = 0
-      panY.value = 0
-    }
+function centreZoomStage() {
+  const stage = lightboxStage.value
+
+  if (!stage) {
     return
   }
 
-  const img = lightboxImage.value
-  const container = img.parentElement
-  if (!container || !img.naturalWidth) return
-
-  // 1. Calculate actual rendered size of the image inside the container
-  const ratio = Math.min(
-    container.clientWidth / img.naturalWidth,
-    container.clientHeight / img.naturalHeight
-  )
-  const actualWidth = img.naturalWidth * ratio
-  const actualHeight = img.naturalHeight * ratio
-
-  // 2. Calculate the zoomed dimensions
-  const scaledWidth = actualWidth * zoomLevel.value
-  const scaledHeight = actualHeight * zoomLevel.value
-
-  // 3. Find maximum allowed visual movement
-  const maxVisualX = Math.max(0, (scaledWidth - container.clientWidth) / 2)
-  const maxVisualY = Math.max(0, (scaledHeight - container.clientHeight) / 2)
-
-  // 4. Clamp the internal pan values
-  const maxX = maxVisualX / zoomLevel.value
-  const maxY = maxVisualY / zoomLevel.value
-
-  panX.value = Math.max(-maxX, Math.min(maxX, panX.value))
-  panY.value = Math.max(-maxY, Math.min(maxY, panY.value))
+  stage.scrollLeft = (stage.scrollWidth - stage.clientWidth) / 2
+  stage.scrollTop = (stage.scrollHeight - stage.clientHeight) / 2
 }
 
-
-// --- Zoom & Drag Handlers ---
 function resetZoom() {
   zoomLevel.value = 1
-  panX.value = 0
-  panY.value = 0
   isDragging.value = false
 }
 
 function handleScrollZoom(event: WheelEvent) {
   const zoomStep = 0.25
-  
-  if (event.deltaY < 0) {
-    zoomLevel.value = Math.min(zoomLevel.value + zoomStep, 4)
-  } else {
-    zoomLevel.value = Math.max(zoomLevel.value - zoomStep, 1)
-  }
 
-   clampPan()
+  const nextZoom =
+    event.deltaY < 0
+      ? Math.min(zoomLevel.value + zoomStep, 4)
+      : Math.max(zoomLevel.value - zoomStep, 1)
+
+  if (nextZoom !== zoomLevel.value) {
+    zoomLevel.value = nextZoom
+  }
 }
 
 function startDrag(event: MouseEvent | TouchEvent) {
   if (zoomLevel.value <= 1) return
-  
+
+  const stage = lightboxStage.value
+
+  if (!stage) {
+    return
+  }
+
   isDragging.value = true
-  
+
   startClientX = 'touches' in event ? event.touches[0].clientX : (event as MouseEvent).clientX
   startClientY = 'touches' in event ? event.touches[0].clientY : (event as MouseEvent).clientY
-  
-  startPanX = panX.value
-  startPanY = panY.value
+
+  startScrollLeft = stage.scrollLeft
+  startScrollTop = stage.scrollTop
 }
 
 function onDrag(event: MouseEvent | TouchEvent) {
   if (!isDragging.value) return
-  
+
+  const stage = lightboxStage.value
+
+  if (!stage) {
+    return
+  }
+
   const clientX = 'touches' in event ? event.touches[0].clientX : (event as MouseEvent).clientX
   const clientY = 'touches' in event ? event.touches[0].clientY : (event as MouseEvent).clientY
-  
+
   const deltaX = clientX - startClientX
   const deltaY = clientY - startClientY
-  
-  panX.value = startPanX + (deltaX / zoomLevel.value)
-  panY.value = startPanY + (deltaY / zoomLevel.value)
 
-  clampPan()
+  stage.scrollLeft = startScrollLeft - deltaX
+  stage.scrollTop = startScrollTop - deltaY
 }
 
 function stopDrag() {
@@ -545,6 +520,16 @@ function handleKeydown(event: KeyboardEvent) {
 
 watch([activePhoto, activeQrContact], ([photo, qrContact]) => {
   document.body.classList.toggle('lightbox-open', Boolean(photo) || Boolean(qrContact))
+
+  if (photo) {
+    nextTick(centreZoomStage)
+  }
+})
+
+watch(zoomLevel, () => {
+  if (activePhoto.value) {
+    nextTick(centreZoomStage)
+  }
 })
 
 watch(
@@ -850,9 +835,8 @@ onBeforeUnmount(() => {
       </section>
     </div>
 
-<div v-if="activePhoto" class="lightbox" role="dialog" aria-modal="true" @click.self="closeLightbox">
+    <div v-if="activePhoto" class="lightbox" role="dialog" aria-modal="true" @click.self="closeLightbox">
       <figure class="lightbox-panel">
-        
         <button class="lightbox-button lightbox-close" type="button" :aria-label="copy.close" @click="closeLightbox">
           x
         </button>
@@ -870,8 +854,9 @@ onBeforeUnmount(() => {
         </div>
 
         <div ref="lightboxStage" class="lightbox-stage">
-          <div 
-            class="lightbox-zoom-surface" 
+          <div
+            class="lightbox-zoom-surface"
+            :style="zoomSurfaceStyle"
             @wheel.prevent="handleScrollZoom"
             @mousedown="startDrag"
             @mousemove="onDrag"
@@ -881,14 +866,13 @@ onBeforeUnmount(() => {
             @touchmove.prevent="onDrag"
             @touchend="stopDrag"
           >
-<img
-  ref="lightboxImage"
-  class="lightbox-image"
-  :src="photoPath(activePhoto.filename)"
-  :alt="photoAlt(activePhoto)"
-  :style="scrollZoomStyle"
-  @dragstart.prevent
-/>
+            <img
+              class="lightbox-image"
+              :src="photoPath(activePhoto.filename)"
+              :alt="photoAlt(activePhoto)"
+              :style="lightboxImageStyle"
+              @dragstart.prevent
+            />
           </div>
         </div>
 
