@@ -629,12 +629,11 @@ h1 {
   display: grid;
   place-items: center;
   padding: 22px 64px;
-  background: rgba(4, 4, 5, 0.9);
   backdrop-filter: blur(18px);
 }
 
 .lightbox-button {
-  position: fixed;
+ position: absolute;
   z-index: 2;
   display: grid;
   place-items: center;
@@ -647,6 +646,7 @@ h1 {
   font-weight: 800;
   line-height: 1;
   cursor: pointer;
+  font:icon;
 }
 
 .lightbox-button:hover {
@@ -655,7 +655,7 @@ h1 {
 }
 
 .lightbox-close {
-  top: 22px;
+  top: 8px;
   right: 22px;
 }
 
@@ -672,6 +672,7 @@ h1 {
 }
 
 .lightbox-panel {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: min(1180px, 100%);
@@ -687,7 +688,6 @@ h1 {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
-  justify-content: space-between;
   gap: 18px;
   min-height: 58px;
   padding: 10px 14px;
@@ -696,24 +696,20 @@ h1 {
   font-size: 0.9rem;
 }
 
-.zoom-slider {
+.lightbox-title {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: min(340px, 52vw);
-  color: #f4d6aa;
-  font-size: 0.86rem;
-  font-weight: 700;
-}
-
-.zoom-slider span {
-  flex: 0 0 auto;
-}
-
-.zoom-slider input {
+  justify-content: center;
   width: 100%;
-  accent-color: #9fd2bd;
-  cursor: pointer;
+}
+
+.lightbox-zoom-surface {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%; 
+  max-height: 100%;
 }
 
 .lightbox-stage {
@@ -818,7 +814,8 @@ h1 {
   }
 
   .lightbox {
-    align-items: start;
+    align-items: center;
+    justify-content: center;
     padding: 10px;
   }
 
@@ -847,7 +844,7 @@ h1 {
   }
 
   .lightbox-close {
-    top: 20px;
+    top: 8px;
     right: 20px;
   }
 
@@ -920,11 +917,6 @@ h1 {
     align-items: flex-start;
     flex-direction: column;
     gap: 10px;
-  }
-
-  .zoom-slider {
-    width: 100%;
-    min-width: 0;
   }
 
   .lightbox-stage {
