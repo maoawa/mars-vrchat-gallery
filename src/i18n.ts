@@ -10,6 +10,7 @@ export const languageCopy = {
     introAfterLink:
       ' or buttons at the bottom or in game. Thanks for appearing in my life and I love you guys!',
     randomMemory: 'Random memory',
+    specialEvent: 'Special event',
     showing: 'Showing',
     for: 'for',
     outing: 'outing',
@@ -37,6 +38,7 @@ export const languageCopy = {
     introAfterLink:
       ' 上的方式或底部的按钮，或直接在游戏里联系我。感谢你们出现在我的生活中，我爱你们！',
     randomMemory: '随机回忆',
+    specialEvent: '特别事件',
     showing: '正在显示',
     for: '关于',
     outing: '个聚会',

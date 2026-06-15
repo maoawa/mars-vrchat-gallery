@@ -5,6 +5,29 @@ from pathlib import Path
 from PIL import Image
 
 
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg"}
+
+
+def list_screenshots(input_dir: Path):
+    return sorted(
+        path
+        for path in input_dir.iterdir()
+        if path.is_file()
+        and path.name.startswith("VRChat_")
+        and path.suffix.lower() in IMAGE_EXTENSIONS
+    )
+
+
+def save_resized_image(image: Image.Image, output_file: Path) -> None:
+    if output_file.suffix.lower() in {".jpg", ".jpeg"}:
+        if image.mode not in {"RGB", "L"}:
+            image = image.convert("RGB")
+        image.save(output_file, "JPEG", quality=95, optimize=True)
+        return
+
+    image.save(output_file, "PNG", optimize=True)
+
+
 def resize_screenshots(input_dir: Path, output_dir: Path):
     """
     Batch resize VRChat screenshots to 720p:
@@ -19,7 +42,7 @@ def resize_screenshots(input_dir: Path, output_dir: Path):
 
     resized_count = 0
 
-    for file_path in sorted(input_dir.glob("VRChat_*.png")):
+    for file_path in list_screenshots(input_dir):
         try:
             with Image.open(file_path) as img:
                 width, height = img.size
@@ -43,7 +66,7 @@ def resize_screenshots(input_dir: Path, output_dir: Path):
 
                 # Save to thumbnail folder
                 output_file = output_dir / file_path.name
-                resized_img.save(output_file, "PNG", quality=95)
+                save_resized_image(resized_img, output_file)
 
                 print(f"✓ Resized ({orientation} {width}x{height} -> {new_size[0]}x{new_size[1]}): {file_path.name}")
                 resized_count += 1
@@ -64,7 +87,7 @@ def main() -> None:
         dest="input_dir",
         type=Path,
         default=Path("."),
-        help="Directory containing source VRChat_*.png files.",
+        help="Directory containing source VRChat_*.png/.jpg files.",
     )
     parser.add_argument(
         "--output",

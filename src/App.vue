@@ -3,10 +3,11 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import LazyPhoto from './components/LazyPhoto.vue'
 import friendsData from './data/friends.json'
 import imagesData from './data/images.json'
+import specialEventsData from './data/special-events.json'
 import worldsData from './data/worlds.json'
 import { detectPreferredLanguage, languageCopy, type Language } from './i18n'
 import { icons, type Icon } from './icons'
-import type { Friend, GalleryImage, GalleryRow, World } from './types'
+import type { Friend, GalleryImage, GalleryRow, SpecialEvent, World } from './types'
 import { parseAsGalleryDate } from './utils/date'
 import { daysSinceVrchatStart, formatGalleryDate, photoPath, thumbnailPath } from './utils/gallery'
 
@@ -25,10 +26,43 @@ type DescriptionPart =
   | { type: 'emphasis'; text: string }
   | { type: 'friend'; id: string; name: string }
   | { type: 'world'; id: string; name: string }
+type SpecialEventView = SpecialEvent & {
+  photos: GalleryImage[]
+  featuredPhotos: GalleryImage[]
+  linkedPhotos: GalleryImage[]
+  sortKey: string
+}
+type GalleryFlowItem =
+  | {
+      type: 'gallery'
+      id: string
+      columns: Array<Array<{ row: GalleryRow; index: number }>>
+      rowCount: number
+    }
+  | {
+      type: 'special-event'
+      id: string
+      event: SpecialEventView
+    }
 
+const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
 const friends = friendsData as Friend[]
 const worlds = worldsData as World[]
 const photos = [...(imagesData as GalleryImage[])].sort((a, b) => b.captured.localeCompare(a.captured))
+const specialEventRecords = specialEventsData as SpecialEvent[]
 
 const friendsById = new Map(friends.map((friend) => [friend.id, friend]))
 const worldsById = new Map(worlds.map((world) => [world.id, world]))
@@ -42,8 +76,31 @@ const socialLinks: Array<{ label: string; icon: Icon; href: string }> = [
   { label: 'Instagram', icon: 'instagram', href: 'https://www.instagram.com/winmemzqwq' },
   { label: 'Email', icon: 'email', href: 'mailto:winmemzqwq@gmail.com' },
 ]
+const specialEvents: SpecialEventView[] = specialEventRecords
+  .map((event) => {
+    const eventPhotos = event.photo_ids
+      .map((photoId) => photosById.get(photoId))
+      .filter((photo): photo is GalleryImage => Boolean(photo))
+    const featuredPhotos = event.featured_photo_ids
+      .map((photoId) => photosById.get(photoId))
+      .filter((photo): photo is GalleryImage => Boolean(photo))
+    const featuredPhotoIds = new Set(featuredPhotos.map((photo) => photo.id))
+
+    return {
+      ...event,
+      photos: eventPhotos,
+      featuredPhotos,
+      linkedPhotos: eventPhotos.filter((photo) => !featuredPhotoIds.has(photo.id)),
+      sortKey: eventPhotos.reduce(
+        (latestCaptured, photo) => (photo.captured > latestCaptured ? photo.captured : latestCaptured),
+        '',
+      ),
+    }
+  })
+  .filter((event) => event.photos.length > 0 && event.featuredPhotos.length > 0)
+  .sort((a, b) => b.sortKey.localeCompare(a.sortKey))
 const allGalleryRows: GalleryRow[] = photos
-  .filter((photo) => !photo.parent)
+  .filter((photo) => !photo.parent && !photo['special-events'])
   .map((photo) => ({
     photo,
     linkedPhotos: (photo.linked ?? [])
@@ -59,6 +116,8 @@ const activeFilter = ref<GalleryFilter | null>(null)
 const galleryColumnCount = ref(1)
 const lightboxStage = ref<HTMLElement | null>(null)
 const activeQrContactId = ref<'wechat' | 'qq' | null>(null)
+const highlightedPhotoId = ref<number | null>(null)
+const highlightedSpecialEventId = ref<string | null>(null)
 
 const zoomLevel = ref(1)
 const isDragging = ref(false)
@@ -99,6 +158,62 @@ const galleryRows = computed(() => {
   })
 })
 
+const gallerySections = computed(() => {
+  if (activeFilter.value || !specialEvents.length) {
+    return [
+      {
+        type: 'gallery' as const,
+        id: 'all',
+        columns: buildGalleryColumns(galleryRows.value),
+        rowCount: galleryRows.value.length,
+      },
+    ]
+  }
+
+  const flowItems: GalleryFlowItem[] = []
+  let rowCursor = 0
+
+  specialEvents.forEach((event) => {
+    const rowsBeforeEvent: GalleryRow[] = []
+
+    while (
+      rowCursor < galleryRows.value.length &&
+      galleryRows.value[rowCursor].photo.captured > event.sortKey
+    ) {
+      rowsBeforeEvent.push(galleryRows.value[rowCursor])
+      rowCursor += 1
+    }
+
+    if (rowsBeforeEvent.length) {
+      flowItems.push({
+        type: 'gallery',
+        id: `gallery-before-${event.id}`,
+        columns: buildGalleryColumns(rowsBeforeEvent),
+        rowCount: rowsBeforeEvent.length,
+      })
+    }
+
+    flowItems.push({
+      type: 'special-event',
+      id: `special-event-${event.id}`,
+      event,
+    })
+  })
+
+  const remainingRows = galleryRows.value.slice(rowCursor)
+
+  if (remainingRows.length) {
+    flowItems.push({
+      type: 'gallery',
+      id: 'gallery-after-special-events',
+      columns: buildGalleryColumns(remainingRows),
+      rowCount: remainingRows.length,
+    })
+  }
+
+  return flowItems
+})
+
 const lightboxPhotos = computed(() => galleryRows.value.flatMap((row) => [row.photo, ...row.linkedPhotos]))
 const randomOuting = ref<GalleryRow | null>(
   allGalleryRows.length ? allGalleryRows[Math.floor(Math.random() * allGalleryRows.length)] : null,
@@ -110,18 +225,18 @@ const currentLightboxPhotos = computed(() => activePhotoList.value ?? lightboxPh
 const activeQrContact = computed(
   () => contactButtons.value.find((contact) => contact.id === activeQrContactId.value) ?? null,
 )
-const galleryColumns = computed(() => {
+function buildGalleryColumns(rows: GalleryRow[]) {
   const columns: Array<Array<{ row: GalleryRow; index: number }>> = Array.from(
     { length: galleryColumnCount.value },
     () => [],
   )
 
-  galleryRows.value.forEach((row, index) => {
+  rows.forEach((row, index) => {
     columns[index % galleryColumnCount.value].push({ row, index })
   })
 
   return columns
-})
+}
 
 const activePhoto = computed(() => {
   if (activeIndex.value === null) {
@@ -204,6 +319,23 @@ function friendList(photo: GalleryImage) {
       id: friendId,
       name: friendName(friendId),
     }))
+}
+
+function eventFriendList(event: SpecialEventView) {
+  return (event.friends ?? [])
+    .filter((friendId) => friendId.trim().length > 0)
+    .map((friendId) => ({
+      id: friendId,
+      name: friendName(friendId),
+    }))
+}
+
+function hasEventWorld(event: SpecialEventView) {
+  return Boolean(event.world?.trim())
+}
+
+function shouldShowEventPhotoWorld(photo: GalleryImage, event: SpecialEventView) {
+  return hasWorld(photo) && photo.world !== event.world
 }
 
 function hasDescription(photo: GalleryImage) {
@@ -334,6 +466,34 @@ function formatLinkedDate(photo: GalleryImage, parentPhoto: GalleryImage) {
   return isSameGalleryDay(photo, parentPhoto) ? formatTime(photo.captured) : formatDate(photo.captured)
 }
 
+function formatShortDateTime(capturedAt: string) {
+  const date = parseAsGalleryDate(capturedAt)
+  const hours = date.getHours()
+  const minutes = date.getMinutes()
+
+  if (currentLanguage.value === 'zh') {
+    const meridiem = hours >= 12 ? '下午' : '上午'
+    const hour12 = hours % 12 || 12
+
+    return `${date.getMonth() + 1}月${date.getDate()}日 ${meridiem}${hour12}:${String(minutes).padStart(2, '0')}`
+  }
+
+  const meridiem = hours >= 12 ? 'PM' : 'AM'
+  const hour12 = hours % 12 || 12
+
+  return `${monthNames[date.getMonth()]} ${date.getDate()} at ${hour12}:${String(minutes).padStart(2, '0')} ${meridiem}`
+}
+
+function formatSpecialEventPhotoDate(photo: GalleryImage, event: SpecialEventView) {
+  if (event.show_full_date) {
+    return formatShortDateTime(photo.captured)
+  }
+
+  const firstPhoto = event.photos[0]
+
+  return firstPhoto && isSameGalleryDay(photo, firstPhoto) ? formatTime(photo.captured) : formatShortDateTime(photo.captured)
+}
+
 function isSameGalleryDay(photo: GalleryImage, parentPhoto: GalleryImage) {
   const photoDate = parseAsGalleryDate(photo.captured)
   const parentDate = parseAsGalleryDate(parentPhoto.captured)
@@ -462,6 +622,52 @@ function closeLightbox() {
   resetZoom()
 }
 
+function scrollToGalleryTarget(selector: string) {
+  nextTick(() => {
+    window.requestAnimationFrame(() => {
+      document.querySelector<HTMLElement>(selector)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest',
+      })
+    })
+  })
+}
+
+function handleHashTarget() {
+  const hashTarget = decodeURIComponent(window.location.hash.slice(1)).trim()
+
+  highlightedPhotoId.value = null
+  highlightedSpecialEventId.value = null
+
+  if (!hashTarget) {
+    return
+  }
+
+  activeFilter.value = null
+  closeLightbox()
+  closeQrContact()
+
+  if (/^\d+$/.test(hashTarget)) {
+    const photoId = Number(hashTarget)
+
+    if (!photosById.has(photoId)) {
+      return
+    }
+
+    highlightedPhotoId.value = photoId
+    scrollToGalleryTarget(`[data-gallery-photo-id="${photoId}"]`)
+    return
+  }
+
+  if (!specialEvents.some((event) => event.id === hashTarget)) {
+    return
+  }
+
+  highlightedSpecialEventId.value = hashTarget
+  scrollToGalleryTarget(`#${CSS.escape(hashTarget)}`)
+}
+
 function showPreviousPhoto() {
   if (activeIndex.value === null || !currentLightboxPhotos.value.length) {
     return
@@ -543,12 +749,14 @@ watch(
 
 onMounted(() => {
   updateGalleryColumnCount()
+  handleHashTarget()
   clockTimer = window.setInterval(() => {
     now.value = Date.now()
   }, 60_000)
 
   window.addEventListener('resize', updateGalleryColumnCount)
   window.addEventListener('keydown', handleKeydown)
+  window.addEventListener('hashchange', handleHashTarget)
 })
 
 onBeforeUnmount(() => {
@@ -558,6 +766,7 @@ onBeforeUnmount(() => {
 
   window.removeEventListener('keydown', handleKeydown)
   window.removeEventListener('resize', updateGalleryColumnCount)
+  window.removeEventListener('hashchange', handleHashTarget)
   document.body.classList.remove('lightbox-open')
 })
 </script>
@@ -686,103 +895,213 @@ onBeforeUnmount(() => {
       <button type="button" @click="clearFilter">{{ copy.clear }}</button>
     </section>
 
-    <section class="gallery" aria-label="VRChat photos">
-      <div v-for="(column, columnIndex) in galleryColumns" :key="columnIndex" class="gallery-column">
-      <article v-for="entry in column" :key="entry.row.photo.id" class="photo-card">
-        <button
-          class="photo-trigger"
-          type="button"
-          :aria-label="`${copy.open} ${entry.row.photo.filename}`"
-          @click="openPhoto(entry.row.photo.id)"
-        >
-          <LazyPhoto
-            :src="thumbnailPath(entry.row.photo.filename)"
-            :alt="photoAlt(entry.row.photo)"
-            :eager="entry.index === 0"
-          />
-        </button>
-
-        <div class="photo-body">
-          <div class="photo-kicker">
-            <span class="photo-number">#{{ entry.row.photo.id }}</span>
-            <time :datetime="entry.row.photo.captured">{{ formatDate(entry.row.photo.captured) }}</time>
+    <template v-for="(item, itemIndex) in gallerySections" :key="item.id">
+      <section v-if="item.type === 'gallery' && item.rowCount" class="gallery" aria-label="VRChat photos">
+        <div v-for="(column, columnIndex) in item.columns" :key="columnIndex" class="gallery-column">
+          <article
+            v-for="entry in column"
+            :key="entry.row.photo.id"
+            class="photo-card"
+            :class="{ 'is-hash-target': highlightedPhotoId === entry.row.photo.id }"
+            :data-gallery-photo-id="entry.row.photo.id"
+          >
             <button
-              v-if="hasWorld(entry.row.photo)"
+              class="photo-trigger"
+              type="button"
+              :aria-label="`${copy.open} ${entry.row.photo.filename}`"
+              @click="openPhoto(entry.row.photo.id)"
+            >
+              <LazyPhoto
+                :src="thumbnailPath(entry.row.photo.filename)"
+                :alt="photoAlt(entry.row.photo)"
+                :eager="itemIndex === 0 && entry.index === 0"
+              />
+            </button>
+
+            <div class="photo-body">
+              <div class="photo-kicker">
+                <span class="photo-number">#{{ entry.row.photo.id }}</span>
+                <time :datetime="entry.row.photo.captured">{{ formatDate(entry.row.photo.captured) }}</time>
+                <button
+                  v-if="hasWorld(entry.row.photo)"
+                  class="world-link"
+                  type="button"
+                  @click="applyWorldFilter(entry.row.photo.world)"
+                >
+                  <svg aria-hidden="true" class="world-pin" :viewBox="icons.pin.viewBox">
+                    <path v-for="path in icons.pin.paths" :key="path" :d="path" />
+                  </svg>
+                  <span>{{ worldName(entry.row.photo.world) }}</span>
+                </button>
+              </div>
+
+              <p v-if="hasDescription(entry.row.photo)" class="photo-description">
+                <template v-for="(part, index) in descriptionParts(photoDescription(entry.row.photo))" :key="index">
+                  <button
+                    v-if="part.type === 'friend'"
+                    type="button"
+                    class="description-friend"
+                    @click="applyFriendFilter(part.id)"
+                  >
+                    {{ part.name }}
+                  </button>
+                  <button
+                    v-else-if="part.type === 'world'"
+                    type="button"
+                    class="world-link"
+                    @click="applyWorldFilter(part.id)"
+                  >
+                    <span>{{ part.name }}</span>
+                  </button>
+                  <br v-else-if="part.type === 'break'" />
+                  <em v-else-if="part.type === 'emphasis'">{{ part.text }}</em>
+                  <template v-else>{{ part.text }}</template>
+                </template>
+              </p>
+
+              <div v-if="friendList(entry.row.photo).length" class="friend-row" aria-label="Friends in this photo">
+                <span>{{ copy.with }}</span>
+                <button
+                  v-for="friend in friendList(entry.row.photo)"
+                  :key="friend.id"
+                  type="button"
+                  @click="applyFriendFilter(friend.id)"
+                >
+                  {{ friend.name }}
+                </button>
+              </div>
+            </div>
+
+            <section v-if="entry.row.linkedPhotos.length" class="linked-photos" aria-label="Linked moments">
+              <div class="linked-grid">
+                <button
+                  v-for="linkedPhoto in entry.row.linkedPhotos"
+                  :key="linkedPhoto.id"
+                  class="linked-trigger"
+                  :class="{ 'is-hash-target': highlightedPhotoId === linkedPhoto.id }"
+                  :data-gallery-photo-id="linkedPhoto.id"
+                  type="button"
+                  :aria-label="`${copy.open} ${linkedPhoto.filename}`"
+                  @click="openPhoto(linkedPhoto.id)"
+                >
+                  <LazyPhoto :src="thumbnailPath(linkedPhoto.filename)" :alt="photoAlt(linkedPhoto)" />
+                  <span class="linked-caption">
+                    <span class="linked-date">{{ formatLinkedDate(linkedPhoto, entry.row.photo) }}</span>
+                    <span class="linked-number">#{{ linkedPhoto.id }}</span>
+                    <span
+                      v-if="hasWorld(linkedPhoto) && linkedPhoto.world !== entry.row.photo.world"
+                      class="linked-world"
+                    >
+                      <svg aria-hidden="true" class="world-pin" :viewBox="icons.pin.viewBox">
+                        <path v-for="path in icons.pin.paths" :key="path" :d="path" />
+                      </svg>
+                      <span>{{ worldName(linkedPhoto.world) }}</span>
+                    </span>
+                  </span>
+                </button>
+              </div>
+            </section>
+          </article>
+        </div>
+      </section>
+
+      <section
+        v-else-if="item.type === 'special-event'"
+        :id="item.event.id"
+        class="special-event"
+        :class="{ 'is-hash-target': highlightedSpecialEventId === item.event.id }"
+        :aria-labelledby="`${item.event.id}-title`"
+      >
+        <div class="special-event__header">
+          <p>{{ copy.specialEvent }}</p>
+          <h2 :id="`${item.event.id}-title`">{{ localisedText(item.event.title_en, item.event.title_zh) }}</h2>
+          <div class="special-event__meta">
+            <span>{{ localisedText(item.event.date_en, item.event.date_zh) }}</span>
+            <button
+              v-if="hasEventWorld(item.event)"
               class="world-link"
               type="button"
-              @click="applyWorldFilter(entry.row.photo.world)"
+              @click="applyWorldFilter(item.event.world ?? '')"
             >
               <svg aria-hidden="true" class="world-pin" :viewBox="icons.pin.viewBox">
                 <path v-for="path in icons.pin.paths" :key="path" :d="path" />
               </svg>
-              <span>{{ worldName(entry.row.photo.world) }}</span>
-            </button>
-          </div>
-
-          <p v-if="hasDescription(entry.row.photo)" class="photo-description">
-            <template v-for="(part, index) in descriptionParts(photoDescription(entry.row.photo))" :key="index">
-              <button
-                v-if="part.type === 'friend'"
-                type="button"
-                class="description-friend"
-                @click="applyFriendFilter(part.id)"
-              >
-                {{ part.name }}
-              </button>
-              <button
-                v-else-if="part.type === 'world'"
-                type="button"
-                class="world-link"
-                @click="applyWorldFilter(part.id)"
-              >
-                <span>{{ part.name }}</span>
-              </button>
-              <br v-else-if="part.type === 'break'" />
-              <em v-else-if="part.type === 'emphasis'">{{ part.text }}</em>
-              <template v-else>{{ part.text }}</template>
-            </template>
-          </p>
-
-          <div v-if="friendList(entry.row.photo).length" class="friend-row" aria-label="Friends in this photo">
-            <span>{{ copy.with }}</span>
-            <button
-              v-for="friend in friendList(entry.row.photo)"
-              :key="friend.id"
-              type="button"
-              @click="applyFriendFilter(friend.id)"
-            >
-              {{ friend.name }}
+              <span>{{ worldName(item.event.world ?? '') }}</span>
             </button>
           </div>
         </div>
 
-        <section v-if="entry.row.linkedPhotos.length" class="linked-photos" aria-label="Linked moments">
-          <div class="linked-grid">
-            <button
-              v-for="linkedPhoto in entry.row.linkedPhotos"
-              :key="linkedPhoto.id"
-              class="linked-trigger"
-              type="button"
-              :aria-label="`${copy.open} ${linkedPhoto.filename}`"
-              @click="openPhoto(linkedPhoto.id)"
-            >
-              <LazyPhoto :src="thumbnailPath(linkedPhoto.filename)" :alt="photoAlt(linkedPhoto)" />
-              <span class="linked-caption">
-                <span class="linked-date">{{ formatLinkedDate(linkedPhoto, entry.row.photo) }}</span>
-                <span class="linked-number">#{{ linkedPhoto.id }}</span>
-                <span v-if="hasWorld(linkedPhoto) && linkedPhoto.world !== entry.row.photo.world" class="linked-world">
-                  <svg aria-hidden="true" class="world-pin" :viewBox="icons.pin.viewBox">
-                    <path v-for="path in icons.pin.paths" :key="path" :d="path" />
-                  </svg>
-                  <span>{{ worldName(linkedPhoto.world) }}</span>
-                </span>
+        <p class="special-event__description">
+          {{ localisedText(item.event.description_en, item.event.description_zh) }}
+        </p>
+
+        <div v-if="eventFriendList(item.event).length" class="friend-row special-event__friend-row">
+          <span>{{ copy.with }}</span>
+          <button
+            v-for="friend in eventFriendList(item.event)"
+            :key="friend.id"
+            type="button"
+            @click="applyFriendFilter(friend.id)"
+          >
+            {{ friend.name }}
+          </button>
+        </div>
+
+        <div class="special-event__feature-grid">
+          <button
+            v-for="(photo, photoIndex) in item.event.featuredPhotos"
+            :key="photo.id"
+            class="special-event__feature"
+            :class="{ 'is-hash-target': highlightedPhotoId === photo.id }"
+            :data-gallery-photo-id="photo.id"
+            type="button"
+            :aria-label="`${copy.open} ${photo.filename}`"
+            @click="openPhoto(photo.id, item.event.photos)"
+          >
+            <LazyPhoto
+              :src="thumbnailPath(photo.filename)"
+              :alt="photoAlt(photo)"
+              :eager="itemIndex === 0 && photoIndex === 0"
+            />
+            <span class="special-event__caption">
+              <span>#{{ photo.id }}</span>
+              <time :datetime="photo.captured">{{ formatSpecialEventPhotoDate(photo, item.event) }}</time>
+              <span v-if="shouldShowEventPhotoWorld(photo, item.event)" class="linked-world">
+                <svg aria-hidden="true" class="world-pin" :viewBox="icons.pin.viewBox">
+                  <path v-for="path in icons.pin.paths" :key="path" :d="path" />
+                </svg>
+                <span>{{ worldName(photo.world) }}</span>
               </span>
-            </button>
-          </div>
-        </section>
-      </article>
-      </div>
-    </section>
+            </span>
+          </button>
+        </div>
+
+        <div v-if="item.event.linkedPhotos.length" class="special-event__linked-grid">
+          <button
+            v-for="photo in item.event.linkedPhotos"
+            :key="photo.id"
+            class="linked-trigger special-event__linked-trigger"
+            :class="{ 'is-hash-target': highlightedPhotoId === photo.id }"
+            :data-gallery-photo-id="photo.id"
+            type="button"
+            :aria-label="`${copy.open} ${photo.filename}`"
+            @click="openPhoto(photo.id, item.event.photos)"
+          >
+            <LazyPhoto :src="thumbnailPath(photo.filename)" :alt="photoAlt(photo)" />
+            <span class="linked-caption">
+              <span class="linked-date">{{ formatSpecialEventPhotoDate(photo, item.event) }}</span>
+              <span class="linked-number">#{{ photo.id }}</span>
+              <span v-if="shouldShowEventPhotoWorld(photo, item.event)" class="linked-world">
+                <svg aria-hidden="true" class="world-pin" :viewBox="icons.pin.viewBox">
+                  <path v-for="path in icons.pin.paths" :key="path" :d="path" />
+                </svg>
+                <span>{{ worldName(photo.world) }}</span>
+              </span>
+            </span>
+          </button>
+        </div>
+      </section>
+    </template>
   </main>
 
   <footer class="site-footer">

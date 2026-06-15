@@ -33,5 +33,10 @@
     "id": "the.black.cat",
     "name_en": "The Black Cat",
     "name_zh": "黑猫酒馆"
+  },
+  {
+    "id": "birthday.celebration",
+    "name_en": "Birthday Celebration",
+    "name_zh": "生日会"
   }
 ]

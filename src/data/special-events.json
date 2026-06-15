@@ -1,0 +1,16 @@
+[
+  {
+    "id": "mars-17th-birthday",
+    "title_en": "Mars' 17th birthday party",
+    "title_zh": "毛毛的 17 岁生日会",
+    "date_en": "June 16, 2026",
+    "date_zh": "2026 年 6 月 16 日",
+    "show_full_date": true,
+    "world": "birthday.celebration",
+    "friends": ["eric", "aoyuki_hamakoto", "caoxianzi", "infj_cloud", "lanlan", "linlin", "linus", "nina", "persimmon", "tofu", "unknown_cn", "wushishan", "xplanet"],
+    "description_en": "I'm turning 17 on June 16th this year! Tonight I got a small room, a cake, too many nameplates to count, and friends showing up from different corners of VRChat. This one gets its own place in the gallery flow.",
+    "description_zh": "今年的6月16日，我就要17岁了！今晚我得到了一个小房间、一块蛋糕、数不过来的名字牌，还有从 VRChat 各个角落赶来的朋友。这一晚值得在相册流里拥有自己的位置。",
+    "photo_ids": [60, 61, 62, 63, 64, 65, 66, 67],
+    "featured_photo_ids": [60, 62]
+  }
+]

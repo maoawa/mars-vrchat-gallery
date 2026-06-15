@@ -83,8 +83,8 @@
     "world": "",
     "friend": [""],
     "parent": 10,
-    "description_en": "",
-    "description_zh": ""
+    "description_en": "It's a poster of [[luse]]'s \"brand\"",
+    "description_zh": "这是 [[luse]] 自己“品牌“的一张海报"
   },
   {
     "id": 10,
@@ -562,5 +562,93 @@
     "description_en": "So I'm gonna turn 17 tomorrow! I decided to hold a birthday party and was inviting my friends to join. I also got two new friends unexpectedly!",
     "description_zh": "所以我每天就要17岁了！我决定举办一个生日派对并且在邀请我的朋友们加入，还出乎意料地认识了两个新朋友！",
     "friend": ["persimmon", "unknown_cn", "mark", "infj_cloud", "tofu"]
+  },
+  {
+    "id": 60,
+    "filename": "VRChat_2026-06-15_23-36-26.jpg",
+    "captured": "2026-06-15T23:36:26",
+    "world": "birthday.celebration",
+    "special-events": true,
+    "description_en": "My 17th birthday party in VRChat. Friends gathered around the cake, the room got loud and warm, and for a while the whole night felt like a little home floating in another world.",
+    "description_zh": "我的 17 岁 VRChat 生日会。朋友们围在蛋糕旁边，房间里热闹又温暖，那一晚有一小段时间像是在另一个世界里拥有了一个家。",
+    "friend": ["unknown_cn", "eric", "xplanet", "nina", "tofu", "wushishan", "infj_cloud", "lanlan", "linlin", "caoxianzi"],
+    "linked": [61, 62, 63, 64, 65, 66, 67]
+  },
+  {
+    "id": 61,
+    "filename": "VRChat_2026-06-15_23-36-52.jpg",
+    "captured": "2026-06-15T23:36:52",
+    "world": "birthday.celebration",
+    "special-events": true,
+    "description_en": "A cake close-up, because a birthday party needs at least one photo where the dessert gets to be the main character.",
+    "description_zh": "蛋糕特写。毕竟生日会总要有一张照片，让甜点也当一次主角。",
+    "friend": ["lanlan", "xplanet", "unknown_cn", "caoxianzi", "eric", "infj_cloud", "tofu", "wushishan"],
+    "parent": 60
+  },
+  {
+    "id": 62,
+    "filename": "VRChat_2026-06-15_23-48-35.jpg",
+    "captured": "2026-06-15T23:48:35",
+    "world": "birthday.celebration",
+    "special-events": true,
+    "description_en": "Another big group photo from the party, full of nameplates, avatars, and the kind of chaos that only feels possible when people are genuinely happy to be there.",
+    "description_zh": "生日会的另一张大合照，满屏的名字、头像和那种只有大家真的开心聚在一起时才会出现的混乱感。",
+    "friend": ["caoxianzi", "persimmon", "linus", "linlin", "infj_cloud", "lanlan", "wushishan", "aoyuki_hamakoto", "eric", "nina", "unknown_cn"],
+    "parent": 60
+  },
+  {
+    "id": 63,
+    "filename": "VRChat_2026-06-15_23-58-06.jpg",
+    "captured": "2026-06-15T23:58:06",
+    "world": "birthday.celebration",
+    "special-events": true,
+    "description_en": "[[eric]] is also turning 17 in four days, so we celebrated for him together. We took a picture.",
+    "description_zh": "[[eric]] 在四天后也要 17 岁了，所以我们也为他一起庆祝。我们一起拍了照。",
+    "friend": ["eric"],
+    "parent": 60
+  },
+  {
+    "id": 64,
+    "filename": "VRChat_2026-06-16_00-01-27.jpg",
+    "captured": "2026-06-16T00:01:27",
+    "world": "birthday.celebration",
+    "special-events": true,
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["linlin", "eric", "wushishan", "unknown_cn"],
+    "parent": 60
+  },
+  {
+    "id": 65,
+    "filename": "VRChat_2026-06-16_00-15-19.jpg",
+    "captured": "2026-06-16T00:15:19",
+    "world": "birthday.celebration",
+    "special-events": true,
+    "description_en": "\"Sir, you can't sleep here!\"",
+    "description_zh": "“先生，这里不让睡觉！“",
+    "friend": ["eric"],
+    "parent": 60
+  },
+  {
+    "id": 66,
+    "filename": "VRChat_2026-06-16_00-18-04.jpg",
+    "captured": "2026-06-16T00:18:04",
+    "world": "birthday.celebration",
+    "special-events": true,
+    "description_en": "[[infj_cloud]] and [[eric]] turned massive and they were fighting under the stars.",
+    "description_zh": "[[infj_cloud]] 和 [[eric]] 把自己变得巨大，在星空下打架。",
+    "friend": ["infj_cloud", "eric", "wushishan"],
+    "parent": 60
+  },
+  {
+    "id": 67,
+    "filename": "VRChat_2026-06-16_00-22-25.jpg",
+    "captured": "2026-06-16T00:22:25",
+    "world": "birthday.celebration",
+    "special-events": true,
+    "description_en": "Everyone is now burgercat! We got the best burgercat ever!",
+    "description_zh": "现在每个人都是汉堡猫了！我们做了最好的汉堡猫叠叠乐！",
+    "friend": [],
+    "parent": 60
   }
 ]

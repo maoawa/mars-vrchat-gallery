@@ -143,5 +143,19 @@
     "id": "tofu",
     "name_en": "Tofu",
     "name_zh": "豆腐"
+  },
+  {
+    "id": "xplanet",
+    "name_en": "xplanet"
+  },
+  {
+    "id": "caoxianzi",
+    "name_en": "Caoxianzi",
+    "name_zh": "草仙子"
+  },
+  {
+    "id": "aoyuki_hamakoto",
+    "name_en": "AoyukiHamakoto",
+    "name_zh": "青雪滨琴"
   }
 ]

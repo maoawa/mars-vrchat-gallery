@@ -12,7 +12,8 @@ from typing import Union
 
 
 PHOTO_PATTERN = re.compile(
-    r"^VRChat_(?P<date>\d{4}-\d{2}-\d{2})_(?P<hour>\d{2})-(?P<minute>\d{2})-(?P<second>\d{2})\.png$"
+    r"^VRChat_(?P<date>\d{4}-\d{2}-\d{2})_(?P<hour>\d{2})-(?P<minute>\d{2})-(?P<second>\d{2})\.(?:png|jpe?g)$",
+    re.IGNORECASE,
 )
 DEFAULT_OUTPUT = Path(__file__).resolve().parent.parent / "src/data/images.json"
 
@@ -135,7 +136,7 @@ def dump_json(value: JsonValue, indent: int = 0) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Create image metadata templates from public/photos/VRChat_*.png files."
+        description="Create image metadata templates from public/photos/VRChat_*.png/.jpg files."
     )
     parser.add_argument(
         "--input",
