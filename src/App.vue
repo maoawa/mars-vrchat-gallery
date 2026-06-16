@@ -119,13 +119,20 @@ const activeQrContactId = ref<'wechat' | 'qq' | null>(null)
 const highlightedPhotoId = ref<number | null>(null)
 const highlightedSpecialEventId = ref<string | null>(null)
 
+const minZoom = 1
+const maxZoom = 4
+const zoomStep = 0.25
+
 const zoomLevel = ref(1)
 const isDragging = ref(false)
+const isPinching = ref(false)
 
 let startClientX = 0
 let startClientY = 0
 let startScrollLeft = 0
 let startScrollTop = 0
+let pinchStartDistance = 0
+let pinchStartZoom = 1
 
 let clockTimer: number | undefined
 
@@ -549,22 +556,87 @@ function centreZoomStage() {
 function resetZoom() {
   zoomLevel.value = 1
   isDragging.value = false
+  isPinching.value = false
+}
+
+function clampZoom(zoom: number) {
+  return Math.min(maxZoom, Math.max(minZoom, zoom))
+}
+
+function zoomAtClientPoint(nextZoom: number, clientX: number, clientY: number) {
+  const stage = lightboxStage.value
+  const clampedZoom = clampZoom(nextZoom)
+
+  if (!stage) {
+    zoomLevel.value = clampedZoom
+    return
+  }
+
+  const previousZoom = zoomLevel.value
+
+  if (clampedZoom === previousZoom) {
+    return
+  }
+
+  const stageRect = stage.getBoundingClientRect()
+  const viewportX = clientX - stageRect.left
+  const viewportY = clientY - stageRect.top
+  const anchorX = (stage.scrollLeft + viewportX) / previousZoom
+  const anchorY = (stage.scrollTop + viewportY) / previousZoom
+
+  zoomLevel.value = clampedZoom
+
+  nextTick(() => {
+    stage.scrollLeft = anchorX * clampedZoom - viewportX
+    stage.scrollTop = anchorY * clampedZoom - viewportY
+  })
 }
 
 function handleScrollZoom(event: WheelEvent) {
-  const zoomStep = 0.25
+  const nextZoom = event.deltaY < 0 ? zoomLevel.value + zoomStep : zoomLevel.value - zoomStep
 
-  const nextZoom =
-    event.deltaY < 0
-      ? Math.min(zoomLevel.value + zoomStep, 4)
-      : Math.max(zoomLevel.value - zoomStep, 1)
+  zoomAtClientPoint(nextZoom, event.clientX, event.clientY)
+}
 
-  if (nextZoom !== zoomLevel.value) {
-    zoomLevel.value = nextZoom
+function getTouchDistance(touches: TouchList) {
+  const deltaX = touches[0].clientX - touches[1].clientX
+  const deltaY = touches[0].clientY - touches[1].clientY
+
+  return Math.hypot(deltaX, deltaY)
+}
+
+function getTouchCenter(touches: TouchList) {
+  return {
+    clientX: (touches[0].clientX + touches[1].clientX) / 2,
+    clientY: (touches[0].clientY + touches[1].clientY) / 2,
   }
 }
 
+function startPinch(event: TouchEvent) {
+  isPinching.value = true
+  isDragging.value = false
+  pinchStartDistance = getTouchDistance(event.touches)
+  pinchStartZoom = zoomLevel.value
+}
+
+function onPinch(event: TouchEvent) {
+  if (!isPinching.value || event.touches.length < 2 || pinchStartDistance <= 0) {
+    return
+  }
+
+  const distance = getTouchDistance(event.touches)
+  const center = getTouchCenter(event.touches)
+  const nextZoom = pinchStartZoom * (distance / pinchStartDistance)
+
+  zoomAtClientPoint(nextZoom, center.clientX, center.clientY)
+}
+
 function startDrag(event: MouseEvent | TouchEvent) {
+  if ('touches' in event && event.touches.length >= 2) {
+    startPinch(event)
+    return
+  }
+
   if (zoomLevel.value <= 1) return
 
   const stage = lightboxStage.value
@@ -583,6 +655,11 @@ function startDrag(event: MouseEvent | TouchEvent) {
 }
 
 function onDrag(event: MouseEvent | TouchEvent) {
+  if ('touches' in event && event.touches.length >= 2) {
+    onPinch(event)
+    return
+  }
+
   if (!isDragging.value) return
 
   const stage = lightboxStage.value
@@ -603,6 +680,8 @@ function onDrag(event: MouseEvent | TouchEvent) {
 
 function stopDrag() {
   isDragging.value = false
+  isPinching.value = false
+  pinchStartDistance = 0
 }
 
 // --- Lightbox Handlers ---
@@ -728,12 +807,6 @@ watch([activePhoto, activeQrContact], ([photo, qrContact]) => {
   document.body.classList.toggle('lightbox-open', Boolean(photo) || Boolean(qrContact))
 
   if (photo) {
-    nextTick(centreZoomStage)
-  }
-})
-
-watch(zoomLevel, () => {
-  if (activePhoto.value) {
     nextTick(centreZoomStage)
   }
 })
@@ -1184,6 +1257,7 @@ onBeforeUnmount(() => {
             @touchstart="startDrag"
             @touchmove.prevent="onDrag"
             @touchend="stopDrag"
+            @touchcancel="stopDrag"
           >
             <img
               class="lightbox-image"
