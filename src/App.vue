@@ -165,8 +165,16 @@ const galleryRows = computed(() => {
   })
 })
 
+const filteredSpecialEvents = computed(() => {
+  if (!activeFilter.value) {
+    return specialEvents
+  }
+
+  return specialEvents.filter((event) => specialEventMatchesFilter(event, activeFilter.value))
+})
+
 const gallerySections = computed(() => {
-  if (activeFilter.value || !specialEvents.length) {
+  if (!filteredSpecialEvents.value.length) {
     return [
       {
         type: 'gallery' as const,
@@ -180,7 +188,7 @@ const gallerySections = computed(() => {
   const flowItems: GalleryFlowItem[] = []
   let rowCursor = 0
 
-  specialEvents.forEach((event) => {
+  filteredSpecialEvents.value.forEach((event) => {
     const rowsBeforeEvent: GalleryRow[] = []
 
     while (
@@ -257,7 +265,7 @@ const activePosition = computed(() => (activeIndex.value === null ? 0 : activeIn
 const daysInVrchat = computed(() => daysSinceVrchatStart(now.value))
 const imageCount = computed(() => photos.length)
 const outingCount = computed(() => allGalleryRows.length)
-const filteredOutingCount = computed(() => galleryRows.value.length)
+const filteredOutingCount = computed(() => galleryRows.value.length + filteredSpecialEvents.value.length)
 const footerSummary = computed(() => {
   if (currentLanguage.value === 'zh') {
     return `${imageCount.value} ${copy.value.photos} · ${outingCount.value} ${copy.value.outings}`
@@ -435,6 +443,18 @@ function photoMatchesFilter(photo: GalleryImage, filter: GalleryFilter | null) {
   }
 
   return photo.friend.includes(filter.id)
+}
+
+function specialEventMatchesFilter(event: SpecialEventView, filter: GalleryFilter | null) {
+  if (!filter) {
+    return true
+  }
+
+  if (filter.type === 'world') {
+    return event.world === filter.id || event.photos.some((photo) => photoMatchesFilter(photo, filter))
+  }
+
+  return (event.friends ?? []).includes(filter.id) || event.photos.some((photo) => photoMatchesFilter(photo, filter))
 }
 
 function applyWorldFilter(worldId: string, closeAfterApply = false) {
