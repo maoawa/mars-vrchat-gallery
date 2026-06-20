@@ -109,12 +109,15 @@ With custom folders:
 python3 scripts/generate_images_json.py --input public/photos --output src/data
 python3 scripts/batch_rename.py --input raw-photos
 python3 scripts/batch_resize.py --input public/photos
+python3 scripts/batch_png_to_jpg.py --input public/photos
 ```
 
 `batch_rename.py` renames `.png`, `.jpg`, and `.jpeg` files in place while
 preserving their file extension. `batch_resize.py` writes thumbnails to
 `INPUT/thumbnails/` unless `--output` is provided, and keeps JPEG output as
-JPEG and PNG output as PNG.
+JPEG and PNG output as PNG. `batch_png_to_jpg.py` converts `VRChat_*.png`
+files to same-name `.jpg` files in `INPUT/` unless `--output` is provided, and
+skips existing JPG files unless `--overwrite` is passed.
 
 `generate_images_json.py` writes to `src/data/images.json` by default. The
 script reads the current JSON file, skips filenames already in the file, and

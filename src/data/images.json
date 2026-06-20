@@ -101,7 +101,7 @@
     "filename": "VRChat_2026-06-06_00-50-32.png",
     "captured": "2026-06-06T00:50:32",
     "world": "karaoke.central",
-    "friend": [""],
+    "friend": ["wuyu"],
     "description_en": "Tried a karaoke world in VRChat, and surprisingly got two friends who listen to me.",
     "description_zh": "试了一个 VRChat 里的卡拉 OK 世界，没想到居然有两个新朋友愿意听我唱。"
   },
@@ -650,5 +650,52 @@
     "description_zh": "现在每个人都是汉堡猫了！我们做了最好的汉堡猫叠叠乐！",
     "friend": [],
     "parent": 60
+  },
+  {
+    "id": 68,
+    "filename": "VRChat_2026-06-19_01-12-54.jpg",
+    "captured": "2026-06-19T01:12:54",
+    "world": "english.hub",
+    "description_en": "So I met [[cutcyoud]], a good Chinese friend who shares lots of hobbies with me. And [[mawusu]] from South Korea who visited and lived in many country, that really opened my eyes. Also more friends learning English together here!",
+    "description_zh": "认识了 [[cutcyoud]]，一个和我有许多共同爱好的的中国朋友。还有来自韩国的 [[mawusu]]，他游历并居住过许多国家，这让我大开眼界。此外，这里还有更多一起学习英语的朋友！",
+    "friend": ["cutcyoud", "mawusu"]
+  },
+  {
+    "id": 69,
+    "filename": "VRChat_2026-06-19_02-12-09.jpg",
+    "captured": "2026-06-19T02:12:09",
+    "world": "english.hub",
+    "description_en": "It was so amazing to meet new friends from Korea and my country China. We talked about many topics for hours.",
+    "description_zh": "能遇见来自韩国和中国的好朋友真的太好了，我们一起聊了很多话题，聊了几个小时。",
+    "friend": ["cutcyoud", "mawusu", "kyleheren"],
+    "linked": [70]
+  },
+  {
+    "id": 70,
+    "filename": "VRChat_2026-06-19_02-12-29.jpg",
+    "captured": "2026-06-19T02:12:29",
+    "world": "english.hub",
+    "description_en": "\"Dude, where did [[mawusu]] go??\"",
+    "description_zh": "“不是哥们，[[mawusu]] 去哪了？？“",
+    "friend": ["cutcyoud", "mawusu", "kyleheren", "wuyu"],
+    "parent": 69
+  },
+  {
+    "id": 71,
+    "filename": "VRChat_2026-06-20_17-00-37.jpg",
+    "captured": "2026-06-20T17:00:37",
+    "world": "english.hub",
+    "description_en": "A picture of Cerydra and Castorice! Two characters from the same game.",
+    "description_zh": "一张刻律德菈和遐蝶的照片！来自同一个游戏的两个角色。<br>*遐蝶：「参见凯撒大人」*",
+    "friend": ["cutcyoud"]
+  },
+  {
+    "id": 72,
+    "filename": "VRChat_2026-06-21_01-56-12.jpg",
+    "captured": "2026-06-21T01:56:12",
+    "world": "",
+    "description_en": "I met [[guderian]] and [[yuki]], who are [[cutcyoud]]'s friends. And It was so great to know that [[cutcyoud]] and I shares the same favourite singer Billie Eilish!",
+    "description_zh": "我见到了 [[cutcyoud]] 的朋友 [[guderian]] 和 [[yuki]]。而且，得知我和 [[cutcyoud]] 喜欢的歌手都是 Billie Eilish，这真是太棒了！",
+    "friend": ["cutcyoud", "guderian", "yuki"]
   }
 ]

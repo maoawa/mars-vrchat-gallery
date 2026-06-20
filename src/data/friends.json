@@ -37,9 +37,13 @@
     "name_zh": "绿色"
   },
   {
+    "id": "wuyu",
+    "name_en": "Wuyu",
+    "name_zh": "無語"
+  },
+  {
     "id": "yuan",
-    "name_en": "Yuan1182",
-    "name_zh": ""
+    "name_en": "Yuan1182"
   },
   {
     "id": "fabio",
@@ -157,5 +161,27 @@
     "id": "aoyuki_hamakoto",
     "name_en": "AoyukiHamakoto",
     "name_zh": "青雪滨琴"
+  },
+  {
+    "id": "cutcyoud",
+    "name_en": "Cutcyoud"
+  },
+  {
+    "id": "mawusu",
+    "name_en": "Mawusu"
+  },
+  {
+    "id": "kyleheren",
+    "name_en": "KyleHeren"
+  },
+  {
+    "id": "guderian",
+    "name_en": "Guderian",
+    "name_zh": "古德里安"
+  },
+  {
+    "id": "yuki",
+    "name_en": "Yuki",
+    "name_zh": "歌爱"
   }
 ]
