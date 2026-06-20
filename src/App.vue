@@ -122,17 +122,26 @@ const highlightedSpecialEventId = ref<string | null>(null)
 const minZoom = 1
 const maxZoom = 4
 const zoomStep = 0.25
+const doubleClickZoom = 2.5
+const swipeThreshold = 72
 
 const zoomLevel = ref(1)
 const isDragging = ref(false)
 const isPinching = ref(false)
+const isSwiping = ref(false)
+const lightboxControlsVisible = ref(true)
 
 let startClientX = 0
 let startClientY = 0
+let lastClientX = 0
+let lastClientY = 0
 let startScrollLeft = 0
 let startScrollTop = 0
 let pinchStartDistance = 0
 let pinchStartZoom = 1
+let hasMovedInGesture = false
+let suppressNextClick = false
+let clickToggleTimer: number | undefined
 
 let clockTimer: number | undefined
 
@@ -577,6 +586,27 @@ function resetZoom() {
   zoomLevel.value = 1
   isDragging.value = false
   isPinching.value = false
+  isSwiping.value = false
+  pinchStartDistance = 0
+}
+
+function clearPhotoClickTimer() {
+  if (clickToggleTimer) {
+    window.clearTimeout(clickToggleTimer)
+    clickToggleTimer = undefined
+  }
+}
+
+function hideLightboxControls() {
+  lightboxControlsVisible.value = false
+}
+
+function resetLightboxViewState() {
+  resetZoom()
+  clearPhotoClickTimer()
+  lightboxControlsVisible.value = true
+  hasMovedInGesture = false
+  suppressNextClick = false
 }
 
 function clampZoom(zoom: number) {
@@ -598,6 +628,10 @@ function zoomAtClientPoint(nextZoom: number, clientX: number, clientY: number) {
     return
   }
 
+  if (clampedZoom > minZoom) {
+    hideLightboxControls()
+  }
+
   const stageRect = stage.getBoundingClientRect()
   const viewportX = clientX - stageRect.left
   const viewportY = clientY - stageRect.top
@@ -609,6 +643,10 @@ function zoomAtClientPoint(nextZoom: number, clientX: number, clientY: number) {
   nextTick(() => {
     stage.scrollLeft = anchorX * clampedZoom - viewportX
     stage.scrollTop = anchorY * clampedZoom - viewportY
+
+    if (clampedZoom === minZoom) {
+      centreZoomStage()
+    }
   })
 }
 
@@ -635,6 +673,8 @@ function getTouchCenter(touches: TouchList) {
 function startPinch(event: TouchEvent) {
   isPinching.value = true
   isDragging.value = false
+  isSwiping.value = false
+  hideLightboxControls()
   pinchStartDistance = getTouchDistance(event.touches)
   pinchStartZoom = zoomLevel.value
 }
@@ -651,13 +691,45 @@ function onPinch(event: TouchEvent) {
   zoomAtClientPoint(nextZoom, center.clientX, center.clientY)
 }
 
+function getGesturePoint(event: MouseEvent | TouchEvent) {
+  if ('touches' in event) {
+    const touch = event.touches[0] ?? event.changedTouches[0]
+
+    return touch ? { clientX: touch.clientX, clientY: touch.clientY } : null
+  }
+
+  return {
+    clientX: event.clientX,
+    clientY: event.clientY,
+  }
+}
+
 function startDrag(event: MouseEvent | TouchEvent) {
+  if (!('touches' in event) && event.button !== 0) {
+    return
+  }
+
   if ('touches' in event && event.touches.length >= 2) {
     startPinch(event)
     return
   }
 
-  if (zoomLevel.value <= 1) return
+  const point = getGesturePoint(event)
+
+  if (!point) {
+    return
+  }
+
+  startClientX = point.clientX
+  startClientY = point.clientY
+  lastClientX = point.clientX
+  lastClientY = point.clientY
+  hasMovedInGesture = false
+
+  if (zoomLevel.value <= 1) {
+    isSwiping.value = true
+    return
+  }
 
   const stage = lightboxStage.value
 
@@ -666,9 +738,7 @@ function startDrag(event: MouseEvent | TouchEvent) {
   }
 
   isDragging.value = true
-
-  startClientX = 'touches' in event ? event.touches[0].clientX : (event as MouseEvent).clientX
-  startClientY = 'touches' in event ? event.touches[0].clientY : (event as MouseEvent).clientY
+  hideLightboxControls()
 
   startScrollLeft = stage.scrollLeft
   startScrollTop = stage.scrollTop
@@ -680,6 +750,22 @@ function onDrag(event: MouseEvent | TouchEvent) {
     return
   }
 
+  const point = getGesturePoint(event)
+
+  if (!point) {
+    return
+  }
+
+  const clientX = point.clientX
+  const clientY = point.clientY
+
+  const deltaX = clientX - startClientX
+  const deltaY = clientY - startClientY
+
+  lastClientX = clientX
+  lastClientY = clientY
+  hasMovedInGesture = hasMovedInGesture || Math.hypot(deltaX, deltaY) > 6
+
   if (!isDragging.value) return
 
   const stage = lightboxStage.value
@@ -688,20 +774,86 @@ function onDrag(event: MouseEvent | TouchEvent) {
     return
   }
 
-  const clientX = 'touches' in event ? event.touches[0].clientX : (event as MouseEvent).clientX
-  const clientY = 'touches' in event ? event.touches[0].clientY : (event as MouseEvent).clientY
-
-  const deltaX = clientX - startClientX
-  const deltaY = clientY - startClientY
-
   stage.scrollLeft = startScrollLeft - deltaX
   stage.scrollTop = startScrollTop - deltaY
 }
 
-function stopDrag() {
+function stopDrag(event?: MouseEvent | TouchEvent) {
+  const point = event ? getGesturePoint(event) : null
+
+  if (point) {
+    lastClientX = point.clientX
+    lastClientY = point.clientY
+  }
+
+  if (isSwiping.value) {
+    const deltaX = lastClientX - startClientX
+    const deltaY = lastClientY - startClientY
+    const isHorizontalSwipe = Math.abs(deltaX) >= swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)
+
+    isSwiping.value = false
+
+    if (isHorizontalSwipe) {
+      if (deltaX > 0) {
+        showPreviousPhoto()
+      } else {
+        showNextPhoto()
+      }
+
+      suppressNextClick = true
+    } else if (hasMovedInGesture) {
+      suppressNextClick = true
+    }
+  }
+
   isDragging.value = false
   isPinching.value = false
   pinchStartDistance = 0
+}
+
+function handleLightboxPhotoClick() {
+  if (suppressNextClick) {
+    suppressNextClick = false
+    return
+  }
+
+  clearPhotoClickTimer()
+  clickToggleTimer = window.setTimeout(() => {
+    lightboxControlsVisible.value = !lightboxControlsVisible.value
+    clickToggleTimer = undefined
+  }, 180)
+}
+
+function handleLightboxPhotoDoubleClick(event: MouseEvent) {
+  clearPhotoClickTimer()
+  suppressNextClick = false
+
+  const nextZoom = zoomLevel.value > minZoom ? minZoom : doubleClickZoom
+  zoomAtClientPoint(nextZoom, event.clientX, event.clientY)
+}
+
+function preloadAdjacentLightboxPhotos() {
+  if (activeIndex.value === null || !currentLightboxPhotos.value.length) {
+    return
+  }
+
+  const photoCount = currentLightboxPhotos.value.length
+  const indexes = new Set([
+    (activeIndex.value - 1 + photoCount) % photoCount,
+    activeIndex.value,
+    (activeIndex.value + 1) % photoCount,
+  ])
+
+  indexes.forEach((index) => {
+    const photo = currentLightboxPhotos.value[index]
+
+    if (!photo) {
+      return
+    }
+
+    const image = new Image()
+    image.src = photoPath(photo.filename)
+  })
 }
 
 // --- Lightbox Handlers ---
@@ -711,14 +863,14 @@ function openPhoto(photoId: number, sourcePhotos = lightboxPhotos.value) {
   if (index >= 0) {
     activePhotoList.value = sourcePhotos
     activeIndex.value = index
-    resetZoom()
+    resetLightboxViewState()
   }
 }
 
 function closeLightbox() {
   activeIndex.value = null
   activePhotoList.value = null
-  resetZoom()
+  resetLightboxViewState()
 }
 
 function scrollToGalleryTarget(selector: string) {
@@ -774,7 +926,7 @@ function showPreviousPhoto() {
 
   activeIndex.value =
     (activeIndex.value - 1 + currentLightboxPhotos.value.length) % currentLightboxPhotos.value.length
-  resetZoom()
+  resetLightboxViewState()
 }
 
 function showNextPhoto() {
@@ -783,7 +935,7 @@ function showNextPhoto() {
   }
 
   activeIndex.value = (activeIndex.value + 1) % currentLightboxPhotos.value.length
-  resetZoom()
+  resetLightboxViewState()
 }
 
 function updateGalleryColumnCount() {
@@ -828,6 +980,7 @@ watch([activePhoto, activeQrContact], ([photo, qrContact]) => {
 
   if (photo) {
     nextTick(centreZoomStage)
+    preloadAdjacentLightboxPhotos()
   }
 })
 
@@ -857,6 +1010,7 @@ onBeforeUnmount(() => {
     window.clearInterval(clockTimer)
   }
 
+  clearPhotoClickTimer()
   window.removeEventListener('keydown', handleKeydown)
   window.removeEventListener('resize', updateGalleryColumnCount)
   window.removeEventListener('hashchange', handleHashTarget)
@@ -1248,7 +1402,7 @@ onBeforeUnmount(() => {
     </div>
 
     <div v-if="activePhoto" class="lightbox" role="dialog" aria-modal="true" @click.self="closeLightbox">
-      <figure class="lightbox-panel">
+      <figure class="lightbox-panel" :class="{ 'is-chrome-hidden': !lightboxControlsVisible }">
         <button class="lightbox-button lightbox-close" type="button" :aria-label="copy.close" @click="closeLightbox">
           x
         </button>
@@ -1278,6 +1432,8 @@ onBeforeUnmount(() => {
             @touchmove.prevent="onDrag"
             @touchend="stopDrag"
             @touchcancel="stopDrag"
+            @click="handleLightboxPhotoClick"
+            @dblclick.prevent="handleLightboxPhotoDoubleClick"
           >
             <img
               class="lightbox-image"
