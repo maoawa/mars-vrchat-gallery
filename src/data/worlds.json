@@ -38,5 +38,10 @@
     "id": "birthday.celebration",
     "name_en": "Birthday Celebration",
     "name_zh": "生日会"
+  },
+  {
+    "id": "taipei.karaoke",
+    "name_en": "Taipei Karaoke",
+    "name_zh": "台北纯K"
   }
 ]

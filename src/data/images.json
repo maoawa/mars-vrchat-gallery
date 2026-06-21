@@ -697,5 +697,25 @@
     "description_en": "I met [[guderian]] and [[yuki]], who are [[cutcyoud]]'s friends. And It was so great to know that [[cutcyoud]] and I shares the same favourite singer Billie Eilish!",
     "description_zh": "我见到了 [[cutcyoud]] 的朋友 [[guderian]] 和 [[yuki]]。而且，得知我和 [[cutcyoud]] 喜欢的歌手都是 Billie Eilish，这真是太棒了！",
     "friend": ["cutcyoud", "guderian", "yuki"]
+  },
+  {
+    "id": 73,
+    "filename": "VRChat_2026-06-21_12-59-47.jpg",
+    "captured": "2026-06-21T12:59:47",
+    "world": "taipei.karaoke",
+    "description_en": "*NEVER GONNA GIVE YOU UP!*<br>It was so happy and interesting to sing with friends.",
+    "description_zh": "你被骗了！<br>和朋友一起唱歌真的很快乐。",
+    "friend": ["cutcyoud", "guderian"],
+    "linked": [74]
+  },
+  {
+    "id": 74,
+    "filename": "VRChat_2026-06-21_13-05-14.jpg",
+    "captured": "2026-06-21T13:05:14",
+    "world": "taipei.karaoke",
+    "description_en": "A picture before I leave.",
+    "description_zh": "我离开前的一张照片。",
+    "friend": ["cutcyoud", "guderian", "den1a"],
+    "parent": 73
   }
 ]
