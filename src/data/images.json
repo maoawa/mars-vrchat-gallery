@@ -717,5 +717,23 @@
     "description_zh": "我离开前的一张照片。",
     "friend": ["cutcyoud", "guderian", "den1a"],
     "parent": 73
+  },
+  {
+    "id": 75,
+    "filename": "VRChat_2026-06-24_22-49-07.jpg",
+    "captured": "2026-06-24T22:49:07",
+    "world": "english.hub",
+    "description_en": "Met a friend [[bigby]] from Saudi Arabia. He told us that he dreamed of visiting China someday, and I showed him some pictures I took in Shanghai City.",
+    "description_zh": "遇见了一个来自沙特阿拉伯的朋友 [[bigby]]。他告诉我们他梦想有天能去中国旅游，我给他展示了一些我在上海拍的图片。",
+    "friend": ["tony", "bigby", "xplanet"]
+  },
+  {
+    "id": 76,
+    "filename": "VRChat_2026-06-24_23-45-39.jpg",
+    "captured": "2026-06-24T23:45:39",
+    "world": "learn.mandarin",
+    "description_en": "A Indonesian guy was here. And I showed him that I can sing the national anthem of Singapore. The anthem is in Malay, which is really similar to Indonesian. He said that I'm talented in learning languages :) (thx)",
+    "description_zh": "有个印度尼西亚的朋友在这。我向他展示了我能唱新加坡国歌。这首国歌是马来语的，和印尼语非常相似。他说我学语言很有天赋 :)（谢谢）",
+    "friend": ["palland", "infj_cloud"]
   }
 ]
