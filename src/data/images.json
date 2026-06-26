@@ -735,5 +735,74 @@
     "description_en": "A Indonesian guy was here. And I showed him that I can sing the national anthem of Singapore. The anthem is in Malay, which is really similar to Indonesian. He said that I'm talented in learning languages :) (thx)",
     "description_zh": "有个印度尼西亚的朋友在这。我向他展示了我能唱新加坡国歌。这首国歌是马来语的，和印尼语非常相似。他说我学语言很有天赋 :)（谢谢）",
     "friend": ["palland", "infj_cloud"]
+  },
+  {
+    "id": 77,
+    "filename": "VRChat_2026-06-26_23-59-40.jpg",
+    "captured": "2026-06-26T23:59:40",
+    "world": "english.hub",
+    "description_en": "[[tony]] turned into a \"foldable\" boy thanks to something wrong with his full body tracking system. And we had a great time to talk to other people.",
+    "description_zh": "由于全身追踪系统出了点故障，[[tony]] 变成了“折叠人”。我们也和其他人愉快地聊了许多。",
+    "friend": ["cutcyoud", "tony", "guderian"]
+  },
+  {
+    "id": 78,
+    "filename": "VRChat_2026-06-27_00-52-06.jpg",
+    "captured": "2026-06-27T00:52:06",
+    "world": "taipei.karaoke",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["cutcyoud"],
+    "parent": 82
+  },
+  {
+    "id": 79,
+    "filename": "VRChat_2026-06-27_00-52-48.jpg",
+    "captured": "2026-06-27T00:52:48",
+    "world": "taipei.karaoke",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["yuki", "cutcyoud"],
+    "parent": 82
+  },
+  {
+    "id": 80,
+    "filename": "VRChat_2026-06-27_01-18-20.jpg",
+    "captured": "2026-06-27T01:18:20",
+    "world": "taipei.karaoke",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["cutcyoud", "yuki"],
+    "parent": 82
+  },
+  {
+    "id": 81,
+    "filename": "VRChat_2026-06-27_01-22-15.jpg",
+    "captured": "2026-06-27T01:22:15",
+    "world": "taipei.karaoke",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["cutcyoud", "yuki"],
+    "parent": 82
+  },
+  {
+    "id": 82,
+    "filename": "VRChat_2026-06-27_01-22-45.jpg",
+    "captured": "2026-06-27T01:22:45",
+    "world": "taipei.karaoke",
+    "description_en": "*NEVER GONNA GIVE YOU UP!* (again)<br>Recently I'm kinda addicted to sing with friends at midnights.",
+    "description_zh": "你被骗了！(再次)<br>最近迷上了和朋友一起在深夜开嗓唱歌。",
+    "friend": ["cutcyoud", "yuki"],
+    "linked": [78, 79, 80, 81, 83]
+  },
+  {
+    "id": 83,
+    "filename": "VRChat_2026-06-27_01-34-36.jpg",
+    "captured": "2026-06-27T01:34:36",
+    "world": "taipei.karaoke",
+    "description_en": "*I was enchanted to meet you..*",
+    "description_zh": "",
+    "friend": ["cutcyoud"],
+    "parent": 82
   }
 ]
