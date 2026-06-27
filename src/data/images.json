@@ -790,8 +790,8 @@
     "filename": "VRChat_2026-06-27_01-22-45.jpg",
     "captured": "2026-06-27T01:22:45",
     "world": "taipei.karaoke",
-    "description_en": "*NEVER GONNA GIVE YOU UP!* (again)<br>Recently I'm kinda addicted to sing with friends at midnights.",
-    "description_zh": "你被骗了！(再次)<br>最近迷上了和朋友一起在深夜开嗓唱歌。",
+    "description_en": "*NEVER GONNA GIVE YOU UP!* (again)<br>Recently I'm kinda addicted to sing with friends at midnights.<br>*Thank [[yuki]] for capturing the main photo.*",
+    "description_zh": "你被骗了！(再次)<br>最近迷上了和朋友一起在深夜开嗓唱歌。<br>*感谢 [[yuki]] 拍了主图。*",
     "friend": ["cutcyoud", "yuki"],
     "linked": [78, 79, 80, 81, 83]
   },
@@ -804,5 +804,82 @@
     "description_zh": "",
     "friend": ["cutcyoud"],
     "parent": 82
+  },
+  {
+    "id": 84,
+    "filename": "VRChat_2026-06-27_18-15-07.jpg",
+    "captured": "2026-06-27T18:15:07",
+    "world": "the.black.cat",
+    "description_en": "*BIG BROTHER IS WATCHING YOU..*<br>Avatar height: 0.2 metres (8 in)",
+    "description_zh": "*老大哥正在看着你*<br>*BIG BROTHER IS WATCHING YOU..*<br>角色高度: 0.2 米",
+    "friend": ["cutcyoud", "yuki"],
+    "linked": [85, 86]
+  },
+  {
+    "id": 85,
+    "filename": "VRChat_2026-06-27_19-11-05.jpg",
+    "captured": "2026-06-27T19:11:05",
+    "world": "the.black.cat",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["cutcyoud", "yuki"],
+    "parent": 84
+  },
+  {
+    "id": 86,
+    "filename": "VRChat_2026-06-27_20-32-04.jpg",
+    "captured": "2026-06-27T20:32:04",
+    "world": "the.black.cat",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["hajimi"],
+    "parent": 84
+  },
+  {
+    "id": 87,
+    "filename": "VRChat_2026-06-27_22-35-37.jpg",
+    "captured": "2026-06-27T22:35:37",
+    "world": "",
+    "description_en": "Our shadows!",
+    "description_zh": "我们的影子！",
+    "friend": ["cutcyoud", "hajimi", "tony"],
+    "linked": [88]
+  },
+  {
+    "id": 88,
+    "filename": "VRChat_2026-06-27_22-45-32.jpg",
+    "captured": "2026-06-27T22:45:32",
+    "world": "",
+    "description_en": "*California gurls, we're unforgettable~*",
+    "description_zh": "加州女孩舞",
+    "friend": ["cutcyoud", "tony", "hajimi"],
+    "parent": 87
+  },
+  {
+    "id": 89,
+    "filename": "VRChat_2026-06-27_23-14-54.jpg",
+    "captured": "2026-06-27T23:14:54",
+    "world": "",
+    "description_en": "Chilled with best friends ^_^",
+    "description_zh": "和最好的朋友们一起放松了一下 ^_^",
+    "friend": ["cutcyoud", "tony", "kurono"]
+  },
+  {
+    "id": 90,
+    "filename": "VRChat_2026-06-28_00-23-56.jpg",
+    "captured": "2026-06-28T00:23:56",
+    "world": "english.hub",
+    "description_en": "A Japanese friend said that every Japanese knows how to draw Doraemon.",
+    "description_zh": "一个日本朋友说，每个日本人都会画哆啦A梦。",
+    "friend": [""]
+  },
+  {
+    "id": 91,
+    "filename": "VRChat_2026-06-28_00-26-42.jpg",
+    "captured": "2026-06-28T00:26:42",
+    "world": "english.hub",
+    "description_en": "Natives took over our place and trying to teach us English words.",
+    "description_zh": "母语者占领了我们的地盘，尝试教我们一些英文单词。",
+    "friend": ["cutcyoud"]
   }
 ]
