@@ -200,6 +200,13 @@
     "id": "hajimi",
     "name_en": "Hajimi",
     "name_zh": "哈基米基哈"
-
+  },
+  {
+    "id": "waterchan",
+    "name_en": "WaterChan"
+  },
+  {
+    "id": "semasan",
+    "name_en": "SemaSan"
   }
 ]
