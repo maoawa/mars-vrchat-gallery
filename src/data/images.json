@@ -901,5 +901,32 @@
     "description_zh": "",
     "friend": ["xplanet", "waterchan", "semasan", "tony", "unknown_cn"],
     "linked": [92]
+  },
+  {
+    "id": 94,
+    "filename": "VRChat_2026-07-02_00-27-22.jpg",
+    "captured": "2026-07-02T00:27:22",
+    "world": "chinese.bar",
+    "description_en": "My first time in {{chinese.bar}}, met many intresting and cute friends here!",
+    "description_zh": "我第一次来{{chinese.bar}}，遇到了许多有意思可爱的朋友！",
+    "friend": ["tutugreen", "xplanet", "tony"]
+  },
+  {
+    "id": 95,
+    "filename": "VRChat_2026-07-03_00-09-59.jpg",
+    "captured": "2026-07-03T00:09:59",
+    "world": "english.hub",
+    "description_en": "I met a new friend [[chi]] in {{english.hub}} today! She's really intresting and we had fun together with many friends.",
+    "description_zh": "我今天在{{english.hub}}遇见了一个新朋友 [[chi]]！",
+    "friend": ["tea", "tony", "chi"]
+  },
+  {
+    "id": 96,
+    "filename": "VRChat_2026-07-03_00-51-30.jpg",
+    "captured": "2026-07-03T00:51:30",
+    "world": "english.hub",
+    "description_en": "New new friends here! [[feedpancake]] told me that he really love Chow Mein, a type of noodles in China.",
+    "description_zh": "新朋友！[[feedpancake]] 告诉我他非常喜欢中国的炒面。",
+    "friend": ["end", "feedpancake"]
   }
 ]

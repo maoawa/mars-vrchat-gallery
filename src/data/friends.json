@@ -208,5 +208,21 @@
   {
     "id": "semasan",
     "name_en": "SemaSan"
+  },
+  {
+    "id": "tutugreen",
+    "name_en": "TutuGreen"
+  },
+  {
+    "id": "chi",
+    "name_en": "Chi"
+  },
+  {
+    "id": "end",
+    "name_en": "END"
+  },
+  {
+    "id": "feedpancake",
+    "name_en": "FeedPancake"
   }
 ]

@@ -43,5 +43,10 @@
     "id": "taipei.karaoke",
     "name_en": "Taipei Karaoke",
     "name_zh": "台北纯K"
+  },
+  {
+    "id": "chinese.bar",
+    "name_en": "Chinese Bar",
+    "name_zh": "中文吧"
   }
 ]
