@@ -10,6 +10,18 @@ export interface World {
   name_zh?: string
 }
 
+export interface PhotoTag {
+  friend: string
+  x: number
+  y: number
+  position?: 'top' | 'right' | 'bottom' | 'left'
+}
+
+export interface PhotoTagGroup {
+  photo: number
+  tags: PhotoTag[]
+}
+
 export interface GalleryImage {
   id: number
   filename: string

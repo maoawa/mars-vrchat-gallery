@@ -15,6 +15,7 @@ This prototype is a Vue, Vite, and TypeScript personal gallery. Metadata lives i
 - `src/data/friends.json`
 - `src/data/worlds.json`
 - `src/data/special-events.json`
+- `src/data/tags.json`
 
 Full-size photos are loaded from `public/photos/`. Thumbnails are loaded from
 `public/photos/thumbnails/` with the same filename.
@@ -32,6 +33,62 @@ timezones while matching the VRChat screenshot filename time.
 
 URLs can deep-link into the gallery flow. Use `#60` to scroll to photo id 60,
 or use a special event id such as `#mars-17th-birthday` to scroll to that event.
+
+## Photo Tags
+
+Lightbox photos can show Instagram-like friend tags. Tags live in
+`src/data/tags.json` instead of `images.json`:
+
+```json
+{
+  "photo": 4,
+  "tags": [
+    {
+      "friend": "mooncake",
+      "x": 55.5,
+      "y": 58.8
+    },
+    {
+      "friend": "eric",
+      "x": 77.9,
+      "y": 71.9,
+      "position": "right"
+    }
+  ]
+}
+```
+
+Tag fields:
+
+- `photo`: numeric image id from `images.json`.
+- `friend`: friend id from `friends.json`.
+- `x` and `y`: percentage coordinates on the displayed image, from 0 to 100.
+- `position`: optional label position, one of `top`, `right`, `bottom`, or
+  `left`. When omitted, the label appears below the dot.
+
+Tags follow the lightbox chrome visibility. Clicking the photo or zooming hides
+the tags with the caption and controls.
+
+While running the local dev server, the browser console exposes tag editing
+helpers:
+
+```js
+tagsEdit.on()
+tagsEdit.off()
+tagsEdit.print()
+await tagsEdit.save()
+```
+
+Use `tagsEdit.on()` with a photo open in the lightbox, drag the tag dots to
+their real positions, then use `tagsEdit.print()` to print the current photo's
+tag JSON. You can move through multiple photos and adjust tags in one session;
+`await tagsEdit.save()` writes all current in-browser tag groups back to
+`src/data/tags.json` through the local Vite dev server.
+
+`tagsEdit.save()` only works during local development with `npm run dev`.
+Production builds cannot write source files. For a quick coordinate template,
+click anywhere on the lightbox image; the app will show and copy a starter JSON
+block with that click's `x` and `y`.
 
 ## Special Events
 
@@ -107,10 +164,20 @@ With custom folders:
 
 ```bash
 python3 scripts/generate_images_json.py --input public/photos --output src/data
+python3 scripts/generate_tags.py
 python3 scripts/batch_rename.py --input raw-photos
 python3 scripts/batch_resize.py --input public/photos
 python3 scripts/batch_png_to_jpg.py --input public/photos
 ```
+
+`generate_images_json.py` writes to `src/data/images.json` by default. The
+script reads the current JSON file, skips filenames already in the file, and
+appends new templates with the next available numeric ids. It accepts
+`VRChat_YYYY-MM-DD_HH-MM-SS.png`, `.jpg`, and `.jpeg` filenames.
+
+`generate_tags.py` reads `images.json` and `tags.json`, then creates tag
+templates in `tags.json` for photos that list friends but do not yet have tags.
+Existing tag groups are preserved.
 
 `batch_rename.py` renames `.png`, `.jpg`, and `.jpeg` files in place while
 preserving their file extension. `batch_resize.py` writes thumbnails to
@@ -119,15 +186,11 @@ JPEG and PNG output as PNG. `batch_png_to_jpg.py` converts `VRChat_*.png`
 files to same-name `.jpg` files in `INPUT/` unless `--output` is provided, and
 skips existing JPG files unless `--overwrite` is passed.
 
-`generate_images_json.py` writes to `src/data/images.json` by default. The
-script reads the current JSON file, skips filenames already in the file, and
-appends new templates with the next available numeric ids. It accepts
-`VRChat_YYYY-MM-DD_HH-MM-SS.png`, `.jpg`, and `.jpeg` filenames.
-
 Preview without writing:
 
 ```bash
 python3 scripts/generate_images_json.py --dry-run
+python3 scripts/generate_tags.py --dry-run
 ```
 
 ## Development

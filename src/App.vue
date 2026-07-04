@@ -4,12 +4,24 @@ import LazyPhoto from './components/LazyPhoto.vue'
 import friendsData from './data/friends.json'
 import imagesData from './data/images.json'
 import specialEventsData from './data/special-events.json'
+import tagsData from './data/tags.json'
 import worldsData from './data/worlds.json'
 import { detectPreferredLanguage, languageCopy, type Language } from './i18n'
 import { icons, type Icon } from './icons'
-import type { Friend, GalleryImage, GalleryRow, SpecialEvent, World } from './types'
+import type { Friend, GalleryImage, GalleryRow, PhotoTag, PhotoTagGroup, SpecialEvent, World } from './types'
 import { parseAsGalleryDate } from './utils/date'
 import { daysSinceVrchatStart, formatGalleryDate, photoPath, thumbnailPath } from './utils/gallery'
+
+declare global {
+  interface Window {
+    tagsEdit?: {
+      on: () => void
+      off: () => void
+      print: () => string
+      save: () => Promise<string>
+    }
+  }
+}
 
 type GalleryFilter =
   | {
@@ -44,6 +56,19 @@ type GalleryFlowItem =
       id: string
       event: SpecialEventView
     }
+type ResolvedPhotoTag = {
+  friendId: string
+  index: number
+  name: string
+  x: number
+  y: number
+  position: 'top' | 'right' | 'bottom' | 'left'
+}
+type DraggedPhotoTag = {
+  photoId: number
+  tagIndex: number
+  pointerId: number
+}
 
 const monthNames = [
   'January',
@@ -63,10 +88,17 @@ const friends = friendsData as Friend[]
 const worlds = worldsData as World[]
 const photos = [...(imagesData as GalleryImage[])].sort((a, b) => b.captured.localeCompare(a.captured))
 const specialEventRecords = specialEventsData as SpecialEvent[]
+const photoTagRecords = tagsData as PhotoTagGroup[]
 
 const friendsById = new Map(friends.map((friend) => [friend.id, friend]))
 const worldsById = new Map(worlds.map((world) => [world.id, world]))
 const photosById = new Map(photos.map((photo) => [photo.id, photo]))
+const editableTagsByPhotoId = new Map(
+  photoTagRecords.map((record) => [
+    record.photo,
+    record.tags.map((tag) => ({ ...tag })),
+  ]),
+)
 const socialLinks: Array<{ label: string; icon: Icon; href: string }> = [
   { label: 'GitHub', icon: 'github', href: 'https://github.com/maoawa/mars-vrchat-gallery' },
   { label: 'X', icon: 'x', href: 'https://twitter.com/winmemzqwq' },
@@ -115,6 +147,7 @@ const activePhotoList = ref<GalleryImage[] | null>(null)
 const activeFilter = ref<GalleryFilter | null>(null)
 const galleryColumnCount = ref(1)
 const lightboxStage = ref<HTMLElement | null>(null)
+const lightboxZoomSurface = ref<HTMLElement | null>(null)
 const activeQrContactId = ref<'wechat' | 'qq' | null>(null)
 const highlightedPhotoId = ref<number | null>(null)
 const highlightedSpecialEventId = ref<string | null>(null)
@@ -124,12 +157,24 @@ const maxZoom = 4
 const zoomStep = 0.25
 const doubleClickZoom = 2.5
 const swipeThreshold = 72
+const swipeAnimationDuration = 180
+const lightboxTagsVisibleStorageKey = 'gallery-lightbox-tags-visible'
+const tagsToggleTutorialStorageKey = 'gallery-tags-toggle-tutorial-complete'
 
 const zoomLevel = ref(1)
 const isDragging = ref(false)
 const isPinching = ref(false)
 const isSwiping = ref(false)
+const isSwipeAnimating = ref(false)
 const lightboxControlsVisible = ref(true)
+const lightboxTagsVisible = ref(true)
+const lightboxTagsToggleTutorialVisible = ref(false)
+const activeImageNaturalSize = ref<{ width: number; height: number } | null>(null)
+const zoomSurfaceSize = ref({ width: 0, height: 0 })
+const swipeOffsetX = ref(0)
+const tagEditingEnabled = ref(false)
+const tagEditVersion = ref(0)
+const draggedPhotoTag = ref<DraggedPhotoTag | null>(null)
 
 let startClientX = 0
 let startClientY = 0
@@ -142,6 +187,9 @@ let pinchStartZoom = 1
 let hasMovedInGesture = false
 let suppressNextClick = false
 let clickToggleTimer: number | undefined
+let lightboxZoomSurfaceObserver: ResizeObserver | undefined
+let tagsToggleTutorialTimer: number | undefined
+let swipeAnimationTimer: number | undefined
 
 let clockTimer: number | undefined
 
@@ -238,7 +286,18 @@ const gallerySections = computed(() => {
   return flowItems
 })
 
-const lightboxPhotos = computed(() => galleryRows.value.flatMap((row) => [row.photo, ...row.linkedPhotos]))
+const lightboxPhotos = computed(() =>
+  gallerySections.value.flatMap((item) => {
+    if (item.type === 'special-event') {
+      return item.event.photos
+    }
+
+    return item.columns
+      .flat()
+      .sort((a, b) => a.index - b.index)
+      .flatMap((entry) => [entry.row.photo, ...entry.row.linkedPhotos])
+  }),
+)
 const randomOuting = ref<GalleryRow | null>(
   allGalleryRows.length ? allGalleryRows[Math.floor(Math.random() * allGalleryRows.length)] : null,
 )
@@ -314,6 +373,36 @@ const lightboxImageStyle = computed(() => {
     cursor: isDragging.value ? 'grabbing' : 'grab',
   }
 })
+const lightboxImageFrameStyle = computed(() => {
+  const naturalSize = activeImageNaturalSize.value
+  const surfaceSize = zoomSurfaceSize.value
+
+  if (!naturalSize || !surfaceSize.width || !surfaceSize.height) {
+    return {
+      width: '100%',
+      height: '100%',
+      '--lightbox-swipe-offset': `${swipeOffsetX.value}px`,
+    }
+  }
+
+  const imageRatio = naturalSize.width / naturalSize.height
+  const surfaceRatio = surfaceSize.width / surfaceSize.height
+  const width = imageRatio >= surfaceRatio ? surfaceSize.width : surfaceSize.height * imageRatio
+  const height = imageRatio >= surfaceRatio ? surfaceSize.width / imageRatio : surfaceSize.height
+
+  return {
+    width: `${width}px`,
+    height: `${height}px`,
+    '--lightbox-swipe-offset': `${swipeOffsetX.value}px`,
+  }
+})
+const activePhotoTags = computed(() => {
+  if (!activePhoto.value) {
+    return []
+  }
+
+  return photoTagList(activePhoto.value)
+})
 
 function hasWorld(photo: GalleryImage) {
   return photo.world.trim().length > 0
@@ -343,6 +432,59 @@ function friendList(photo: GalleryImage) {
       id: friendId,
       name: friendName(friendId),
     }))
+}
+
+function photoTagList(photo: GalleryImage): ResolvedPhotoTag[] {
+  tagEditVersion.value
+
+  return (editableTagsByPhotoId.get(photo.id) ?? [])
+    .filter((tag) => tag.friend.trim().length > 0)
+    .map((tag, index) => ({
+      friendId: tag.friend,
+      index,
+      name: friendName(tag.friend),
+      x: clampPercent(tag.x),
+      y: clampPercent(tag.y),
+      position: tag.position ?? 'bottom',
+    }))
+}
+
+function clampPercent(value: number) {
+  if (!Number.isFinite(value)) {
+    return 50
+  }
+
+  return Math.min(100, Math.max(0, value))
+}
+
+function photoTagStyle(tag: ResolvedPhotoTag) {
+  return {
+    left: `${tag.x}%`,
+    top: `${tag.y}%`,
+  }
+}
+
+function photoTagClass(tag: ResolvedPhotoTag) {
+  return `is-label-${tag.position}`
+}
+
+function tagCoordinatesFromClientPoint(clientX: number, clientY: number) {
+  const frame = lightboxZoomSurface.value?.querySelector<HTMLElement>('.lightbox-image-frame')
+
+  if (!frame || !activeImageNaturalSize.value) {
+    return null
+  }
+
+  const rect = frame.getBoundingClientRect()
+
+  if (!rect.width || !rect.height) {
+    return null
+  }
+
+  return {
+    x: Number(clampPercent(((clientX - rect.left) / rect.width) * 100).toFixed(1)),
+    y: Number(clampPercent(((clientY - rect.top) / rect.height) * 100).toFixed(1)),
+  }
 }
 
 function eventFriendList(event: SpecialEventView) {
@@ -582,11 +724,42 @@ function centreZoomStage() {
   stage.scrollTop = (stage.scrollHeight - stage.clientHeight) / 2
 }
 
+function updateZoomSurfaceSize() {
+  const surface = lightboxZoomSurface.value
+
+  if (!surface) {
+    zoomSurfaceSize.value = { width: 0, height: 0 }
+    return
+  }
+
+  const rect = surface.getBoundingClientRect()
+  zoomSurfaceSize.value = {
+    width: rect.width,
+    height: rect.height,
+  }
+}
+
+function handleLightboxImageLoad(event: Event) {
+  const image = event.currentTarget as HTMLImageElement
+
+  if (!image.naturalWidth || !image.naturalHeight) {
+    return
+  }
+
+  activeImageNaturalSize.value = {
+    width: image.naturalWidth,
+    height: image.naturalHeight,
+  }
+  updateZoomSurfaceSize()
+}
+
 function resetZoom() {
   zoomLevel.value = 1
   isDragging.value = false
   isPinching.value = false
   isSwiping.value = false
+  isSwipeAnimating.value = false
+  swipeOffsetX.value = 0
   pinchStartDistance = 0
 }
 
@@ -597,6 +770,13 @@ function clearPhotoClickTimer() {
   }
 }
 
+function clearSwipeAnimationTimer() {
+  if (swipeAnimationTimer) {
+    window.clearTimeout(swipeAnimationTimer)
+    swipeAnimationTimer = undefined
+  }
+}
+
 function hideLightboxControls() {
   lightboxControlsVisible.value = false
 }
@@ -604,6 +784,7 @@ function hideLightboxControls() {
 function resetLightboxViewState() {
   resetZoom()
   clearPhotoClickTimer()
+  clearSwipeAnimationTimer()
   lightboxControlsVisible.value = true
   hasMovedInGesture = false
   suppressNextClick = false
@@ -611,6 +792,30 @@ function resetLightboxViewState() {
 
 function clampZoom(zoom: number) {
   return Math.min(maxZoom, Math.max(minZoom, zoom))
+}
+
+function resistedSwipeOffset(deltaX: number) {
+  const maxOffset = Math.max(160, window.innerWidth * 0.42)
+  const magnitude = Math.abs(deltaX)
+
+  if (magnitude <= maxOffset) {
+    return deltaX
+  }
+
+  const overflow = magnitude - maxOffset
+  return Math.sign(deltaX) * (maxOffset + overflow * 0.22)
+}
+
+function settleSwipeOffset(offset: number, afterSettle?: () => void) {
+  clearSwipeAnimationTimer()
+  isSwipeAnimating.value = true
+  swipeOffsetX.value = offset
+  swipeAnimationTimer = window.setTimeout(() => {
+    afterSettle?.()
+    swipeOffsetX.value = 0
+    isSwipeAnimating.value = false
+    swipeAnimationTimer = undefined
+  }, swipeAnimationDuration)
 }
 
 function zoomAtClientPoint(nextZoom: number, clientX: number, clientY: number) {
@@ -671,6 +876,9 @@ function getTouchCenter(touches: TouchList) {
 }
 
 function startPinch(event: TouchEvent) {
+  clearSwipeAnimationTimer()
+  swipeOffsetX.value = 0
+  isSwipeAnimating.value = false
   isPinching.value = true
   isDragging.value = false
   isSwiping.value = false
@@ -727,6 +935,9 @@ function startDrag(event: MouseEvent | TouchEvent) {
   hasMovedInGesture = false
 
   if (zoomLevel.value <= 1) {
+    clearSwipeAnimationTimer()
+    swipeOffsetX.value = 0
+    isSwipeAnimating.value = false
     isSwiping.value = true
     return
   }
@@ -766,6 +977,11 @@ function onDrag(event: MouseEvent | TouchEvent) {
   lastClientY = clientY
   hasMovedInGesture = hasMovedInGesture || Math.hypot(deltaX, deltaY) > 6
 
+  if (isSwiping.value) {
+    swipeOffsetX.value = currentLightboxPhotos.value.length > 1 ? resistedSwipeOffset(deltaX) : 0
+    return
+  }
+
   if (!isDragging.value) return
 
   const stage = lightboxStage.value
@@ -789,20 +1005,28 @@ function stopDrag(event?: MouseEvent | TouchEvent) {
   if (isSwiping.value) {
     const deltaX = lastClientX - startClientX
     const deltaY = lastClientY - startClientY
-    const isHorizontalSwipe = Math.abs(deltaX) >= swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)
+    const isHorizontalSwipe =
+      currentLightboxPhotos.value.length > 1 &&
+      Math.abs(deltaX) >= swipeThreshold &&
+      Math.abs(deltaX) > Math.abs(deltaY)
 
     isSwiping.value = false
 
     if (isHorizontalSwipe) {
-      if (deltaX > 0) {
-        showPreviousPhoto()
-      } else {
-        showNextPhoto()
-      }
-
+      const shouldShowPrevious = deltaX > 0
+      settleSwipeOffset(shouldShowPrevious ? window.innerWidth : -window.innerWidth, () => {
+        if (shouldShowPrevious) {
+          showPreviousPhoto()
+        } else {
+          showNextPhoto()
+        }
+      })
       suppressNextClick = true
     } else if (hasMovedInGesture) {
+      settleSwipeOffset(0)
       suppressNextClick = true
+    } else {
+      swipeOffsetX.value = 0
     }
   }
 
@@ -811,9 +1035,197 @@ function stopDrag(event?: MouseEvent | TouchEvent) {
   pinchStartDistance = 0
 }
 
-function handleLightboxPhotoClick() {
+function startTagDrag(event: PointerEvent, tag: ResolvedPhotoTag) {
+  if (!tagEditingEnabled.value || !activePhoto.value) {
+    return
+  }
+
+  event.preventDefault()
+  event.stopPropagation()
+  clearPhotoClickTimer()
+  suppressNextClick = true
+  draggedPhotoTag.value = {
+    photoId: activePhoto.value.id,
+    tagIndex: tag.index,
+    pointerId: event.pointerId,
+  }
+  updateDraggedTag(event.clientX, event.clientY)
+  window.addEventListener('pointermove', handleTagDragMove)
+  window.addEventListener('pointerup', stopTagDrag)
+  window.addEventListener('pointercancel', stopTagDrag)
+}
+
+function updateDraggedTag(clientX: number, clientY: number) {
+  const draggedTag = draggedPhotoTag.value
+
+  if (!draggedTag) {
+    return
+  }
+
+  const coordinates = tagCoordinatesFromClientPoint(clientX, clientY)
+  const tags = editableTagsByPhotoId.get(draggedTag.photoId)
+  const tag = tags?.[draggedTag.tagIndex]
+
+  if (!coordinates || !tag) {
+    return
+  }
+
+  tag.x = coordinates.x
+  tag.y = coordinates.y
+  tagEditVersion.value += 1
+}
+
+function handleTagDragMove(event: PointerEvent) {
+  if (draggedPhotoTag.value?.pointerId !== event.pointerId) {
+    return
+  }
+
+  event.preventDefault()
+  updateDraggedTag(event.clientX, event.clientY)
+}
+
+function stopTagDrag(event?: PointerEvent) {
+  if (event && draggedPhotoTag.value?.pointerId !== event.pointerId) {
+    return
+  }
+
+  draggedPhotoTag.value = null
+  suppressNextClick = true
+  window.removeEventListener('pointermove', handleTagDragMove)
+  window.removeEventListener('pointerup', stopTagDrag)
+  window.removeEventListener('pointercancel', stopTagDrag)
+}
+
+function photoTagGroupData(photoId: number): PhotoTagGroup {
+  const tags = editableTagsByPhotoId.get(photoId) ?? []
+
+  return {
+    photo: photoId,
+    tags: tags.map((tag) => {
+      const serialisedTag: PhotoTag = {
+        friend: tag.friend,
+        x: Number(clampPercent(tag.x).toFixed(1)),
+        y: Number(clampPercent(tag.y).toFixed(1)),
+      }
+
+      if (tag.position) {
+        serialisedTag.position = tag.position
+      }
+
+      return serialisedTag
+    }),
+  }
+}
+
+function allPhotoTagGroupsData() {
+  return Array.from(editableTagsByPhotoId.keys())
+    .sort((a, b) => a - b)
+    .map((photoId) => photoTagGroupData(photoId))
+}
+
+function serialisePhotoTagGroup(photoId: number) {
+  return JSON.stringify(photoTagGroupData(photoId), null, 2)
+}
+
+function printCurrentPhotoTags() {
+  if (!activePhoto.value) {
+    const message = 'Open a photo in the lightbox before running tagsEdit.print().'
+    console.warn(message)
+    return ''
+  }
+
+  const payload = serialisePhotoTagGroup(activePhoto.value.id)
+  console.log(payload)
+  return payload
+}
+
+async function saveEditedPhotoTags() {
+  const payload = allPhotoTagGroupsData()
+  const response = await fetch('/__tags/save', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+
+  if (!response.ok) {
+    const message = await response.text()
+    throw new Error(message || 'Failed to save tags.')
+  }
+
+  const serialisedPayload = JSON.stringify(payload, null, 2)
+  console.info('Saved current tag positions to src/data/tags.json.')
+  console.log(serialisedPayload)
+  return serialisedPayload
+}
+
+function enableTagEditing() {
+  tagEditingEnabled.value = true
+  lightboxControlsVisible.value = true
+  console.info('Tag editing enabled. Run \"await tagsEdit.save()\" to save.')
+}
+
+function disableTagEditing() {
+  tagEditingEnabled.value = false
+  stopTagDrag()
+  console.info('Tag editing disabled.')
+}
+
+function loadLightboxTagsPreference() {
+  const savedValue = window.localStorage.getItem(lightboxTagsVisibleStorageKey)
+
+  if (savedValue === 'true' || savedValue === 'false') {
+    lightboxTagsVisible.value = savedValue === 'true'
+  }
+}
+
+function hasCompletedTagsToggleTutorial() {
+  return window.localStorage.getItem(tagsToggleTutorialStorageKey) === 'true'
+}
+
+function completeTagsToggleTutorial() {
+  lightboxTagsToggleTutorialVisible.value = false
+  window.localStorage.setItem(tagsToggleTutorialStorageKey, 'true')
+  tagsToggleTutorialTimer = undefined
+}
+
+function startTagsToggleTutorial() {
+  if (hasCompletedTagsToggleTutorial() || lightboxTagsToggleTutorialVisible.value) {
+    return
+  }
+
+  lightboxTagsToggleTutorialVisible.value = true
+  tagsToggleTutorialTimer = window.setTimeout(completeTagsToggleTutorial, 3_000)
+}
+
+function toggleLightboxTags() {
+  lightboxTagsVisible.value = !lightboxTagsVisible.value
+}
+
+function installGalleryTagConsoleApi() {
+  window.tagsEdit = {
+    on: enableTagEditing,
+    off: disableTagEditing,
+    print: printCurrentPhotoTags,
+    save: saveEditedPhotoTags,
+  }
+}
+
+function uninstallGalleryTagConsoleApi() {
+  if (window.tagsEdit?.on === enableTagEditing) {
+    delete window.tagsEdit
+  }
+}
+
+function handleLightboxPhotoClick(event: MouseEvent) {
   if (suppressNextClick) {
     suppressNextClick = false
+    return
+  }
+
+  if (tagEditingEnabled.value) {
+    lightboxControlsVisible.value = true
     return
   }
 
@@ -975,13 +1387,38 @@ function handleKeydown(event: KeyboardEvent) {
   }
 }
 
-watch([activePhoto, activeQrContact], ([photo, qrContact]) => {
+watch([activePhoto, activeQrContact], ([photo, qrContact], [previousPhoto]) => {
   document.body.classList.toggle('lightbox-open', Boolean(photo) || Boolean(qrContact))
 
+  if (photo?.id !== previousPhoto?.id) {
+    activeImageNaturalSize.value = null
+  }
+
   if (photo) {
-    nextTick(centreZoomStage)
+    if (!previousPhoto) {
+      startTagsToggleTutorial()
+    }
+
+    nextTick(() => {
+      updateZoomSurfaceSize()
+      centreZoomStage()
+    })
     preloadAdjacentLightboxPhotos()
   }
+})
+
+watch(lightboxZoomSurface, (surface, previousSurface) => {
+  if (previousSurface) {
+    lightboxZoomSurfaceObserver?.unobserve(previousSurface)
+  }
+
+  if (!surface) {
+    updateZoomSurfaceSize()
+    return
+  }
+
+  updateZoomSurfaceSize()
+  lightboxZoomSurfaceObserver?.observe(surface)
 })
 
 watch(
@@ -993,9 +1430,21 @@ watch(
   { immediate: true },
 )
 
+watch(lightboxTagsVisible, (isVisible) => {
+  window.localStorage.setItem(lightboxTagsVisibleStorageKey, String(isVisible))
+})
+
 onMounted(() => {
+  loadLightboxTagsPreference()
   updateGalleryColumnCount()
   handleHashTarget()
+  installGalleryTagConsoleApi()
+  lightboxZoomSurfaceObserver = new ResizeObserver(updateZoomSurfaceSize)
+
+  if (lightboxZoomSurface.value) {
+    lightboxZoomSurfaceObserver.observe(lightboxZoomSurface.value)
+  }
+
   clockTimer = window.setInterval(() => {
     now.value = Date.now()
   }, 60_000)
@@ -1011,6 +1460,13 @@ onBeforeUnmount(() => {
   }
 
   clearPhotoClickTimer()
+  clearSwipeAnimationTimer()
+  if (tagsToggleTutorialTimer) {
+    window.clearTimeout(tagsToggleTutorialTimer)
+  }
+  stopTagDrag()
+  uninstallGalleryTagConsoleApi()
+  lightboxZoomSurfaceObserver?.disconnect()
   window.removeEventListener('keydown', handleKeydown)
   window.removeEventListener('resize', updateGalleryColumnCount)
   window.removeEventListener('hashchange', handleHashTarget)
@@ -1303,7 +1759,7 @@ onBeforeUnmount(() => {
             :data-gallery-photo-id="photo.id"
             type="button"
             :aria-label="`${copy.open} ${photo.filename}`"
-            @click="openPhoto(photo.id, item.event.photos)"
+            @click="openPhoto(photo.id)"
           >
             <LazyPhoto
               :src="thumbnailPath(photo.filename)"
@@ -1332,7 +1788,7 @@ onBeforeUnmount(() => {
             :data-gallery-photo-id="photo.id"
             type="button"
             :aria-label="`${copy.open} ${photo.filename}`"
-            @click="openPhoto(photo.id, item.event.photos)"
+            @click="openPhoto(photo.id)"
           >
             <LazyPhoto :src="thumbnailPath(photo.filename)" :alt="photoAlt(photo)" />
             <span class="linked-caption">
@@ -1414,6 +1870,19 @@ onBeforeUnmount(() => {
         </button>
 
         <div class="lightbox-toolbar">
+          <div v-if="lightboxTagsToggleTutorialVisible" class="lightbox-tags-hint" aria-live="polite">
+            {{ copy.toggleTagsHint }}
+          </div>
+          <button
+            class="lightbox-tags-toggle"
+            :class="{ 'is-active': lightboxTagsVisible, 'is-tutorial': lightboxTagsToggleTutorialVisible }"
+            type="button"
+            :aria-pressed="lightboxTagsVisible"
+            :aria-label="copy.showTagsLabel"
+            @click.stop="toggleLightboxTags"
+          >
+            {{ copy.showTags }}
+          </button>
           <div class="lightbox-title">
             <span>{{ activePosition }} / {{ currentLightboxPhotos.length }}</span>
           </div>
@@ -1421,6 +1890,7 @@ onBeforeUnmount(() => {
 
         <div ref="lightboxStage" class="lightbox-stage">
           <div
+            ref="lightboxZoomSurface"
             class="lightbox-zoom-surface"
             :style="zoomSurfaceStyle"
             @wheel.prevent="handleScrollZoom"
@@ -1435,13 +1905,41 @@ onBeforeUnmount(() => {
             @click="handleLightboxPhotoClick"
             @dblclick.prevent="handleLightboxPhotoDoubleClick"
           >
-            <img
-              class="lightbox-image"
-              :src="photoPath(activePhoto.filename)"
-              :alt="photoAlt(activePhoto)"
-              :style="lightboxImageStyle"
-              @dragstart.prevent
-            />
+            <div
+              class="lightbox-image-frame"
+              :class="{ 'is-swipe-animating': isSwipeAnimating }"
+              :style="lightboxImageFrameStyle"
+            >
+              <img
+                class="lightbox-image"
+                :src="photoPath(activePhoto.filename)"
+                :alt="photoAlt(activePhoto)"
+                :style="lightboxImageStyle"
+                @load="handleLightboxImageLoad"
+                @dragstart.prevent
+              />
+              <div
+                v-if="activeImageNaturalSize && activePhotoTags.length && lightboxTagsVisible"
+                class="lightbox-tags"
+                :class="{ 'is-editing': tagEditingEnabled }"
+                :aria-label="copy.taggedFriends"
+              >
+                <button
+                  v-for="tag in activePhotoTags"
+                  :key="`${tag.friendId}-${tag.index}`"
+                  class="lightbox-tag"
+                  :class="photoTagClass(tag)"
+                  :style="photoTagStyle(tag)"
+                  type="button"
+                  :aria-label="tag.name"
+                  @pointerdown="startTagDrag($event, tag)"
+                  @click.stop="tagEditingEnabled || applyFriendFilter(tag.friendId, true)"
+                >
+                  <span class="lightbox-tag__dot" aria-hidden="true"></span>
+                  <span class="lightbox-tag__label">{{ tag.name }}</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -417,7 +417,7 @@
     "filename": "VRChat_2026-06-09_00-25-03.png",
     "captured": "2026-06-09T00:25:03",
     "world": "english.hub",
-    "friend": [""],
+    "friend": ["tony", "wangyue"],
     "parent": 42,
     "description_en": "",
     "description_zh": ""
@@ -889,7 +889,7 @@
     "world": "english.hub",
     "description_en": "",
     "description_zh": "",
-    "friend": ["unknown_cn", "xplanet", "semasan", "den1a", "waterchan"],
+    "friend": ["unknown_cn", "xplanet", "semasan", "tony", "waterchan"],
     "parent": 93
   },
   {
@@ -899,7 +899,7 @@
     "world": "english.hub",
     "description_en": "We've been seeing a guy named [[waterchan]] in {{english.hub}} for so long. He doesn't speak English at all, and his language (Hmong) sounds like gibberish to us. But thanks to [[semasan]]'s translation, we're finally able to communicate with him.",
     "description_zh": "",
-    "friend": ["xplanet", "waterchan", "semasan", "tony", "unknown_cn"],
+    "friend": ["xplanet", "waterchan", "semasan", "den1a", "unknown_cn"],
     "linked": [92]
   },
   {
