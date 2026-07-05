@@ -928,5 +928,121 @@
     "description_en": "New new friends here! [[feedpancake]] told me that he really love Chow Mein, a type of noodles in China.",
     "description_zh": "新朋友！[[feedpancake]] 告诉我他非常喜欢中国的炒面。",
     "friend": ["end", "feedpancake"]
+  },
+  {
+    "id": 97,
+    "filename": "VRChat_2026-07-04_00-15-09.jpg",
+    "captured": "2026-07-04T00:15:09",
+    "world": "life.in.snow",
+    "description_en": "Two Colombinas from Genshin! Gotta say kawaii.",
+    "description_zh": "两只原神里的哥伦比娅！确实得说很可爱。",
+    "friend": ["cutcyoud"]
+  },
+  {
+    "id": 98,
+    "filename": "VRChat_2026-07-04_00-36-54.jpg",
+    "captured": "2026-07-04T00:36:54",
+    "world": "life.in.snow",
+    "description_en": "Chilling and chatting with friends in {{life.in.snow}}.",
+    "description_zh": "和朋友们一起在 {{life.in.snow}} 放松闲聊。",
+    "friend": ["cutcyoud", "aiko", "yuki"]
+  },
+  {
+    "id": 99,
+    "filename": "VRChat_2026-07-04_03-03-35.jpg",
+    "captured": "2026-07-04T03:03:35",
+    "world": "english.hub",
+    "description_en": "Got a new friend [[yuma]] here! I introduced [[waterchan]] to people around us as nobody could understand him but me at that time.<br>(I can't understand either honestly..)",
+    "description_zh": "一个新朋友 [[yuma]]！我向周围人介绍了 [[waterchan]]，因为当时除了我没人能听懂他说的话。<br>(其实我也听不懂)",
+    "friend": ["yuma", "rinqt", "waterchan"]
+  },
+  {
+    "id": 100,
+    "filename": "VRChat_2026-07-04_03-07-06.jpg",
+    "captured": "2026-07-04T03:07:06",
+    "world": "english.hub",
+    "description_en": "It's illegal to carry a weapon here!!",
+    "description_zh": "在这里持枪是违法的！！",
+    "friend": ["rinqt"],
+    "parent": 101
+  },
+  {
+    "id": 101,
+    "filename": "VRChat_2026-07-04_03-14-59.jpg",
+    "captured": "2026-07-04T03:14:59",
+    "world": "english.hub",
+    "description_en": "Met a friend who also plays Genshin and we talked about the upcoming stories of the game.",
+    "description_zh": "见到了一个同样玩原神的朋友，我们聊了一些这个游戏即将推出的剧情。",
+    "friend": ["rinqt"],
+    "linked": [100]
+  },
+  {
+    "id": 102,
+    "filename": "VRChat_2026-07-04_03-24-51.jpg",
+    "captured": "2026-07-04T03:24:51",
+    "world": "learn.mandarin",
+    "description_en": "[[tea]] with his brand new outfit! I like it!",
+    "description_zh": "[[tea]] 和他的全新穿搭！我很喜欢这个！",
+    "friend": ["tea"]
+  },
+  {
+    "id": 103,
+    "filename": "VRChat_2026-07-04_23-58-48.jpg",
+    "captured": "2026-07-04T23:58:48",
+    "world": "english.hub",
+    "description_en": "Gugugaga!!!",
+    "description_zh": "咕咕嘎嘎！！！",
+    "friend": ["infj_cloud", "hajimi"],
+    "parent": 104
+  },
+  {
+    "id": 104,
+    "filename": "VRChat_2026-07-04_23-59-03.jpg",
+    "captured": "2026-07-04T23:59:03",
+    "world": "english.hub",
+    "description_en": "Old friends!!",
+    "description_zh": "老朋友们！",
+    "friend": ["cutcyoud", "hajimi", "infj_cloud", "tony", "yuki"],
+    "linked": [103]
+  },
+  {
+    "id": 105,
+    "filename": "VRChat_2026-07-05_04-32-55.jpg",
+    "captured": "2026-07-05T04:32:55",
+    "world": "houhai.ktv",
+    "description_en": "I had really a great time chatting with [[cutcyoud]] and [[yuki]] for hours, and later [[den1a]] joined us.",
+    "description_zh": "我和 [[cutcyoud]] 和 [[yuki]] 聊了天，真的特别开心，晚些时候 [[den1a]] 也来了。",
+    "friend": ["cutcyoud", "den1a", "yuki"],
+    "linked": [106, 107, 108]
+  },
+  {
+    "id": 106,
+    "filename": "VRChat_2026-07-05_04-48-26.jpg",
+    "captured": "2026-07-05T04:48:26",
+    "world": "houhai.ktv",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["cutcyoud", "den1a"],
+    "parent":105
+  },
+  {
+    "id": 107,
+    "filename": "VRChat_2026-07-05_04-54-24.jpg",
+    "captured": "2026-07-05T04:54:24",
+    "world": "houhai.ktv",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["den1a"],
+    "parent":105
+  },
+  {
+    "id": 108,
+    "filename": "VRChat_2026-07-05_04-55-07.jpg",
+    "captured": "2026-07-05T04:55:07",
+    "world": "houhai.ktv",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["cutcyoud", "yuki", "den1a"],
+    "parent":105
   }
 ]

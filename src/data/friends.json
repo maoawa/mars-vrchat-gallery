@@ -224,5 +224,13 @@
   {
     "id": "feedpancake",
     "name_en": "FeedPancake"
+  },
+  {
+    "id": "yuma",
+    "name_en": "Yuma"
+  },
+  {
+    "id": "rinqt",
+    "name_en": "Rinqt"
   }
 ]

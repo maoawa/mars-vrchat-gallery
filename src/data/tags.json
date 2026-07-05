@@ -1319,5 +1319,206 @@
         "y": 55.7
       }
     ]
+  },
+  {
+    "photo": 97,
+    "tags": [
+      {
+        "friend": "cutcyoud",
+        "x": 61.1,
+        "y": 62.8
+      }
+    ]
+  },
+  {
+    "photo": 98,
+    "tags": [
+      {
+        "friend": "cutcyoud",
+        "x": 73.2,
+        "y": 65.7
+      },
+      {
+        "friend": "aiko",
+        "x": 24.3,
+        "y": 58,
+        "position": "top"
+      },
+      {
+        "friend": "yuki",
+        "x": 56.9,
+        "y": 41.8,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 99,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 43.9,
+        "y": 16,
+        "position": "top"
+      },
+      {
+        "friend": "rinqt",
+        "x": 57.1,
+        "y": 66.7
+      },
+      {
+        "friend": "waterchan",
+        "x": 66.6,
+        "y": 70.5
+      }
+    ]
+  },
+  {
+    "photo": 100,
+    "tags": [
+      {
+        "friend": "rinqt",
+        "x": 47,
+        "y": 46.1,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 101,
+    "tags": [
+      {
+        "friend": "rinqt",
+        "x": 60.3,
+        "y": 35.6,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 102,
+    "tags": [
+      {
+        "friend": "tea",
+        "x": 65.2,
+        "y": 40.8,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 103,
+    "tags": [
+      {
+        "friend": "infj_cloud",
+        "x": 23.9,
+        "y": 64.1
+      },
+      {
+        "friend": "hajimi",
+        "x": 42.7,
+        "y": 55.6
+      }
+    ]
+  },
+  {
+    "photo": 104,
+    "tags": [
+      {
+        "friend": "cutcyoud",
+        "x": 81.1,
+        "y": 64.4
+      },
+      {
+        "friend": "hajimi",
+        "x": 17.2,
+        "y": 74.5
+      },
+      {
+        "friend": "infj_cloud",
+        "x": 38.2,
+        "y": 66
+      },
+      {
+        "friend": "tony",
+        "x": 55.5,
+        "y": 61.4
+      },
+      {
+        "friend": "yuki",
+        "x": 70.9,
+        "y": 54.1
+      }
+    ]
+  },
+  {
+    "photo": 105,
+    "tags": [
+      {
+        "friend": "cutcyoud",
+        "x": 73.4,
+        "y": 69
+      },
+      {
+        "friend": "den1a",
+        "x": 19,
+        "y": 68.3
+      },
+      {
+        "friend": "yuki",
+        "x": 31.4,
+        "y": 62.5
+      }
+    ]
+  },
+  {
+    "photo": 106,
+    "tags": [
+      {
+        "friend": "cutcyoud",
+        "x": 72.3,
+        "y": 39.9,
+        "position": "left"
+      },
+      {
+        "friend": "den1a",
+        "x": 41.8,
+        "y": 31.1,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 107,
+    "tags": [
+      {
+        "friend": "den1a",
+        "x": 56.8,
+        "y": 64.8
+      }
+    ]
+  },
+  {
+    "photo": 108,
+    "tags": [
+      {
+        "friend": "cutcyoud",
+        "x": 98.8,
+        "y": 83.2,
+        "position": "left"
+      },
+      {
+        "friend": "yuki",
+        "x": 4.8,
+        "y": 8.9,
+        "position": "right"
+      },
+      {
+        "friend": "den1a",
+        "x": 55.4,
+        "y": 44.4,
+        "position": "top"
+      }
+    ]
   }
 ]

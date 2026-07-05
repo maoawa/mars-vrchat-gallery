@@ -48,5 +48,15 @@
     "id": "chinese.bar",
     "name_en": "Chinese Bar",
     "name_zh": "中文吧"
+  },
+  {
+    "id": "life.in.snow",
+    "name_en": "Life in Snow",
+    "name_zh": "雪中生活"
+  },
+  {
+    "id": "houhai.ktv",
+    "name_en": "Houhai KTV",
+    "name_zh": "后海KTV"
   }
 ]
