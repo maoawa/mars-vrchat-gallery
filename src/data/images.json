@@ -1023,7 +1023,7 @@
     "description_en": "",
     "description_zh": "",
     "friend": ["cutcyoud", "den1a"],
-    "parent":105
+    "parent": 105
   },
   {
     "id": 107,
@@ -1033,7 +1033,7 @@
     "description_en": "",
     "description_zh": "",
     "friend": ["den1a"],
-    "parent":105
+    "parent": 105
   },
   {
     "id": 108,
@@ -1043,6 +1043,87 @@
     "description_en": "",
     "description_zh": "",
     "friend": ["cutcyoud", "yuki", "den1a"],
-    "parent":105
+    "parent": 105
+  },
+  {
+    "id": 109,
+    "filename": "VRChat_2026-07-07_23-02-41.jpg",
+    "captured": "2026-07-07T23:02:41",
+    "world": "english.hub",
+    "description_en": "Kinich, Miko and Mizuki (me) from Genshin! Cuuute!",
+    "description_zh": "来自原神的基尼奇、神子和梦见月瑞希(我)！可爱捏！",
+    "friend": [""]
+  },
+  {
+    "id": 110,
+    "filename": "VRChat_2026-07-07_23-22-29.jpg",
+    "captured": "2026-07-07T23:22:29",
+    "world": "english.hub",
+    "description_en": "New friend [[alba]] and I in [[ninkaze]]'s arms.<br>Avatar height: 0.2 metres (8 in)",
+    "description_zh": "新朋友 [[alba]] 和我在 [[ninkaze]] 的怀里.<br>角色高度: 0.2 米",
+    "friend": ["alba", "ninkaze"]
+  },
+  {
+    "id": 111,
+    "filename": "VRChat_2026-07-07_23-41-35.jpg",
+    "captured": "2026-07-07T23:41:35",
+    "world": "english.hub",
+    "description_en": "Many new friends!",
+    "description_zh": "好多新朋友！",
+    "friend": ["tony", "villagerm", "alba", "chi", "waterchan"]
+  },
+  {
+    "id": 112,
+    "filename": "VRChat_2026-07-08_00-18-45.jpg",
+    "captured": "2026-07-08T00:18:45",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["chi", "waterchan"]
+  },
+  {
+    "id": 113,
+    "filename": "VRChat_2026-07-08_00-36-21.jpg",
+    "captured": "2026-07-08T00:36:21",
+    "world": "english.hub",
+    "description_en": "Teaching a random friend mathematics...",
+    "description_zh": "正在教一个朋友数学...",
+    "friend": [""]
+  },
+  {
+    "id": 114,
+    "filename": "VRChat_2026-07-09_00-23-23.jpg",
+    "captured": "2026-07-09T00:23:23",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["waterchan", "chi"]
+  },
+  {
+    "id": 115,
+    "filename": "VRChat_2026-07-09_00-27-28.jpg",
+    "captured": "2026-07-09T00:27:28",
+    "world": "english.hub",
+    "description_en": "I met the Singaporean friend [[smoketees]] again!",
+    "description_zh": "我再次遇见了新加坡朋友 [[smoketees]]！",
+    "friend": ["smoketees"]
+  },
+  {
+    "id": 116,
+    "filename": "VRChat_2026-07-09_00-35-54.jpg",
+    "captured": "2026-07-09T00:35:54",
+    "world": "english.hub",
+    "description_en": "Just an ordinary S'pore policeman and an ordinary Indo boy...(SE Asia joke)",
+    "description_zh": "只是一个普通的新加坡警察和普通的印尼男孩...(东南亚笑话)",
+    "friend": ["smoketees", "natasu", "moon_beam"]
+  },
+  {
+    "id": 117,
+    "filename": "VRChat_2026-07-09_01-08-00.jpg",
+    "captured": "2026-07-09T01:08:00",
+    "world": "english.hub",
+    "description_en": "American friends [[moon_beam]], [[lee_priest]] and Indonesian friend [[natasu]]! I shared them many delicious foods in my city and we also discussed about many eating and cultral differences.",
+    "description_zh": "还有我的美国朋友 [[moon_beam]]、[[lee_priest]] 以及印尼朋友 [[natasu]]！我给他们分享了许多我城市的美食，我们也探讨了饮食习惯和文化方面的诸多差异。",
+    "friend": ["moon_beam", "natasu", "lee_priest"]
   }
 ]

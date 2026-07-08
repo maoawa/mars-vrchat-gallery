@@ -232,5 +232,34 @@
   {
     "id": "rinqt",
     "name_en": "Rinqt"
+  },
+  {
+    "id": "alba",
+    "name_en": "Alba"
+  },
+  {
+    "id": "ninkaze",
+    "name_en": "Ninkaze",
+    "name_zh": "忍风"
+  },
+  {
+    "id": "villagerm",
+    "name_en": "VillagerM"
+  },
+  {
+    "id": "smoketees",
+    "name_en": "Smoketees"
+  },
+  {
+    "id": "moon_beam",
+    "name_en": "Moon Beam"
+  },
+  {
+    "id": "natasu",
+    "name_en": "Natasu"
+  },
+  {
+    "id": "lee_priest",
+    "name_en": "Lee Priest"
   }
 ]

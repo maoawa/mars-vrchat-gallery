@@ -1520,5 +1520,139 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 110,
+    "tags": [
+      {
+        "friend": "alba",
+        "x": 59.4,
+        "y": 73
+      },
+      {
+        "friend": "ninkaze",
+        "x": 51.4,
+        "y": 48.2
+      }
+    ]
+  },
+  {
+    "photo": 111,
+    "tags": [
+      {
+        "friend": "tony",
+        "x": 19.2,
+        "y": 45.3
+      },
+      {
+        "friend": "villagerm",
+        "x": 34.2,
+        "y": 56.4
+      },
+      {
+        "friend": "alba",
+        "x": 56,
+        "y": 29,
+        "position": "top"
+      },
+      {
+        "friend": "chi",
+        "x": 65.9,
+        "y": 46.6,
+        "position": "top"
+      },
+      {
+        "friend": "waterchan",
+        "x": 70.4,
+        "y": 81.7,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 112,
+    "tags": [
+      {
+        "friend": "chi",
+        "x": 49.9,
+        "y": 19.2,
+        "position": "top"
+      },
+      {
+        "friend": "waterchan",
+        "x": 59.6,
+        "y": 73.7,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 114,
+    "tags": [
+      {
+        "friend": "waterchan",
+        "x": 51.5,
+        "y": 47.8,
+        "position": "top"
+      },
+      {
+        "friend": "chi",
+        "x": 68,
+        "y": 62.5
+      }
+    ]
+  },
+  {
+    "photo": 115,
+    "tags": [
+      {
+        "friend": "smoketees",
+        "x": 67.9,
+        "y": 75.4
+      }
+    ]
+  },
+  {
+    "photo": 116,
+    "tags": [
+      {
+        "friend": "smoketees",
+        "x": 36.7,
+        "y": 63
+      },
+      {
+        "friend": "natasu",
+        "x": 55.3,
+        "y": 75.6
+      },
+      {
+        "friend": "moon_beam",
+        "x": 76.3,
+        "y": 65.3,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 117,
+    "tags": [
+      {
+        "friend": "moon_beam",
+        "x": 52.7,
+        "y": 47,
+        "position": "top"
+      },
+      {
+        "friend": "natasu",
+        "x": 73.5,
+        "y": 71.4
+      },
+      {
+        "friend": "lee_priest",
+        "x": 53.1,
+        "y": 32.9,
+        "position": "right"
+      }
+    ]
   }
 ]
