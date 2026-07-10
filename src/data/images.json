@@ -1125,5 +1125,23 @@
     "description_en": "American friends [[moon_beam]], [[lee_priest]] and Indonesian friend [[natasu]]! I shared them many delicious foods in my city and we also discussed about many eating and cultral differences.",
     "description_zh": "还有我的美国朋友 [[moon_beam]]、[[lee_priest]] 以及印尼朋友 [[natasu]]！我给他们分享了许多我城市的美食，我们也探讨了饮食习惯和文化方面的诸多差异。",
     "friend": ["moon_beam", "natasu", "lee_priest"]
+  },
+  {
+    "id": 118,
+    "filename": "VRChat_2026-07-10_23-04-54.jpg",
+    "captured": "2026-07-10T23:04:54",
+    "world": "",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["eunoiv"]
+  },
+  {
+    "id": 119,
+    "filename": "VRChat_2026-07-11_00-40-24.jpg",
+    "captured": "2026-07-11T00:40:24",
+    "world": "english.hub",
+    "description_en": "I got exams tomorrow... But I'm still chilling with friends :)",
+    "description_zh": "我明天还要考试...但是我还是在和朋友们一起玩 :)",
+    "friend": ["aver", "yuma", "cutcyoud", "waterchan", "chi"]
   }
 ]

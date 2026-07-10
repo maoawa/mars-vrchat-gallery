@@ -5,10 +5,16 @@ export const languageCopy = {
     title: 'Mars VRChat Gallery',
     languageToggle: '中文',
     languageLabel: 'Switch language to Chinese',
+    introShort:
+      'If you find yourself in a photo but are not listed, please contact me, and please know it was not intentional.',
     introBeforeLink:
-      "Hi! I'm Mars. As you can see, this is my personal VRChat gallery. It's still under construction so I may forget to mention some friends. But I didn't mean to ignore them, and I do cherish every friends of mine. Please contact me using methods in ",
+      "Hi, I'm Mars, and this is my personal VRChat gallery. It is still growing, so I may occasionally miss a friend's name or forget to list someone in a photo. If that happens, please contact me through ",
     introAfterLink:
-      ' or buttons at the bottom or in game. Thanks for appearing in my life and I love you guys!',
+      ', the links below, or in game. It was never intentional. I treasure every friend and every memory here and thank you for being part of my life!',
+    introMore: 'More...',
+    introLess: 'Hide',
+    introDismiss: "Don't show this again",
+    socialLinksLabel: 'Social links',
     randomMemory: 'Random memory',
     specialEvent: 'Special event',
     showing: 'Showing',
@@ -31,16 +37,24 @@ export const languageCopy = {
     taggedFriends: 'Tagged friends',
     wechat: 'WeChat',
     qq: 'QQ',
-    copyright: '© 2026 Mars. All rights reserved.',
+    lastUpdated: 'Last Updated',
+    photoTimesNote: 'Photo times are shown in China Standard Time (UTC+8).',
+    copyrightBeforeLink: '© 2026 Mars.',
+    copyrightAfterLink: 'All rights reserved.',
   },
   zh: {
     title: '毛毛的 VRChat 相册',
     languageToggle: 'English',
     languageLabel: '切换语言为英语',
+    introShort: '如果你发现自己出现在照片里但没有被列出，请联系我，也请相信我不是故意的。',
     introBeforeLink:
-      '嗨！我是毛毛(Mars)。正如你所见，这是我的个人 VRChat 相册。这里仍在建设中，所以我可能会不小心漏掉一些朋友。但我绝不是有意忽略他们，我真心珍视我的每一位朋友。请通过 ',
+      '嗨！我是毛毛 (Mars)，这里是我的个人 VRChat 相册。它还在慢慢整理中，所以我有时可能会漏掉朋友的名字，或没有把照片里的人标完整。如果你发现这种情况，请通过 ',
     introAfterLink:
-      ' 上的方式或底部的按钮，或直接在游戏里联系我。感谢你们出现在我的生活中，我爱你们！',
+      '、下面的联系方式，或直接在游戏里联系我。这绝不是有意忽略你。我很珍惜这里的每位朋友和每段回忆，谢谢你们出现在我的生活里！',
+    introMore: '更多...',
+    introLess: '收起',
+    introDismiss: '不再显示这个提示',
+    socialLinksLabel: '社交链接',
     randomMemory: '随机回忆',
     specialEvent: '特别事件',
     showing: '正在显示',
@@ -63,7 +77,10 @@ export const languageCopy = {
     taggedFriends: '已标记的朋友',
     wechat: '微信',
     qq: 'QQ',
-    copyright: '© 2026 毛毛 (Mars) 保留所有权利',
+    lastUpdated: '最后更新',
+    photoTimesNote: '图片拍摄时间以中国标准时间显示 (UTC+8)',
+    copyrightBeforeLink: '© 2026 毛毛 (Mars).',
+    copyrightAfterLink: '保留所有权利',
   },
 } satisfies Record<Language, Record<string, string>>
 

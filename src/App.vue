@@ -106,8 +106,11 @@ const socialLinks: Array<{ label: string; icon: Icon; href: string }> = [
   { label: 'Discord', icon: 'discord', href: 'https://discord.com/users/742704239410675725' },
   { label: 'Facebook', icon: 'facebook', href: 'https://www.facebook.com/profile.php?id=100088742570811' },
   { label: 'Instagram', icon: 'instagram', href: 'https://www.instagram.com/winmemzqwq' },
-  { label: 'Email', icon: 'email', href: 'mailto:winmemzqwq@gmail.com' },
 ]
+const emailContact = { label: 'Email', icon: 'email' as Icon }
+const emailNameParts = ['winmemz', 'qwq']
+const emailDomainParts = ['gmail', 'com']
+const emailSchemeParts = ['ma', 'il', 'to']
 const specialEvents: SpecialEventView[] = specialEventRecords
   .map((event) => {
     const eventPhotos = event.photo_ids
@@ -142,6 +145,8 @@ const allGalleryRows: GalleryRow[] = photos
 
 const now = ref(Date.now())
 const currentLanguage = ref<Language>(detectPreferredLanguage())
+const introExpanded = ref(false)
+const introDismissed = ref(false)
 const activeIndex = ref<number | null>(null)
 const activePhotoList = ref<GalleryImage[] | null>(null)
 const activeFilter = ref<GalleryFilter | null>(null)
@@ -160,6 +165,7 @@ const swipeThreshold = 72
 const swipeAnimationDuration = 180
 const lightboxTagsVisibleStorageKey = 'gallery-lightbox-tags-visible'
 const tagsToggleTutorialStorageKey = 'gallery-tags-toggle-tutorial-complete'
+const introDismissedStorageKey = 'gallery-intro-dismissed'
 
 const zoomLevel = ref(1)
 const isDragging = ref(false)
@@ -194,6 +200,7 @@ let swipeAnimationTimer: number | undefined
 let clockTimer: number | undefined
 
 const copy = computed(() => languageCopy[currentLanguage.value])
+const buildTimeIso = __BUILD_TIME__
 const contactButtons = computed(() => [
   {
     id: 'wechat' as const,
@@ -344,6 +351,22 @@ const footerSummary = computed(() => {
 const footerDays = computed(() => {
   return `${copy.value.footerDaysBefore}${daysInVrchat.value}${copy.value.footerDaysAfter}`
 })
+const lastUpdatedText = computed(() => {
+  const buildTime = new Date(buildTimeIso)
+
+  if (Number.isNaN(buildTime.getTime())) {
+    return ''
+  }
+
+  return new Intl.DateTimeFormat(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(buildTime)
+})
+const lastUpdatedTimezone = computed(() => formatUtcOffset(new Date(buildTimeIso)))
 
 const activeFilterLabel = computed(() => {
   if (!activeFilter.value) {
@@ -703,6 +726,27 @@ function formatDate(capturedAt: string) {
 
 function toggleLanguage() {
   currentLanguage.value = currentLanguage.value === 'en' ? 'zh' : 'en'
+}
+
+function dismissIntro() {
+  introDismissed.value = true
+  introExpanded.value = false
+  window.localStorage.setItem(introDismissedStorageKey, 'true')
+}
+
+function formatUtcOffset(date: Date) {
+  const offsetMinutes = -date.getTimezoneOffset()
+  const sign = offsetMinutes >= 0 ? '+' : '-'
+  const absoluteMinutes = Math.abs(offsetMinutes)
+  const hours = Math.floor(absoluteMinutes / 60)
+  const minutes = absoluteMinutes % 60
+
+  return minutes === 0 ? `UTC${sign}${hours}` : `UTC${sign}${hours}:${String(minutes).padStart(2, '0')}`
+}
+
+function openEmail() {
+  const address = `${emailNameParts.join('')}@${emailDomainParts.join('.')}`
+  window.location.href = [emailSchemeParts.join(''), address].join(':')
 }
 
 function openQrContact(contactId: 'wechat' | 'qq') {
@@ -1435,6 +1479,7 @@ watch(lightboxTagsVisible, (isVisible) => {
 })
 
 onMounted(() => {
+  introDismissed.value = window.localStorage.getItem(introDismissedStorageKey) === 'true'
   loadLightboxTagsPreference()
   updateGalleryColumnCount()
   handleHashTarget()
@@ -1484,11 +1529,57 @@ onBeforeUnmount(() => {
 
     <header class="site-header">
       <h1>{{ copy.title }}</h1>
-      <p class="lede" :class="{ 'lede-cn': currentLanguage === 'zh' }">
-        {{ copy.introBeforeLink }}
-        <a href="https://maao.cc/" target="_blank" rel="noreferrer">maao.cc</a>
-        {{ copy.introAfterLink }}
-      </p>
+      <div v-if="!introDismissed" class="lede" :class="{ 'lede-cn': currentLanguage === 'zh' }">
+        <p>
+          <template v-if="introExpanded">
+            {{ copy.introBeforeLink }}
+            <a href="https://maao.cc/" target="_blank" rel="noreferrer">maao.cc</a>
+            {{ copy.introAfterLink }}
+          </template>
+          <template v-else>
+            {{ copy.introShort }}
+          </template>
+          <button class="lede-inline-button" type="button" :aria-expanded="introExpanded" @click="introExpanded = !introExpanded">
+            {{ introExpanded ? copy.introLess : copy.introMore }}
+          </button>
+        </p>
+        <button v-if="introExpanded" class="lede-dismiss-button" type="button" @click="dismissIntro">
+          {{ copy.introDismiss }}
+        </button>
+      </div>
+
+      <nav class="footer-social header-social" :aria-label="copy.socialLinksLabel">
+        <a
+          v-for="link in socialLinks"
+          :key="link.label"
+          :href="link.href"
+          :aria-label="link.label"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <svg aria-hidden="true" class="social-icon" :viewBox="icons[link.icon].viewBox">
+            <path v-for="path in icons[link.icon].paths" :key="path" :d="path" />
+          </svg>
+        </a>
+
+        <button type="button" :aria-label="emailContact.label" @click="openEmail">
+          <svg aria-hidden="true" class="social-icon" :viewBox="icons[emailContact.icon].viewBox">
+            <path v-for="path in icons[emailContact.icon].paths" :key="path" :d="path" />
+          </svg>
+        </button>
+
+        <button
+          v-for="contact in contactButtons"
+          :key="contact.id"
+          type="button"
+          :aria-label="contact.label"
+          @click="openQrContact(contact.id)"
+        >
+          <svg aria-hidden="true" class="social-icon" :viewBox="icons[contact.icon].viewBox">
+            <path v-for="path in icons[contact.icon].paths" :key="path" :d="path" />
+          </svg>
+        </button>
+      </nav>
     </header>
 
     <section v-if="randomOuting" class="random-outing" aria-label="Random outing">
@@ -1813,42 +1904,28 @@ onBeforeUnmount(() => {
       <p>{{ footerDays }}</p>
     </div>
 
-    <nav class="footer-social" aria-label="Social links">
-      <a
-        v-for="link in socialLinks"
-        :key="link.label"
-        :href="link.href"
-        :aria-label="link.label"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <svg aria-hidden="true" class="social-icon" :viewBox="icons[link.icon].viewBox">
-          <path v-for="path in icons[link.icon].paths" :key="path" :d="path" />
-        </svg>
-      </a>
-
-      <button
-        v-for="contact in contactButtons"
-        :key="contact.id"
-        type="button"
-        :aria-label="contact.label"
-        @click="openQrContact(contact.id)"
-      >
-        <svg aria-hidden="true" class="social-icon" :viewBox="icons[contact.icon].viewBox">
-          <path v-for="path in icons[contact.icon].paths" :key="path" :d="path" />
-        </svg>
-      </button>
-    </nav>
-
     <div class="footer-contact">
-      <p>{{ copy.copyright }}</p>
+      <p>{{ copy.photoTimesNote }}</p>
+      <p v-if="lastUpdatedText">
+        {{ copy.lastUpdated }}:
+        <time :datetime="buildTimeIso">{{ lastUpdatedText }} ({{ lastUpdatedTimezone }})</time>
+      </p>
+      <p>
+        {{ copy.copyrightBeforeLink }}
+        <a href="https://maao.cc/" target="_blank" rel="noreferrer">maao.cc</a>
+        {{ copy.copyrightAfterLink }}
+      </p>
     </div>
   </footer>
 
   <Teleport to="body">
     <div v-if="activeQrContact" class="qr-modal" role="dialog" aria-modal="true" @click.self="closeQrContact">
       <section class="qr-panel" :aria-label="activeQrContact.label">
-        <button class="qr-close" type="button" :aria-label="copy.close" @click="closeQrContact">x</button>
+        <button class="qr-close" type="button" :aria-label="copy.close" @click="closeQrContact">
+          <svg aria-hidden="true" class="close-icon" :viewBox="icons.close.viewBox">
+            <path v-for="path in icons.close.paths" :key="path" :d="path" />
+          </svg>
+        </button>
         <img class="qr-image" :src="activeQrContact.qrPath" :alt="`${activeQrContact.label} QR code`" />
         <div class="qr-caption">
           <p>{{ activeQrContact.label }}</p>
@@ -1860,7 +1937,9 @@ onBeforeUnmount(() => {
     <div v-if="activePhoto" class="lightbox" role="dialog" aria-modal="true" @click.self="closeLightbox">
       <figure class="lightbox-panel" :class="{ 'is-chrome-hidden': !lightboxControlsVisible }">
         <button class="lightbox-button lightbox-close" type="button" :aria-label="copy.close" @click="closeLightbox">
-          x
+          <svg aria-hidden="true" class="close-icon" :viewBox="icons.close.viewBox">
+            <path v-for="path in icons.close.paths" :key="path" :d="path" />
+          </svg>
         </button>
         <button v-if="currentLightboxPhotos.length > 1" class="lightbox-button lightbox-prev" type="button" :aria-label="copy.previous" @click="showPreviousPhoto">
           &lt;

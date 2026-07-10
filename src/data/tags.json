@@ -1654,5 +1654,46 @@
         "position": "right"
       }
     ]
+  },
+  {
+    "photo": 118,
+    "tags": [
+      {
+        "friend": "eunoiv",
+        "x": 49.3,
+        "y": 84.6
+      }
+    ]
+  },
+  {
+    "photo": 119,
+    "tags": [
+      {
+        "friend": "aver",
+        "x": 29.6,
+        "y": 59
+      },
+      {
+        "friend": "yuma",
+        "x": 48.8,
+        "y": 78.9
+      },
+      {
+        "friend": "cutcyoud",
+        "x": 55,
+        "y": 32.1,
+        "position": "top"
+      },
+      {
+        "friend": "waterchan",
+        "x": 58.2,
+        "y": 76
+      },
+      {
+        "friend": "chi",
+        "x": 63.7,
+        "y": 41.9
+      }
+    ]
   }
 ]
