@@ -1143,5 +1143,54 @@
     "description_en": "I got exams tomorrow... But I'm still chilling with friends :)",
     "description_zh": "我明天还要考试...但是我还是在和朋友们一起玩 :)",
     "friend": ["aver", "yuma", "cutcyoud", "waterchan", "chi"]
+  },
+  {
+    "id": 120,
+    "filename": "VRChat_2026-07-12_01-05-01.jpg",
+    "captured": "2026-07-12T01:05:01",
+    "world": "english.hub",
+    "description_en": "The freaking sweet SUMMER VACATION HAHAHAHAA! Also my first time joining VRChat with full-body tracking.",
+    "description_zh": "美妙的暑假哈哈哈！这也是我第一次用全身追踪玩 VRChat。",
+    "friend": ["theo", "moon_beam", "waterchan"],
+    "linked": [121]
+  },
+  {
+    "id": 121,
+    "filename": "VRChat_2026-07-12_01-05-25.jpg",
+    "captured": "2026-07-12T01:05:25",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["theo", "moon_beam", "waterchan"],
+    "parent": 120
+  },
+  {
+    "id": 122,
+    "filename": "VRChat_2026-07-12_01-46-16.jpg",
+    "captured": "2026-07-12T01:46:16",
+    "world": "english.hub",
+    "description_en": "It's good to meet old friend [[luse]] again and he showed us his new outfits.",
+    "description_zh": "能遇见老朋友 [[luse]] 真好，他还向我们展示了他的新服装。",
+    "friend": ["luse", "moon_beam", "theo", "smoketees"]
+  },
+  {
+    "id": 123,
+    "filename": "VRChat_2026-07-12_02-15-12.jpg",
+    "captured": "2026-07-12T02:15:12",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["tarik", "moon_beam", "eunoiv", "theo"],
+    "linked": [124]
+  },
+  {
+    "id": 124,
+    "filename": "VRChat_2026-07-12_02-16-16.jpg",
+    "captured": "2026-07-12T02:16:16",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["tarik", "moon_beam", "eunoiv", "theo"],
+    "parent": 123
   }
 ]
