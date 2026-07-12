@@ -58,5 +58,10 @@
     "id": "houhai.ktv",
     "name_en": "Houhai KTV",
     "name_zh": "后海KTV"
+  },
+  {
+    "id": "fish",
+    "name_en": "Fish!",
+    "name_zh": "钓鱼!"
   }
 ]

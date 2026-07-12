@@ -277,5 +277,22 @@
   {
     "id": "tarik",
     "name_en": "Tarik"
+  },
+  {
+    "id": "rinkago",
+    "name_en": "Rinkago"
+  },
+  {
+    "id": "li_hua",
+    "name_en": "Li Hua",
+    "name_zh": "李华"
+  },
+  {
+    "id": "ikeren",
+    "name_en": "Ikeren"
+  },
+  {
+    "id": "sozo",
+    "name_en": "Sozo"
   }
 ]
