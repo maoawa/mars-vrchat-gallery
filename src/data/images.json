@@ -1290,5 +1290,43 @@
     "description_zh": "[[waterchan]] 这是在冥想...？",
     "friend": ["waterchan"],
     "parent": 133
+  },
+  {
+    "id": 135,
+    "filename": "VRChat_2026-07-14_01-01-41.jpg",
+    "captured": "2026-07-14T01:01:41",
+    "world": "english.hub",
+    "description_en": "Sharing my stories in public feels like giving a speech. And it's so good that I got many people listen to me.",
+    "description_zh": "公开分享我的故事感觉就像在发表演讲。能有这么多人愿意倾听，真是一件很棒的事。",
+    "friend": ["theo", "yosinmite", "chi", "marmighty", "ikeren"],
+    "linked": [136]
+  },
+  {
+    "id": 136,
+    "filename": "VRChat_2026-07-14_01-09-20.jpg",
+    "captured": "2026-07-14T01:09:20",
+    "world": "english.hub",
+    "description_en": "Why there are suddenly so many people??",
+    "description_zh": "为什么突然有了这么多人？？",
+    "friend": ["theo", "chi", "marmighty"],
+    "parent": 135
+  },
+  {
+    "id": 137,
+    "filename": "VRChat_2026-07-14_01-18-32.jpg",
+    "captured": "2026-07-14T01:18:32",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["marmighty", "chi", "theo"]
+  },
+  {
+    "id": 138,
+    "filename": "VRChat_2026-07-14_02-06-33.jpg",
+    "captured": "2026-07-14T02:06:33",
+    "world": "english.hub",
+    "description_en": "Thank y'all for listening to and sharing own stories with each other!",
+    "description_zh": "感谢大家倾听并互相分享彼此的故事！",
+    "friend": ["chi", "waterchan", "theo", "marmighty"]
   }
 ]
