@@ -2046,5 +2046,103 @@
         "y": 68.3
       }
     ]
+  },
+  {
+    "photo": 139,
+    "tags": [
+      {
+        "friend": "theo",
+        "x": 50,
+        "y": 50
+      }
+    ]
+  },
+  {
+    "photo": 140,
+    "tags": [
+      {
+        "friend": "chi",
+        "x": 32.8,
+        "y": 72.7
+      },
+      {
+        "friend": "neru",
+        "x": 49.8,
+        "y": 76.4
+      },
+      {
+        "friend": "kerry",
+        "x": 60.5,
+        "y": 55
+      },
+      {
+        "friend": "li_hua",
+        "x": 71.9,
+        "y": 47.4
+      }
+    ]
+  },
+  {
+    "photo": 141,
+    "tags": [
+      {
+        "friend": "neru",
+        "x": 43,
+        "y": 53
+      },
+      {
+        "friend": "chi",
+        "x": 61.1,
+        "y": 23.2,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 142,
+    "tags": [
+      {
+        "friend": "chi",
+        "x": 20.8,
+        "y": 67.7
+      }
+    ]
+  },
+  {
+    "photo": 143,
+    "tags": [
+      {
+        "friend": "neru",
+        "x": 27,
+        "y": 48.1,
+        "position": "top"
+      },
+      {
+        "friend": "chi",
+        "x": 64.5,
+        "y": 63.3
+      }
+    ]
+  },
+  {
+    "photo": 144,
+    "tags": [
+      {
+        "friend": "chi",
+        "x": 40.2,
+        "y": 53
+      },
+      {
+        "friend": "moon_beam",
+        "x": 71.4,
+        "y": 53
+      },
+      {
+        "friend": "waterchan",
+        "x": 86.6,
+        "y": 31.1,
+        "position": "top"
+      }
+    ]
   }
 ]

@@ -1328,5 +1328,61 @@
     "description_en": "Thank y'all for listening to and sharing own stories with each other!",
     "description_zh": "感谢大家倾听并互相分享彼此的故事！",
     "friend": ["chi", "waterchan", "theo", "marmighty"]
+  },
+  {
+    "id": 139,
+    "filename": "VRChat_2026-07-15_02-12-22.jpg",
+    "captured": "2026-07-15T02:12:22",
+    "world": "english.hub",
+    "description_en": "A friend from Russia asks me if I'm living in {{english.hub}} because she sees me every single day. Uh, fair enough, maybe yes..?",
+    "description_zh": "一个来自俄罗斯的朋友问我是不是住在{{english.hub}}。额，好吧，可能确实..？",
+    "friend": ["theo"]
+  },
+  {
+    "id": 140,
+    "filename": "VRChat_2026-07-15_03-27-25.jpg",
+    "captured": "2026-07-15T03:27:25",
+    "world": "english.hub",
+    "description_en": "Many Malaysian friends were here and listening to my stories of learning English!",
+    "description_zh": "这里有很多马来西亚朋友听我分享自己学英语的故事！",
+    "friend": ["chi", "neru", "kerry", "li_hua"]
+  },
+  {
+    "id": 141,
+    "filename": "VRChat_2026-07-15_04-01-39.jpg",
+    "captured": "2026-07-15T04:01:39",
+    "world": "english.hub",
+    "description_en": "[[chi]] is building a tomato cage for [[neru]].",
+    "description_zh": "[[chi]] 正在给 [[neru]] 造一个西红柿笼子。",
+    "friend": ["neru", "chi"]
+  },
+  {
+    "id": 142,
+    "filename": "VRChat_2026-07-15_04-05-16.jpg",
+    "captured": "2026-07-15T04:05:16",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["chi"],
+    "parent": 143
+  },
+  {
+    "id": 143,
+    "filename": "VRChat_2026-07-15_04-07-29.jpg",
+    "captured": "2026-07-15T04:07:29",
+    "world": "english.hub",
+    "description_en": "We're literally teaching [[chi]] how to write Chinese characters and picking a Chinese name for her!",
+    "description_zh": "我们在教 [[chi]] 如何写中文字，还在帮她选她的中文名字！",
+    "friend": ["neru", "chi"],
+    "linked": [142]
+  },
+  {
+    "id": 144,
+    "filename": "VRChat_2026-07-15_05-33-08.jpg",
+    "captured": "2026-07-15T05:33:08",
+    "world": "english.hub",
+    "description_en": "Chill time!",
+    "description_zh": "放松时间！",
+    "friend": ["chi", "moon_beam", "waterchan"]
   }
 ]
