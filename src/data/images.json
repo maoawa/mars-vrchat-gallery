@@ -1336,7 +1336,7 @@
     "world": "english.hub",
     "description_en": "A friend from Russia asks me if I'm living in {{english.hub}} because she sees me every single day. Uh, fair enough, maybe yes..?",
     "description_zh": "一个来自俄罗斯的朋友问我是不是住在{{english.hub}}。额，好吧，可能确实..？",
-    "friend": ["theo"]
+    "friend": ["ayashi", "theo"]
   },
   {
     "id": 140,

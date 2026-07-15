@@ -2051,9 +2051,16 @@
     "photo": 139,
     "tags": [
       {
+        "friend": "ayashi",
+        "x": 56.6,
+        "y": 45.3,
+        "position": "top"
+      },
+      {
         "friend": "theo",
-        "x": 50,
-        "y": 50
+        "x": 90.9,
+        "y": 42.6,
+        "position": "top"
       }
     ]
   },
