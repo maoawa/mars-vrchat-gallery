@@ -63,5 +63,10 @@
     "id": "fish",
     "name_en": "Fish!",
     "name_zh": "钓鱼!"
+  },
+  {
+    "id": "en.jp.language.exchange",
+    "name_en": "EN-JP Language Exchange",
+    "name_zh": "英语-日语语言交换"
   }
 ]

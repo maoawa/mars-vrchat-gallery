@@ -1393,5 +1393,32 @@
     "description_en": "",
     "description_zh": "",
     "friend": ["chi", "jacque"]
+  },
+  {
+    "id": 146,
+    "filename": "VRChat_2026-07-17_00-11-06.jpg",
+    "captured": "2026-07-17T00:11:06",
+    "world": "en.jp.language.exchange",
+    "description_en": "I joined [[moon_beam]] in {{en.jp.language.exchange}} and met two amazing Japanese friends. We talked about J-pop, which is my favourite few years ago.",
+    "description_zh": "我加入了在{{en.jp.language.exchange}} 里的 [[moon_beam]]，结识了两位很棒的日本朋友。我们聊到了 J-pop，那曾是我几年前的最爱。",
+    "friend": ["moon_beam", "neru"]
+  },
+  {
+    "id": 147,
+    "filename": "VRChat_2026-07-17_01-40-26.jpg",
+    "captured": "2026-07-17T01:40:26",
+    "world": "english.hub",
+    "description_en": "We got a foodpanda squad here!",
+    "description_zh": "这里有一支 foodpanda 外卖小队！",
+    "friend": [""]
+  },
+  {
+    "id": 148,
+    "filename": "VRChat_2026-07-17_01-41-28.jpg",
+    "captured": "2026-07-17T01:41:28",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["kerry"]
   }
 ]
