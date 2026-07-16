@@ -1384,5 +1384,14 @@
     "description_en": "Chill time!",
     "description_zh": "放松时间！",
     "friend": ["chi", "moon_beam", "waterchan"]
+  },
+  {
+    "id": 145,
+    "filename": "VRChat_2026-07-16_13-08-38.jpg",
+    "captured": "2026-07-16T13:08:38",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["chi", "jacque"]
   }
 ]

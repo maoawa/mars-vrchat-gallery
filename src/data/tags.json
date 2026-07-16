@@ -2151,5 +2151,22 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 145,
+    "tags": [
+      {
+        "friend": "chi",
+        "x": 28.3,
+        "y": 31.3,
+        "position": "top"
+      },
+      {
+        "friend": "jacque",
+        "x": 40.7,
+        "y": 45.7,
+        "position": "top"
+      }
+    ]
   }
 ]
