@@ -2078,7 +2078,7 @@
         "y": 76.4
       },
       {
-        "friend": "kerry",
+        "friend": "karry",
         "x": 60.5,
         "y": 55
       },
@@ -2188,9 +2188,57 @@
     "photo": 148,
     "tags": [
       {
-        "friend": "kerry",
+        "friend": "karry",
         "x": 35.1,
         "y": 63.2
+      }
+    ]
+  },
+  {
+    "photo": 149,
+    "tags": [
+      {
+        "friend": "marmighty",
+        "x": 37.4,
+        "y": 59
+      },
+      {
+        "friend": "neru",
+        "x": 63.2,
+        "y": 27.1
+      }
+    ]
+  },
+  {
+    "photo": 150,
+    "tags": [
+      {
+        "friend": "mawusu",
+        "x": 57.6,
+        "y": 21.3,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 151,
+    "tags": [
+      {
+        "friend": "chi",
+        "x": 21.7,
+        "y": 54.7
+      },
+      {
+        "friend": "karry",
+        "x": 44.2,
+        "y": 32.4,
+        "position": "top"
+      },
+      {
+        "friend": "neru",
+        "x": 49.2,
+        "y": 66.7,
+        "position": "top"
       }
     ]
   }

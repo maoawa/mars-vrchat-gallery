@@ -1345,7 +1345,7 @@
     "world": "english.hub",
     "description_en": "Many Malaysian friends were here and listening to my stories of learning English!",
     "description_zh": "这里有很多马来西亚朋友听我分享自己学英语的故事！",
-    "friend": ["chi", "neru", "kerry", "li_hua"]
+    "friend": ["chi", "neru", "karry", "li_hua"]
   },
   {
     "id": 141,
@@ -1419,6 +1419,33 @@
     "world": "english.hub",
     "description_en": "",
     "description_zh": "",
-    "friend": ["kerry"]
+    "friend": ["karry"]
+  },
+  {
+    "id": 149,
+    "filename": "VRChat_2026-07-17_18-40-34.jpg",
+    "captured": "2026-07-17T18:40:34",
+    "world": "en.jp.language.exchange",
+    "description_en": "I shared my stories with [[marmighty]], [[neru]] and new friends!",
+    "description_zh": "我和 [[marmighty]]、[[neru]] 和新朋友们分享了我的故事！",
+    "friend": ["marmighty", "neru"]
+  },
+  {
+    "id": 150,
+    "filename": "VRChat_2026-07-18_00-56-56.jpg",
+    "captured": "2026-07-18T00:56:56",
+    "world": "english.hub",
+    "description_en": "It's been a while since I last met [[mawusu]]!",
+    "description_zh": "好久不见，[[mawusu]]！",
+    "friend": ["mawusu"]
+  },
+  {
+    "id": 151,
+    "filename": "VRChat_2026-07-18_02-31-32.jpg",
+    "captured": "2026-07-18T02:31:32",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["chi", "karry", "neru"]
   }
 ]
