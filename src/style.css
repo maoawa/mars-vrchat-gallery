@@ -715,6 +715,10 @@ h1 {
   fill: currentColor;
 }
 
+.social-icon--home path {
+  fill: url("#personal-home-gradient");
+}
+
 .close-icon {
   display: block;
   width: 18px;

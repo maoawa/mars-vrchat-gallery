@@ -100,6 +100,7 @@ const editableTagsByPhotoId = new Map(
   ]),
 )
 const socialLinks: Array<{ label: string; icon: Icon; href: string }> = [
+  { label: 'maao.cc', icon: 'home', href: 'https://maao.cc/' },
   { label: 'GitHub', icon: 'github', href: 'https://github.com/maoawa/mars-vrchat-gallery' },
   { label: 'X', icon: 'x', href: 'https://twitter.com/winmemzqwq' },
   { label: 'Telegram', icon: 'telegram', href: 'https://t.me/maoawa' },
@@ -1557,7 +1558,20 @@ onBeforeUnmount(() => {
           target="_blank"
           rel="noreferrer"
         >
-          <svg aria-hidden="true" class="social-icon" :viewBox="icons[link.icon].viewBox">
+          <svg
+            aria-hidden="true"
+            class="social-icon"
+            :class="{ 'social-icon--home': link.icon === 'home' }"
+            :viewBox="icons[link.icon].viewBox"
+          >
+            <defs v-if="link.icon === 'home'">
+              <linearGradient id="personal-home-gradient" x1="88" y1="72" x2="552" y2="576" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#f4d6aa" />
+                <stop offset="0.36" stop-color="#9fd2bd" />
+                <stop offset="0.68" stop-color="#b7c7ff" />
+                <stop offset="1" stop-color="#f0b6d7" />
+              </linearGradient>
+            </defs>
             <path v-for="path in icons[link.icon].paths" :key="path" :d="path" />
           </svg>
         </a>
