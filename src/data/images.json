@@ -1447,5 +1447,50 @@
     "description_en": "",
     "description_zh": "",
     "friend": ["chi", "karry", "neru"]
+  },
+  {
+    "id": 152,
+    "filename": "VRChat_2026-07-20_00-02-46.jpg",
+    "captured": "2026-07-20T00:02:46",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["tea", "rinkago", "moon_beam", "ikeren", "theo"]
+  },
+  {
+    "id": 153,
+    "filename": "VRChat_2026-07-20_02-25-16.jpg",
+    "captured": "2026-07-20T02:25:16",
+    "world": "midnight.rooftop",
+    "description_en": "I dropped by in [[aiko]]'s world and met many new friendly friends!",
+    "description_zh": "我造访了 [[aiko]] 的世界，结识了许多友善的新朋友！",
+    "friend": ["aiko", "envy"]
+  },
+  {
+    "id": 154,
+    "filename": "VRChat_2026-07-20_02-45-28.jpg",
+    "captured": "2026-07-20T02:45:28",
+    "world": "midnight.rooftop",
+    "description_en": "Great to meet a new friend [[envy]] who's also learning English. We both agree that VRChat is such a good game to practise and make friends!",
+    "description_zh": "很高兴结识了一位同样在学习英语的新朋友 [[envy]]。我们都觉得 VRChat 是一款非常适合练习英语和结交朋友的好游戏！",
+    "friend": ["envy"]
+  },
+  {
+    "id": 155,
+    "filename": "VRChat_2026-07-20_03-26-04.jpg",
+    "captured": "2026-07-20T03:26:04",
+    "world": "english.hub",
+    "description_en": "[[yuma]] has a cool avatar and I can even pick him up!",
+    "description_zh": "[[yuma]] 的模型很酷，我甚至能把他提起来！",
+    "friend": ["yuma"]
+  },
+  {
+    "id": 156,
+    "filename": "VRChat_2026-07-20_04-13-28.jpg",
+    "captured": "2026-07-20T04:13:28",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["karry"]
   }
 ]

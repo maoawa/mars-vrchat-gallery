@@ -2241,5 +2241,80 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 152,
+    "tags": [
+      {
+        "friend": "tea",
+        "x": 27.4,
+        "y": 58.7
+      },
+      {
+        "friend": "rinkago",
+        "x": 52.9,
+        "y": 30.7
+      },
+      {
+        "friend": "moon_beam",
+        "x": 59.6,
+        "y": 53.3
+      },
+      {
+        "friend": "ikeren",
+        "x": 74.2,
+        "y": 45.1
+      },
+      {
+        "friend": "theo",
+        "x": 72.6,
+        "y": 70
+      }
+    ]
+  },
+  {
+    "photo": 153,
+    "tags": [
+      {
+        "friend": "aiko",
+        "x": 39.6,
+        "y": 54.8
+      },
+      {
+        "friend": "envy",
+        "x": 60.8,
+        "y": 39.8
+      }
+    ]
+  },
+  {
+    "photo": 154,
+    "tags": [
+      {
+        "friend": "envy",
+        "x": 72.3,
+        "y": 68.5
+      }
+    ]
+  },
+  {
+    "photo": 155,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 66.5,
+        "y": 62.5
+      }
+    ]
+  },
+  {
+    "photo": 156,
+    "tags": [
+      {
+        "friend": "karry",
+        "x": 72.3,
+        "y": 66.2
+      }
+    ]
   }
 ]
