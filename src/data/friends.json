@@ -322,5 +322,9 @@
   {
     "id": "envy",
     "name_en": "Envy"
+  },
+  {
+    "id": "ag",
+    "name_en": "AG"
   }
 ]

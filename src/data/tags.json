@@ -2316,5 +2316,134 @@
         "y": 66.2
       }
     ]
+  },
+  {
+    "photo": 157,
+    "tags": [
+      {
+        "friend": "chi",
+        "x": 16.6,
+        "y": 60.2
+      },
+      {
+        "friend": "disguiser",
+        "x": 55.2,
+        "y": 57.5
+      },
+      {
+        "friend": "theo",
+        "x": 70.6,
+        "y": 71.1
+      },
+      {
+        "friend": "neru",
+        "x": 74.9,
+        "y": 37.3,
+        "position": "top"
+      },
+      {
+        "friend": "envy",
+        "x": 90.4,
+        "y": 65.2
+      }
+    ]
+  },
+  {
+    "photo": 158,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 24.7,
+        "y": 52
+      },
+      {
+        "friend": "chi",
+        "x": 42.4,
+        "y": 28.3,
+        "position": "top"
+      },
+      {
+        "friend": "ag",
+        "x": 50.2,
+        "y": 25.5,
+        "position": "top"
+      },
+      {
+        "friend": "ikeren",
+        "x": 60.1,
+        "y": 23.1,
+        "position": "top"
+      },
+      {
+        "friend": "theo",
+        "x": 74.8,
+        "y": 27.1,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 159,
+    "tags": [
+      {
+        "friend": "envy",
+        "x": 54.1,
+        "y": 10.7,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 160,
+    "tags": [
+      {
+        "friend": "ikeren",
+        "x": 30.3,
+        "y": 25.6,
+        "position": "top"
+      },
+      {
+        "friend": "theo",
+        "x": 81.7,
+        "y": 75.7,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 161,
+    "tags": [
+      {
+        "friend": "chi",
+        "x": 64.6,
+        "y": 59.4
+      },
+      {
+        "friend": "ag",
+        "x": 70.3,
+        "y": 10.2,
+        "position": "top"
+      },
+      {
+        "friend": "theo",
+        "x": 71.9,
+        "y": 75.6
+      }
+    ]
+  },
+  {
+    "photo": 162,
+    "tags": [
+      {
+        "friend": "ag",
+        "x": 39.5,
+        "y": 39.9
+      },
+      {
+        "friend": "theo",
+        "x": 46,
+        "y": 44.5
+      }
+    ]
   }
 ]
