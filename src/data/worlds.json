@@ -73,5 +73,10 @@
     "id": "midnight.rooftop",
     "name_en": "Midnight Rooftop",
     "name_zh": "午夜屋顶"
+  },
+  {
+    "id": "cozy.cottage",
+    "name_en": "Cozy Cottage",
+    "name_zh": "温馨小屋"
   }
 ]

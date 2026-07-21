@@ -2445,5 +2445,42 @@
         "y": 44.5
       }
     ]
+  },
+  {
+    "photo": 163,
+    "tags": [
+      {
+        "friend": "karry",
+        "x": 44.3,
+        "y": 66.1
+      },
+      {
+        "friend": "neru",
+        "x": 54.3,
+        "y": 70.9
+      },
+      {
+        "friend": "eunoiv",
+        "x": 60.9,
+        "y": 78.9,
+        "position": "top"
+      },
+      {
+        "friend": "theo",
+        "x": 67.4,
+        "y": 69.2,
+        "position": "top"
+      },
+      {
+        "friend": "chi",
+        "x": 71.6,
+        "y": 69.2
+      },
+      {
+        "friend": "tea",
+        "x": 83.9,
+        "y": 70.6
+      }
+    ]
   }
 ]

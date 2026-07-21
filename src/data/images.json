@@ -103,7 +103,7 @@
     "world": "karaoke.central",
     "friend": ["wuyu"],
     "description_en": "Tried a karaoke world in VRChat, and surprisingly got two friends who listen to me.",
-    "description_zh": "试了一个 VRChat 里的卡拉 OK 世界，没想到居然有两个新朋友愿意听我唱。"
+    "description_zh": "试了一个 VRChat 里的卡拉OK世界，没想到居然有两个新朋友愿意听我唱。"
   },
   {
     "id": 12,
@@ -1498,8 +1498,8 @@
     "filename": "VRChat_2026-07-21_01-20-28.jpg",
     "captured": "2026-07-21T01:20:28",
     "world": "english.hub",
-    "description_en": "",
-    "description_zh": "",
+    "description_en": "It's been a while, [[disguiser]]. Today he dropped by real quick with us.",
+    "description_zh": "好久不见，[[disguiser]]。今天他抽空来和我们见了一面。",
     "friend": ["chi", "disguiser", "theo", "neru", "envy"]
   },
   {
@@ -1507,17 +1507,17 @@
     "filename": "VRChat_2026-07-21_02-28-14.jpg",
     "captured": "2026-07-21T02:28:14",
     "world": "english.hub",
-    "description_en": "",
-    "description_zh": "",
+    "description_en": "\"Our Uncle [[yuma]]!\"",
+    "description_zh": "“我们的 [[yuma]] 叔叔！”",
     "friend": ["yuma", "chi", "ag", "ikeren", "theo"]
   },
   {
     "id": 159,
     "filename": "VRChat_2026-07-21_02-47-15.jpg",
     "captured": "2026-07-21T02:47:15",
-    "world": "",
-    "description_en": "",
-    "description_zh": "",
+    "world": "cozy.cottage",
+    "description_en": "[[envy]] drew a cute cat.<br>\"Silly but cute,\" [[ikeren]] said.",
+    "description_zh": "[[envy]] 画了只可爱的小猫。<br>“傻傻的但很可爱” [[ikeren]] 说。",
     "friend": ["envy"],
     "parent": 160
   },
@@ -1525,9 +1525,9 @@
     "id": 160,
     "filename": "VRChat_2026-07-21_02-54-00.jpg",
     "captured": "2026-07-21T02:54:00",
-    "world": "",
-    "description_en": "",
-    "description_zh": "",
+    "world": "cozy.cottage",
+    "description_en": "Chilling with friends in a new world, that's so relaxing!",
+    "description_zh": "和朋友在新的世界里悠闲相聚，真是放松！",
     "friend": ["ikeren", "theo", "envy"],
     "linked": [159]
   },
@@ -1536,8 +1536,8 @@
     "filename": "VRChat_2026-07-21_04-12-48.jpg",
     "captured": "2026-07-21T04:12:48",
     "world": "taipei.karaoke",
-    "description_en": "",
-    "description_zh": "",
+    "description_en": "We had all said we were going to bed, but once we got to the karaoke, none of us felt sleepy anymore.<br>*NEVER GONNA GIVE YOU UP!*",
+    "description_zh": "本来我们都说要去睡觉，结果一来卡拉OK就都不困了。<br>你被骗了！",
     "friend": ["chi", "ag", "theo"],
     "linked": [162]
   },
@@ -1550,5 +1550,14 @@
     "description_zh": "",
     "friend": ["ag", "theo"],
     "parent": 161
+  },
+  {
+    "id": 163,
+    "filename": "VRChat_2026-07-22_00-42-53.jpg",
+    "captured": "2026-07-22T00:42:53",
+    "world": "taipei.karaoke",
+    "description_en": "I've been addicting to karaoke so much recently?",
+    "description_zh": "最近好像太沉迷于卡拉OK了？",
+    "friend": ["karry", "neru", "eunoiv", "theo", "chi", "tea"]
   }
 ]
