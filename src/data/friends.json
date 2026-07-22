@@ -279,6 +279,10 @@
     "name_en": "Tarik"
   },
   {
+    "id": "joshy",
+    "name_en": "Joshy"
+  },
+  {
     "id": "rinkago",
     "name_en": "Rinkago"
   },
@@ -326,5 +330,9 @@
   {
     "id": "ag",
     "name_en": "AG"
+  },
+  {
+    "id": "shin",
+    "name_en": "Shin"
   }
 ]

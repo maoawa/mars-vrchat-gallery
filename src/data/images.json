@@ -1180,7 +1180,7 @@
     "world": "english.hub",
     "description_en": "",
     "description_zh": "",
-    "friend": ["tarik", "moon_beam", "eunoiv", "theo"],
+    "friend": ["tarik", "joshy", "moon_beam", "eunoiv", "theo"],
     "linked": [124]
   },
   {
@@ -1190,7 +1190,7 @@
     "world": "english.hub",
     "description_en": "",
     "description_zh": "",
-    "friend": ["tarik", "moon_beam", "eunoiv", "theo"],
+    "friend": ["tarik", "moon_beam", "eunoiv", "joshy", "theo"],
     "parent": 123
   },
   {
@@ -1559,5 +1559,83 @@
     "description_en": "I've been addicting to karaoke so much recently?",
     "description_zh": "最近好像太沉迷于卡拉OK了？",
     "friend": ["karry", "neru", "eunoiv", "theo", "chi", "tea"]
+  },
+  {
+    "id": 164,
+    "filename": "VRChat_2026-07-23_00-26-10.jpg",
+    "captured": "2026-07-23T00:26:10",
+    "world": "rain.tea.concrete",
+    "description_en": "Chilling!",
+    "description_zh": "放松！",
+    "friend": ["chi", "infj_cloud", "shin", "semasan"]
+  },
+  {
+    "id": 165,
+    "filename": "VRChat_2026-07-23_00-53-53.jpg",
+    "captured": "2026-07-23T00:53:53",
+    "world": "karaoke.in.sync",
+    "description_en": "Here's the band of us!",
+    "description_zh": "这是我们的乐队！",
+    "friend": ["shin", "ag", "chi"],
+    "parent": 169
+  },
+  {
+    "id": 166,
+    "filename": "VRChat_2026-07-23_01-26-07.jpg",
+    "captured": "2026-07-23T01:26:07",
+    "world": "karaoke.in.sync",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["shin", "chi", "ag", "disguiser", "tea"],
+    "parent": 169
+  },
+  {
+    "id": 167,
+    "filename": "VRChat_2026-07-23_01-42-07.jpg",
+    "captured": "2026-07-23T01:42:07",
+    "world": "karaoke.in.sync",
+    "description_en": "We're glad to have [[disguiser]] here to play the guitar for us (he’s actually playing it!).",
+    "description_zh": "我们有幸请到了 [[disguiser]] 来为我们弹吉他（他真的在弹！）",
+    "friend": ["disguiser"],
+    "parent": 169
+  },
+  {
+    "id": 168,
+    "filename": "VRChat_2026-07-23_01-57-33.jpg",
+    "captured": "2026-07-23T01:57:33",
+    "world": "karaoke.in.sync",
+    "description_en": "[[yuma]] is so cute on the stage!",
+    "description_zh": "[[yuma]] 在舞台上好可爱！",
+    "friend": ["yuma"],
+    "parent": 169
+  },
+  {
+    "id": 169,
+    "filename": "VRChat_2026-07-23_02-22-32.jpg",
+    "captured": "2026-07-23T02:22:32",
+    "world": "karaoke.in.sync",
+    "description_en": "To myself of yesterday: YES.",
+    "description_zh": "致昨天的我自己：是的。",
+    "friend": ["joshy", "shin", "chi", "semasan", "ag", "yuma"],
+    "linked": [166, 165, 167, 168, 170]
+  },
+  {
+    "id": 170,
+    "filename": "VRChat_2026-07-23_02-41-52.jpg",
+    "captured": "2026-07-23T02:41:52",
+    "world": "karaoke.in.sync",
+    "description_en": "Two giant monsters [[chi]] and me picked up innocent [[yuma]] above the roof! 😈",
+    "description_zh": "[[chi]] 和我，两只巨大的怪物抓住了无辜的 [[yuma]]，把他提到了屋顶上！😈",
+    "friend": ["chi", "yuma"],
+    "parent": 169
+  },
+  {
+    "id": 171,
+    "filename": "VRChat_2026-07-23_03-35-37.jpg",
+    "captured": "2026-07-23T03:35:37",
+    "world": "starry.sky.cottage",
+    "description_en": "Singing the national anthem of Malaysia I just learned to my Malaysian friends.",
+    "description_zh": "给我的马来西亚朋友们唱了我刚学会的马来西亚国歌。",
+    "friend": ["karry", "neru"]
   }
 ]
