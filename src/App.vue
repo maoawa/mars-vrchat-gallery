@@ -458,6 +458,17 @@ function friendList(photo: GalleryImage) {
     }))
 }
 
+function outingFriendList(row: GalleryRow) {
+  const friendIds = [row.photo, ...row.linkedPhotos].flatMap((photo) => photo.friend)
+
+  return [...new Set(friendIds)]
+    .filter((friendId) => friendId.trim().length > 0)
+    .map((friendId) => ({
+      id: friendId,
+      name: friendName(friendId),
+    }))
+}
+
 function photoTagList(photo: GalleryImage): ResolvedPhotoTag[] {
   tagEditVersion.value
 
@@ -1652,10 +1663,10 @@ onBeforeUnmount(() => {
             </template>
           </p>
 
-          <div v-if="friendList(randomOuting.photo).length" class="friend-row" aria-label="Friends in this outing">
+          <div v-if="outingFriendList(randomOuting).length" class="friend-row" aria-label="Friends in this outing">
             <span>{{ copy.with }}</span>
             <button
-              v-for="friend in friendList(randomOuting.photo)"
+              v-for="friend in outingFriendList(randomOuting)"
               :key="friend.id"
               type="button"
               @click="applyFriendFilter(friend.id)"
@@ -1767,10 +1778,10 @@ onBeforeUnmount(() => {
                 </template>
               </p>
 
-              <div v-if="friendList(entry.row.photo).length" class="friend-row" aria-label="Friends in this photo">
+              <div v-if="outingFriendList(entry.row).length" class="friend-row" aria-label="Friends in this photo">
                 <span>{{ copy.with }}</span>
                 <button
-                  v-for="friend in friendList(entry.row.photo)"
+                  v-for="friend in outingFriendList(entry.row)"
                   :key="friend.id"
                   type="button"
                   @click="applyFriendFilter(friend.id)"

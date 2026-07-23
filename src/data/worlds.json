@@ -94,5 +94,10 @@
     "name_en": "Starry Sky Cottage",
     "name_zh": "星空小屋",
     "comment": "https://vrchat.com/home/launch?worldId=wrld_b606847b-d1a1-4b26-8b14-ae1aeab7574b"
+  },
+  {
+    "id": "japan.shrine",
+    "name_en": "Japan Shrine",
+    "name_zh": "日本神社"
   }
 ]

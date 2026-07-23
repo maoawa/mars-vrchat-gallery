@@ -2674,5 +2674,21 @@
         "y": 65.1
       }
     ]
+  },
+  {
+    "photo": 172,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 29.9,
+        "y": 68.2
+      },
+      {
+        "friend": "waterchan",
+        "x": 33.6,
+        "y": 20.6,
+        "position": "top"
+      }
+    ]
   }
 ]
