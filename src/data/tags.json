@@ -2690,5 +2690,186 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 173,
+    "tags": [
+      {
+        "friend": "joshy",
+        "x": 12,
+        "y": 31.9,
+        "position": "top"
+      },
+      {
+        "friend": "eric",
+        "x": 27.6,
+        "y": 27.3,
+        "position": "top"
+      },
+      {
+        "friend": "theo",
+        "x": 44,
+        "y": 42.9
+      }
+    ]
+  },
+  {
+    "photo": 174,
+    "tags": [
+      {
+        "friend": "eunoiv",
+        "x": 31.1,
+        "y": 39.2,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 175,
+    "tags": [
+      {
+        "friend": "eunoiv",
+        "x": 21.3,
+        "y": 60.9
+      }
+    ]
+  },
+  {
+    "photo": 176,
+    "tags": [
+      {
+        "friend": "eunoiv",
+        "x": 36.4,
+        "y": 40.8,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 177,
+    "tags": [
+      {
+        "friend": "eunoiv",
+        "x": 58.8,
+        "y": 70.3
+      }
+    ]
+  },
+  {
+    "photo": 178,
+    "tags": [
+      {
+        "friend": "eunoiv",
+        "x": 61.2,
+        "y": 68.3
+      }
+    ]
+  },
+  {
+    "photo": 179,
+    "tags": [
+      {
+        "friend": "eunoiv",
+        "x": 33.7,
+        "y": 58.3
+      }
+    ]
+  },
+  {
+    "photo": 180,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 39.1,
+        "y": 48
+      },
+      {
+        "friend": "chi",
+        "x": 64.6,
+        "y": 55.7,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 181,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 45.5,
+        "y": 55.4
+      },
+      {
+        "friend": "chi",
+        "x": 60,
+        "y": 55
+      },
+      {
+        "friend": "yuma",
+        "x": 72.3,
+        "y": 29.9
+      },
+      {
+        "friend": "joshy",
+        "x": 85.6,
+        "y": 67.1,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 182,
+    "tags": [
+      {
+        "friend": "joshy",
+        "x": 41.7,
+        "y": 31.8
+      },
+      {
+        "friend": "kurono",
+        "x": 50.7,
+        "y": 58.1,
+        "position": "top"
+      },
+      {
+        "friend": "taru",
+        "x": 68.4,
+        "y": 60.6,
+        "position": "top"
+      },
+      {
+        "friend": "yuma",
+        "x": 76,
+        "y": 26.7,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 183,
+    "tags": [
+      {
+        "friend": "kurono",
+        "x": 26.6,
+        "y": 60.3,
+        "position": "top"
+      },
+      {
+        "friend": "taru",
+        "x": 62.3,
+        "y": 58.5
+      },
+      {
+        "friend": "yuma",
+        "x": 63,
+        "y": 20.3,
+        "position": "top"
+      },
+      {
+        "friend": "joshy",
+        "x": 75.8,
+        "y": 65.6
+      }
+    ]
   }
 ]
