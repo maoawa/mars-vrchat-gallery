@@ -2871,5 +2871,133 @@
         "y": 65.6
       }
     ]
+  },
+  {
+    "photo": 184,
+    "tags": [
+      {
+        "friend": "shin",
+        "x": 34,
+        "y": 36.3
+      },
+      {
+        "friend": "chi",
+        "x": 28.7,
+        "y": 65.6,
+        "position": "top"
+      },
+      {
+        "friend": "ag",
+        "x": 38.8,
+        "y": 57.5,
+        "position": "top"
+      },
+      {
+        "friend": "neru",
+        "x": 72.5,
+        "y": 55.5
+      }
+    ]
+  },
+  {
+    "photo": 185,
+    "tags": [
+      {
+        "friend": "theo",
+        "x": 39.4,
+        "y": 38.2
+      },
+      {
+        "friend": "ethan",
+        "x": 53,
+        "y": 45.6
+      },
+      {
+        "friend": "disguiser",
+        "x": 75.5,
+        "y": 51.1
+      }
+    ]
+  },
+  {
+    "photo": 186,
+    "tags": [
+      {
+        "friend": "tea",
+        "x": 38.4,
+        "y": 45.2,
+        "position": "top"
+      },
+      {
+        "friend": "chi",
+        "x": 41,
+        "y": 67.5
+      },
+      {
+        "friend": "disguiser",
+        "x": 49,
+        "y": 58.9
+      },
+      {
+        "friend": "ethan",
+        "x": 49.2,
+        "y": 37.1,
+        "position": "top"
+      },
+      {
+        "friend": "silva",
+        "x": 54.5,
+        "y": 74.2,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 187,
+    "tags": [
+      {
+        "friend": "silva",
+        "x": 44.4,
+        "y": 64.4,
+        "position": "top"
+      },
+      {
+        "friend": "ethan",
+        "x": 78.7,
+        "y": 53.4
+      }
+    ]
+  },
+  {
+    "photo": 188,
+    "tags": [
+      {
+        "friend": "silva",
+        "x": 48.7,
+        "y": 47.9,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 189,
+    "tags": [
+      {
+        "friend": "aver",
+        "x": 23.4,
+        "y": 35.1
+      },
+      {
+        "friend": "silva",
+        "x": 59.9,
+        "y": 59.5
+      },
+      {
+        "friend": "taru",
+        "x": 72.8,
+        "y": 61.8,
+        "position": "top"
+      }
+    ]
   }
 ]

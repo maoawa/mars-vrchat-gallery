@@ -1755,5 +1755,61 @@
     "description_zh": "",
     "friend": ["kurono", "taru", "yuma", "joshy"],
     "parent": 181
+  },
+  {
+    "id": 184,
+    "filename": "VRChat_2026-07-28_01-25-47.jpg",
+    "captured": "2026-07-28T01:25:47",
+    "world": "",
+    "description_en": "This is the first day with my first own avatar and it's pretty cute!",
+    "description_zh": "这是我拥有第一个属于自己的模型的第一天，它真的很可爱！",
+    "friend": ["shin", "chi", "ag", "neru"]
+  },
+  {
+    "id": 185,
+    "filename": "VRChat_2026-07-28_02-03-14.jpg",
+    "captured": "2026-07-28T02:03:14",
+    "world": "learn.mandarin",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["theo", "ethan", "disguiser"],
+    "parent": 186
+  },
+  {
+    "id": 186,
+    "filename": "VRChat_2026-07-28_02-47-31.jpg",
+    "captured": "2026-07-28T02:47:31",
+    "world": "learn.mandarin",
+    "description_en": "We held a street concert here! We're singing our favourite songs and [[disguiser]]'s playing piano. I love the atmosphere so much!",
+    "description_zh": "我们在这里举办了一场街头音乐会！我们唱着我们最喜欢的歌曲，[[disguiser]]正在弹钢琴。我非常喜欢这种气氛！",
+    "friend": ["tea", "chi", "disguiser", "ethan", "silva"],
+    "linked": [185]
+  },
+  {
+    "id": 187,
+    "filename": "VRChat_2026-07-28_04-17-19.jpg",
+    "captured": "2026-07-28T04:17:19",
+    "world": "taipei.karaoke",
+    "description_en": "So I'm with my VR headset on my head in real life, and now my avatar got the same headset. That's so hilarious bruh.",
+    "description_zh": "我现实中戴着 VR 眼镜，现在我的模型也戴上了同样的头显。这也太搞笑了兄弟。",
+    "friend": ["silva", "ethan"]
+  },
+  {
+    "id": 188,
+    "filename": "VRChat_2026-07-28_04-59-01.jpg",
+    "captured": "2026-07-28T04:59:01",
+    "world": "taipei.karaoke",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["silva"]
+  },
+  {
+    "id": 189,
+    "filename": "VRChat_2026-07-28_05-24-32.jpg",
+    "captured": "2026-07-28T05:24:32",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["aver", "silva", "taru"]
   }
 ]
