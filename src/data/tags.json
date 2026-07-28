@@ -2999,5 +2999,56 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 190,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 25.4,
+        "y": 52.9
+      },
+      {
+        "friend": "taru",
+        "x": 57.5,
+        "y": 49.9,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 191,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 41.9,
+        "y": 39.2,
+        "position": "top"
+      },
+      {
+        "friend": "yuma",
+        "x": 47.9,
+        "y": 45.5,
+        "position": "top"
+      },
+      {
+        "friend": "silva",
+        "x": 48.7,
+        "y": 72.6,
+        "position": "top"
+      },
+      {
+        "friend": "li_hua",
+        "x": 59.6,
+        "y": 48.5,
+        "position": "top"
+      },
+      {
+        "friend": "joshy",
+        "x": 64,
+        "y": 50.3,
+        "position": "right"
+      }
+    ]
   }
 ]

@@ -1811,5 +1811,25 @@
     "description_en": "",
     "description_zh": "",
     "friend": ["aver", "silva", "taru"]
+  },
+  {
+    "id": 190,
+    "filename": "VRChat_2026-07-29_03-24-31.jpg",
+    "captured": "2026-07-29T03:24:31",
+    "world": "minasoco.aquarium",
+    "description_en": "A war between Counter-Terrorist vs Terrorist in [[yuma]]'s bar.<br>([[taru]] got a SMG in her hand!)",
+    "description_zh": "一场在 [[yuma]] 的吧台发生的反恐精英和恐怖分子之间的战争。<br>（[[taru]] 的手里拿着一把冲锋枪！）",
+    "friend": ["yuma", "taru"],
+    "parent": 191
+  },
+  {
+    "id": 191,
+    "filename": "VRChat_2026-07-29_04-13-15.jpg",
+    "captured": "2026-07-29T04:13:15",
+    "world": "minasoco.aquarium",
+    "description_en": "Had a great chat with friends from all over the world!",
+    "description_zh": "和来自世界各地的朋友们聊得很开心！",
+    "friend": ["taru", "yuma", "silva", "li_hua", "joshy"],
+    "linked": [190]
   }
 ]
