@@ -3050,5 +3050,195 @@
         "position": "right"
       }
     ]
+  },
+  {
+    "photo": 192,
+    "tags": [
+      {
+        "friend": "chi",
+        "x": 32.3,
+        "y": 55.9
+      },
+      {
+        "friend": "ag",
+        "x": 55.8,
+        "y": 51.4
+      }
+    ]
+  },
+  {
+    "photo": 193,
+    "tags": [
+      {
+        "friend": "joshy",
+        "x": 15.9,
+        "y": 72.8,
+        "position": "top"
+      },
+      {
+        "friend": "waterchan",
+        "x": 34.6,
+        "y": 21.5,
+        "position": "top"
+      },
+      {
+        "friend": "chi",
+        "x": 44.7,
+        "y": 70.2
+      },
+      {
+        "friend": "ag",
+        "x": 54.8,
+        "y": 23.6,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 194,
+    "tags": [
+      {
+        "friend": "eunoiv",
+        "x": 40.2,
+        "y": 51.9
+      }
+    ]
+  },
+  {
+    "photo": 195,
+    "tags": [
+      {
+        "friend": "laowai",
+        "x": 73.5,
+        "y": 50.1
+      }
+    ]
+  },
+  {
+    "photo": 196,
+    "tags": [
+      {
+        "friend": "silva",
+        "x": 18.2,
+        "y": 53.2,
+        "position": "top"
+      },
+      {
+        "friend": "disguiser",
+        "x": 43,
+        "y": 47.2
+      },
+      {
+        "friend": "ethan",
+        "x": 57.5,
+        "y": 44
+      }
+    ]
+  },
+  {
+    "photo": 197,
+    "tags": [
+      {
+        "friend": "silva",
+        "x": 32.9,
+        "y": 62.4,
+        "position": "top"
+      },
+      {
+        "friend": "ethan",
+        "x": 58,
+        "y": 49.9
+      },
+      {
+        "friend": "disguiser",
+        "x": 71.3,
+        "y": 43.8
+      }
+    ]
+  },
+  {
+    "photo": 198,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 30.3,
+        "y": 60.2,
+        "position": "top"
+      },
+      {
+        "friend": "tora",
+        "x": 37.8,
+        "y": 65.3
+      },
+      {
+        "friend": "chi",
+        "x": 46.8,
+        "y": 56
+      },
+      {
+        "friend": "ag",
+        "x": 49.9,
+        "y": 25.7,
+        "position": "top"
+      },
+      {
+        "friend": "yuma",
+        "x": 63.5,
+        "y": 24.1,
+        "position": "top"
+      },
+      {
+        "friend": "joshy",
+        "x": 71.8,
+        "y": 59.1
+      }
+    ]
+  },
+  {
+    "photo": 199,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 42.1,
+        "y": 69.1
+      },
+      {
+        "friend": "joshy",
+        "x": 56.5,
+        "y": 68.5
+      },
+      {
+        "friend": "ag",
+        "x": 43.6,
+        "y": 40.1
+      },
+      {
+        "friend": "chi",
+        "x": 54.6,
+        "y": 41.2
+      },
+      {
+        "friend": "taru",
+        "x": 38.5,
+        "y": 30.8,
+        "position": "top"
+      },
+      {
+        "friend": "tora",
+        "x": 41.7,
+        "y": 25.2,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 200,
+    "tags": [
+      {
+        "friend": "villagerm",
+        "x": 30.5,
+        "y": 60.5
+      }
+    ]
   }
 ]

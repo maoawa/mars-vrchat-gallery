@@ -347,5 +347,14 @@
   {
     "id": "silva",
     "name_en": "Silva"
+  },
+  {
+    "id": "laowai",
+    "name_en": "Laowai",
+    "name_zh": "超级老外"
+  },
+  {
+    "id": "tora",
+    "name_en": "Tora"
   }
 ]
