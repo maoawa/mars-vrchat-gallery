@@ -1919,5 +1919,35 @@
     "description_en": "I met [[villagerm]] again, he shared me so many things about language learning.",
     "description_zh": "我又见到了 [[villagerm]]，他和我分享了许多关于语言学习的事情。",
     "friend": ["villagerm"]
+  },
+  {
+    "id": 201,
+    "filename": "VRChat_2026-07-31_03-32-16.jpg",
+    "captured": "2026-07-31T03:32:16",
+    "world": "learn.mandarin",
+    "description_en": "[[tora]] took a picture of me viewing photos with my phone and this angle is really nice!",
+    "description_zh": "[[tora]] 拍了一张我用手机看照片的照片，这个角度真不错！",
+    "friend": ["tora", "taru"],
+    "parent": 202
+  },
+  {
+    "id": 202,
+    "filename": "VRChat_2026-07-31_04-22-31.jpg",
+    "captured": "2026-07-31T04:22:31",
+    "world": "learn.mandarin",
+    "description_en": "So many friends again!",
+    "description_zh": "又一次好多朋友！",
+    "friend": ["aver", "tora", "ethan", "taru", "yuma", "disguiser", "joshy"],
+    "linked": [201, 203]
+  },
+  {
+    "id": 203,
+    "filename": "VRChat_2026-07-31_04-36-05.jpg",
+    "captured": "2026-07-31T04:36:05",
+    "world": "learn.mandarin",
+    "description_en": "[[yuma]] is so cute!",
+    "description_zh": "[[yuma]] 好可爱！",
+    "friend": ["yuma"],
+    "parent": 202
   }
 ]
