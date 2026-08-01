@@ -524,6 +524,10 @@ h1 {
   color: #cfe0ff;
 }
 
+.description-emphasis {
+  font-style: italic;
+}
+
 .world-link {
   display: inline-flex;
   gap: 2px;

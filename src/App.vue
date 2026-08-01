@@ -33,11 +33,10 @@ type GalleryFilter =
       id: string
     }
 type DescriptionPart =
-  | { type: 'text'; text: string }
-  | { type: 'break' }
-  | { type: 'emphasis'; text: string }
-  | { type: 'friend'; id: string; name: string }
-  | { type: 'world'; id: string; name: string }
+  | { type: 'text'; text: string; emphasis?: boolean }
+  | { type: 'break'; emphasis?: boolean }
+  | { type: 'friend'; id: string; name: string; emphasis?: boolean }
+  | { type: 'world'; id: string; name: string; emphasis?: boolean }
 type SpecialEventView = SpecialEvent & {
   photos: GalleryImage[]
   featuredPhotos: GalleryImage[]
@@ -551,23 +550,25 @@ function photoAlt(photo: GalleryImage) {
   return photoDescription(photo) || photo.filename
 }
 
-function descriptionParts(description: string) {
+function descriptionParts(description: string, emphasis = false, parseEmphasis = true) {
   const parts: DescriptionPart[] = []
   const friendPattern = /\[\[([a-zA-Z0-9_-]+)\]\]/g
   const worldPattern = /\{\{([a-zA-Z0-9_.-]+)\}\}/g
-  const emphasisPattern = /\*([^*\n]+)\*/g
+  const emphasisPattern = parseEmphasis ? /\*([^*\n]+)\*/g : null
   const breakPattern = /<br\s*\/?>/gi
   let cursor = 0
 
   while (cursor < description.length) {
     friendPattern.lastIndex = cursor
     worldPattern.lastIndex = cursor
-    emphasisPattern.lastIndex = cursor
+    if (emphasisPattern) {
+      emphasisPattern.lastIndex = cursor
+    }
     breakPattern.lastIndex = cursor
 
     const friendMatch = friendPattern.exec(description)
     const worldMatch = worldPattern.exec(description)
-    const emphasisMatch = emphasisPattern.exec(description)
+    const emphasisMatch = emphasisPattern?.exec(description) ?? null
     const breakMatch = breakPattern.exec(description)
     const matches = [
       friendMatch ? { kind: 'friend' as const, match: friendMatch } : null,
@@ -578,12 +579,12 @@ function descriptionParts(description: string) {
     const nextMatch = matches.sort((a, b) => a.match.index - b.match.index)[0]
 
     if (!nextMatch) {
-      parts.push({ type: 'text', text: description.slice(cursor) })
+      parts.push({ type: 'text', text: description.slice(cursor), emphasis })
       break
     }
 
     if (nextMatch.match.index > cursor) {
-      parts.push({ type: 'text', text: description.slice(cursor, nextMatch.match.index) })
+      parts.push({ type: 'text', text: description.slice(cursor, nextMatch.match.index), emphasis })
     }
 
     if (nextMatch.kind === 'friend') {
@@ -591,6 +592,7 @@ function descriptionParts(description: string) {
         type: 'friend',
         id: nextMatch.match[1],
         name: friendName(nextMatch.match[1]),
+        emphasis,
       })
     } else if (nextMatch.kind === 'world') {
       const worldId = nextMatch.match[1]
@@ -601,16 +603,14 @@ function descriptionParts(description: string) {
               type: 'world',
               id: worldId,
               name: worldName(worldId),
+              emphasis,
             }
-          : { type: 'text', text: nextMatch.match[0] },
+          : { type: 'text', text: nextMatch.match[0], emphasis },
       )
     } else if (nextMatch.kind === 'emphasis') {
-      parts.push({
-        type: 'emphasis',
-        text: nextMatch.match[1],
-      })
+      parts.push(...descriptionParts(nextMatch.match[1], true, false))
     } else {
-      parts.push({ type: 'break' })
+      parts.push({ type: 'break', emphasis })
     }
 
     cursor = nextMatch.match.index + nextMatch.match[0].length
@@ -1645,6 +1645,7 @@ onBeforeUnmount(() => {
                 v-if="part.type === 'friend'"
                 type="button"
                 class="description-friend"
+                :class="{ 'description-emphasis': part.emphasis }"
                 @click="applyFriendFilter(part.id)"
               >
                 {{ part.name }}
@@ -1653,12 +1654,13 @@ onBeforeUnmount(() => {
                 v-else-if="part.type === 'world'"
                 type="button"
                 class="world-link"
+                :class="{ 'description-emphasis': part.emphasis }"
                 @click="applyWorldFilter(part.id)"
               >
                 <span>{{ part.name }}</span>
               </button>
               <br v-else-if="part.type === 'break'" />
-              <em v-else-if="part.type === 'emphasis'">{{ part.text }}</em>
+              <em v-else-if="part.emphasis">{{ part.text }}</em>
               <template v-else>{{ part.text }}</template>
             </template>
           </p>
@@ -1760,6 +1762,7 @@ onBeforeUnmount(() => {
                     v-if="part.type === 'friend'"
                     type="button"
                     class="description-friend"
+                    :class="{ 'description-emphasis': part.emphasis }"
                     @click="applyFriendFilter(part.id)"
                   >
                     {{ part.name }}
@@ -1768,12 +1771,13 @@ onBeforeUnmount(() => {
                     v-else-if="part.type === 'world'"
                     type="button"
                     class="world-link"
+                    :class="{ 'description-emphasis': part.emphasis }"
                     @click="applyWorldFilter(part.id)"
                   >
                     <span>{{ part.name }}</span>
                   </button>
                   <br v-else-if="part.type === 'break'" />
-                  <em v-else-if="part.type === 'emphasis'">{{ part.text }}</em>
+                  <em v-else-if="part.emphasis">{{ part.text }}</em>
                   <template v-else>{{ part.text }}</template>
                 </template>
               </p>
@@ -2069,6 +2073,7 @@ onBeforeUnmount(() => {
                 v-if="part.type === 'friend'"
                 type="button"
                 class="description-friend"
+                :class="{ 'description-emphasis': part.emphasis }"
                 @click="applyFriendFilter(part.id, true)"
               >
                 {{ part.name }}
@@ -2077,12 +2082,13 @@ onBeforeUnmount(() => {
                 v-else-if="part.type === 'world'"
                 type="button"
                 class="world-link"
+                :class="{ 'description-emphasis': part.emphasis }"
                 @click="applyWorldFilter(part.id, true)"
               >
                 <span>{{ part.name }}</span>
               </button>
               <br v-else-if="part.type === 'break'" />
-              <em v-else-if="part.type === 'emphasis'">{{ part.text }}</em>
+              <em v-else-if="part.emphasis">{{ part.text }}</em>
               <template v-else>{{ part.text }}</template>
             </template>
           </p>

@@ -1949,5 +1949,35 @@
     "description_zh": "[[yuma]] 好可爱！",
     "friend": ["yuma"],
     "parent": 202
+  },
+  {
+    "id": 204,
+    "filename": "VRChat_2026-08-02_03-11-14.jpg",
+    "captured": "2026-08-02T03:11:14",
+    "world": "spaceship.churros",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["yuma", "liv", "rino"],
+    "parent": 205
+  },
+  {
+    "id": 205,
+    "filename": "VRChat_2026-08-02_03-12-47.jpg",
+    "captured": "2026-08-02T03:12:47",
+    "world": "spaceship.churros",
+    "description_en": "I'm travelling in Suzhou City! But nothing beats a VRChat holiday!<br>*A big thank-you to [[liv]] for helping me to take those pictures!*",
+    "description_zh": "我在苏州旅行！不过没有什么比 VRChat 假期更棒的了！<br>*\"Nothing beats a VRChat holiday!\"*<br>*非常感谢 [[liv]] 帮我拍了这些照片！*",
+    "friend": ["taru", "yuma", "liv", "rino"],
+    "linked": [204, 206]
+  },
+  {
+    "id": 206,
+    "filename": "VRChat_2026-08-02_03-13-14.jpg",
+    "captured": "2026-08-02T03:13:14",
+    "world": "spaceship.churros",
+    "description_en": "The picture I took with my poor iPad... I did take my VR headset with me but I'm just too lazy.",
+    "description_zh": "这是我用可怜的iPad拍的照片... 我确实带了VR头显，但我太懒了。",
+    "friend": ["rino", "liv", "yuma", "taru", "ikeren"],
+    "parent": 205
   }
 ]
