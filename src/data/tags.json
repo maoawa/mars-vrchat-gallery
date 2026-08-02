@@ -3240,5 +3240,154 @@
         "y": 60.5
       }
     ]
+  },
+  {
+    "photo": 201,
+    "tags": [
+      {
+        "friend": "tora",
+        "x": 38,
+        "y": 50
+      },
+      {
+        "friend": "taru",
+        "x": 62,
+        "y": 50
+      }
+    ]
+  },
+  {
+    "photo": 202,
+    "tags": [
+      {
+        "friend": "aver",
+        "x": 38,
+        "y": 50
+      },
+      {
+        "friend": "tora",
+        "x": 42,
+        "y": 50
+      },
+      {
+        "friend": "ethan",
+        "x": 46,
+        "y": 50
+      },
+      {
+        "friend": "taru",
+        "x": 50,
+        "y": 50
+      },
+      {
+        "friend": "yuma",
+        "x": 54,
+        "y": 50
+      },
+      {
+        "friend": "disguiser",
+        "x": 58,
+        "y": 50
+      },
+      {
+        "friend": "joshy",
+        "x": 62,
+        "y": 50
+      }
+    ]
+  },
+  {
+    "photo": 203,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 50,
+        "y": 50
+      }
+    ]
+  },
+  {
+    "photo": 204,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 13,
+        "y": 46.2
+      },
+      {
+        "friend": "liv",
+        "x": 43.8,
+        "y": 22,
+        "position": "top"
+      },
+      {
+        "friend": "rino",
+        "x": 61.2,
+        "y": 20.4,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 205,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 21.6,
+        "y": 69,
+        "position": "top"
+      },
+      {
+        "friend": "yuma",
+        "x": 35.7,
+        "y": 52.5
+      },
+      {
+        "friend": "liv",
+        "x": 52.3,
+        "y": 32.7,
+        "position": "top"
+      },
+      {
+        "friend": "rino",
+        "x": 63.1,
+        "y": 30.5,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 206,
+    "tags": [
+      {
+        "friend": "rino",
+        "x": 37.6,
+        "y": 27,
+        "position": "top"
+      },
+      {
+        "friend": "liv",
+        "x": 48.3,
+        "y": 26.2,
+        "position": "top"
+      },
+      {
+        "friend": "yuma",
+        "x": 65.9,
+        "y": 41.2
+      },
+      {
+        "friend": "taru",
+        "x": 70.6,
+        "y": 60.8,
+        "position": "top"
+      },
+      {
+        "friend": "ikeren",
+        "x": 75.7,
+        "y": 66.4,
+        "position": "right"
+      }
+    ]
   }
 ]
