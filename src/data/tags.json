@@ -3389,5 +3389,34 @@
         "position": "right"
       }
     ]
+  },
+  {
+    "photo": 207,
+    "tags": [
+      {
+        "friend": "ikeren",
+        "x": 23.6,
+        "y": 51.8,
+        "position": "top"
+      },
+      {
+        "friend": "waterchan",
+        "x": 40.5,
+        "y": 30.6,
+        "position": "top"
+      },
+      {
+        "friend": "taru",
+        "x": 47.6,
+        "y": 49.7,
+        "position": "top"
+      },
+      {
+        "friend": "tora",
+        "x": 72.7,
+        "y": 53.2,
+        "position": "top"
+      }
+    ]
   }
 ]

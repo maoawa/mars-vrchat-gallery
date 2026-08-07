@@ -1979,5 +1979,14 @@
     "description_zh": "这是我用可怜的iPad拍的照片... 我确实带了VR头显，但我太懒了。",
     "friend": ["rino", "liv", "yuma", "taru", "ikeren"],
     "parent": 205
+  },
+  {
+    "id": 207,
+    "filename": "VRChat_2026-08-07_04-24-14.jpg",
+    "captured": "2026-08-07T04:24:14",
+    "world": "still.garden",
+    "description_en": "The second last night of my trip, and still hanging out with my friends even with my poor iPad only.",
+    "description_zh": "旅行的倒数第二个晚上，我仍然和朋友们一起聊天，尽管只能在我那可怜的 iPad 上玩。",
+    "friend": ["ikeren", "waterchan", "taru", "tora"]
   }
 ]
