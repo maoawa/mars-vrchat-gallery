@@ -93,7 +93,7 @@
     "id": "starry.sky.cottage",
     "name_en": "Starry Sky Cottage",
     "name_zh": "星空小屋",
-    "comment": "https://vrchat.com/home/world/wrld_b606847b-d1a1-4b26-8b14-ae1aeab7574b"
+    "link": "https://vrchat.com/home/world/wrld_b606847b-d1a1-4b26-8b14-ae1aeab7574b"
   },
   {
     "id": "japan.shrine",
@@ -109,36 +109,54 @@
     "id": "minasoco.aquarium",
     "name_en": "Minasoco Aquarium",
     "name_zh": "Minasoco 水族馆",
-    "comment": "https://vrchat.com/home/world/wrld_240182aa-b53c-458a-bbb4-718687625a20"
+    "link": "https://vrchat.com/home/world/wrld_240182aa-b53c-458a-bbb4-718687625a20"
   },
   {
     "id": "somnium.molle",
     "name_en": "Somnium Molle",
     "name_zh": "柔软的梦",
-    "comment": "https://vrchat.com/home/world/wrld_57eb20c7-af23-4132-b6e8-b1254b56eb71"
+    "link": "https://vrchat.com/home/world/wrld_57eb20c7-af23-4132-b6e8-b1254b56eb71"
   },
   {
     "id": "world.of.the.soul",
     "name_en": "World of the Soul",
     "name_zh": "灵魂世界",
-    "comment": "https://vrchat.com/home/world/wrld_262729a1-1eca-4f4a-b9ed-d00ffa663d6b"
+    "link": "https://vrchat.com/home/world/wrld_262729a1-1eca-4f4a-b9ed-d00ffa663d6b"
   },
   {
     "id": "udon.bird.sanctuary",
     "name_en": "Udon Bird Sanctuary",
     "name_zh": "Udon 鸟类保护区",
-    "comment": "https://vrchat.com/home/world/wrld_cacfe6b1-b2c1-40d0-8566-8edd4d96e9fd"
+    "link": "https://vrchat.com/home/world/wrld_cacfe6b1-b2c1-40d0-8566-8edd4d96e9fd"
   },
   {
     "id": "spaceship.churros",
     "name_en": "Spaceship Churros",
     "name_zh": "太空吉事果",
-    "comment": "https://vrchat.com/home/world/wrld_af93d9fb-45a8-4157-b25a-04b97bc90c28"
+    "link": "https://vrchat.com/home/world/wrld_af93d9fb-45a8-4157-b25a-04b97bc90c28"
   },
   {
     "id": "still.garden",
     "name_en": "Still Garden",
     "name_zh": "静园",
-    "comment": "https://vrchat.com/home/world/wrld_3739e47a-c1eb-42eb-a7a6-350094ef9fa4"
+    "link": "https://vrchat.com/home/world/wrld_3739e47a-c1eb-42eb-a7a6-350094ef9fa4"
+  },
+  {
+    "id": "yoiniwa.hermitage",
+    "name_en": "Yoiniwa Hermitage",
+    "name_zh": "宵庭",
+    "link": "https://vrchat.com/home/world/wrld_ef6bd42b-40d7-4e48-bd0a-454c0b23ebfc"
+  },
+  {
+    "id": "blumea",
+    "name_en": "Blumea",
+    "name_zh": "Blumea 星星",
+    "link": "https://vrchat.com/home/world/wrld_0aed64fa-b806-4278-aed5-0e34ce3ca2f1"
+  },
+  {
+    "id": "asteroid.field",
+    "name_en": "Asteroid Field",
+    "name_zh": "小行星带",
+    "link": "https://vrchat.com/home/world/wrld_df15c8a3-a14e-413f-a9ca-3d922d03f300"
   }
 ]

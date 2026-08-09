@@ -1988,5 +1988,95 @@
     "description_en": "The second last night of my trip, and still hanging out with my friends even with my poor iPad only.",
     "description_zh": "旅行的倒数第二个晚上，我仍然和朋友们一起聊天，尽管只能在我那可怜的 iPad 上玩。",
     "friend": ["ikeren", "waterchan", "taru", "tora"]
+  },
+  {
+    "id": 208,
+    "filename": "VRChat_2026-08-09_02-56-07.jpg",
+    "captured": "2026-08-09T02:56:07",
+    "world": "yoiniwa.hermitage",
+    "description_en": "Came home from the trip!",
+    "description_zh": "旅游结束回来了！",
+    "friend": ["chi", "neru"]
+  },
+  {
+    "id": 209,
+    "filename": "VRChat_2026-08-09_05-31-55.jpg",
+    "captured": "2026-08-09T05:31:55",
+    "world": "blumea",
+    "description_en": "",
+    "description_zh": "",
+    "friend": [""],
+    "parent": 210
+  },
+  {
+    "id": 210,
+    "filename": "VRChat_2026-08-09_05-34-03.jpg",
+    "captured": "2026-08-09T05:34:03",
+    "world": "blumea",
+    "description_en": "It was an amazing movie-like world about the life of a star far away called {{blumea}}.",
+    "description_zh": "这是一个奇妙的、如同电影般的世界，讲述了一颗名为 {{blumea}} 的遥远恒星的生命经历。",
+    "friend": ["li_hua", "taru", "yuma", "joshy"],
+    "linked": [209]
+  },
+  {
+    "id": 211,
+    "filename": "VRChat_2026-08-09_05-49-27.jpg",
+    "captured": "2026-08-09T05:49:27",
+    "world": "asteroid.field",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["taru", "yuma", "joshy", "li_hua"],
+    "parent": 213
+  },
+  {
+    "id": 212,
+    "filename": "VRChat_2026-08-09_06-05-02.jpg",
+    "captured": "2026-08-09T06:05:02",
+    "world": "asteroid.field",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["yuma", "joshy", "taru"],
+    "parent": 213
+  },
+  {
+    "id": 213,
+    "filename": "VRChat_2026-08-09_06-15-15.jpg",
+    "captured": "2026-08-09T06:15:15",
+    "world": "asteroid.field",
+    "description_en": "We experienced a nice explore game {{asteroid.field}} together.",
+    "description_zh": "我们一起体验了一款很棒的探索游戏 {{asteroid.field}}。",
+    "friend": ["joshy", "yuma", "taru"],
+    "linked": [211, 212]
+  },
+  {
+    "id": 214,
+    "filename": "VRChat_2026-08-10_02-35-36.jpg",
+    "captured": "2026-08-10T02:35:36",
+    "world": "karaoke.in.sync",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["taru", "joshy", "yuma"],
+    "parent": 216
+  },
+  {
+    "id": 215,
+    "filename": "VRChat_2026-08-10_04-19-19.jpg",
+    "captured": "2026-08-10T04:19:19",
+    "world": "karaoke.in.sync",
+    "description_en": "It's our first time to see [[waterchan]] finally speaks some English. And he sang really well!",
+    "description_zh": "这是我们第一次看到 [[waterchan]] 终于能说英语了。而且他唱得很好！",
+
+    "friend": ["waterchan"],
+    "parent": 216
+  },
+  {
+    "id": 216,
+    "filename": "VRChat_2026-08-10_05-00-37.jpg",
+    "captured": "2026-08-10T05:00:37",
+    "world": "karaoke.in.sync",
+    "description_en": "Sing!",
+    "description_zh": "唱歌！",
+    "friend": ["yuma", "waterchan", "joshy", "taru"],
+    "linked": [214, 215]
   }
 ]
