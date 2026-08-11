@@ -172,11 +172,27 @@ function readRequestBody(request: import('node:http').IncomingMessage) {
 
 function exposeGalleryData(): Plugin {
   let outputDataDir = ''
+  const editorSavedFiles = new Map<string, number>()
+
+  function writeEditorJsonFile(filePath: string, payload: unknown) {
+    editorSavedFiles.set(resolve(filePath), Date.now())
+    writeJsonFile(filePath, payload)
+  }
 
   return {
     name: 'expose-gallery-data',
     configResolved(config) {
       outputDataDir = resolve(config.root, config.build.outDir, 'data')
+    },
+    handleHotUpdate(context) {
+      const filePath = resolve(context.file)
+      const savedAt = editorSavedFiles.get(filePath)
+
+      if (savedAt && Date.now() - savedAt < 3_000) {
+        return []
+      }
+
+      if (savedAt) editorSavedFiles.delete(filePath)
     },
     configureServer(server) {
       server.middlewares.use('/__gallery/save', async (request, response, next) => {
@@ -195,10 +211,10 @@ function exposeGalleryData(): Plugin {
             return
           }
 
-          writeJsonFile(imagesFile, payload.images)
-          writeJsonFile(friendsFile, payload.friends)
-          writeJsonFile(worldsFile, payload.worlds)
-          writeJsonFile(tagsFile, payload.tags)
+          writeEditorJsonFile(imagesFile, payload.images)
+          writeEditorJsonFile(friendsFile, payload.friends)
+          writeEditorJsonFile(worldsFile, payload.worlds)
+          writeEditorJsonFile(tagsFile, payload.tags)
           response.setHeader('Content-Type', 'application/json; charset=utf-8')
           response.end(JSON.stringify({ ok: true }))
         } catch (error) {
@@ -223,7 +239,7 @@ function exposeGalleryData(): Plugin {
             return
           }
 
-          writeJsonFile(tagsFile, payload)
+          writeEditorJsonFile(tagsFile, payload)
           response.setHeader('Content-Type', 'application/json; charset=utf-8')
           response.end(JSON.stringify({ ok: true }))
         } catch (error) {

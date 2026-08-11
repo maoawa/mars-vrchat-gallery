@@ -1127,6 +1127,30 @@ h1 {
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.42);
 }
 
+.edit-mode-dev-toggle {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 70;
+  min-height: 40px;
+  padding: 9px 13px;
+  border: 1px solid rgba(159, 210, 189, 0.44);
+  border-radius: 999px;
+  background: rgba(12, 12, 14, 0.9);
+  color: #a9a29b;
+  font-size: 0.75rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(16px);
+}
+
+.edit-mode-dev-toggle.is-active {
+  border-color: rgba(159, 210, 189, 0.72);
+  background: rgba(159, 210, 189, 0.14);
+  color: #cceade;
+}
+
 .edit-panel {
   position: absolute;
   top: max(68px, calc(env(safe-area-inset-top) + 58px));
@@ -1147,6 +1171,17 @@ h1 {
   backdrop-filter: blur(20px);
 }
 
+.edit-panel.is-collapsed {
+  top: auto;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  width: auto;
+  max-width: calc(100vw - 32px);
+  padding: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+}
+
 .edit-panel button,
 .edit-panel input,
 .edit-panel textarea {
@@ -1162,6 +1197,10 @@ h1 {
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
+}
+
+.edit-panel.is-collapsed .edit-panel__header {
+  align-items: center;
 }
 
 .edit-panel__header div {
@@ -1181,6 +1220,20 @@ h1 {
   font-size: 1.06rem;
 }
 
+.edit-panel.is-collapsed .edit-panel__header div {
+  display: flex;
+  align-items: center;
+}
+
+.edit-panel.is-collapsed .edit-panel__header span {
+  display: none;
+}
+
+.edit-panel.is-collapsed .edit-panel__header strong {
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
 .edit-panel__header > button,
 .edit-chip > button,
 .edit-tag-row > button:last-child {
@@ -1194,6 +1247,21 @@ h1 {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);
   color: #f3f0ea;
+}
+
+.edit-panel__header > .edit-panel__mode-toggle {
+  width: auto;
+  min-width: 40px;
+  padding: 0 8px;
+  border-color: rgba(159, 210, 189, 0.5);
+  color: #cceade;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.edit-panel__collapse {
+  font-size: 1rem;
+  font-weight: 900;
 }
 
 .edit-field {
@@ -1397,6 +1465,25 @@ h1 {
 .edit-suggestions button:first-child,
 .edit-suggestions button:hover {
   background: rgba(159, 210, 189, 0.12);
+}
+
+.edit-suggestions .edit-photo-suggestion {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-photo-suggestion span {
+  font-weight: 900;
+}
+
+.edit-photo-suggestion img {
+  display: block;
+  width: 72px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
 }
 
 .edit-suggestions small,

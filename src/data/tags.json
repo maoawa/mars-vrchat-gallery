@@ -3649,5 +3649,163 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 220,
+    "tags": [
+      {
+        "friend": "joshy",
+        "x": 11.1,
+        "y": 48.6,
+        "position": "top"
+      },
+      {
+        "friend": "theo",
+        "x": 29.8,
+        "y": 38.1,
+        "position": "top"
+      },
+      {
+        "friend": "yuma",
+        "x": 38.8,
+        "y": 33.4,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 221,
+    "tags": [
+      {
+        "friend": "neru",
+        "x": 31,
+        "y": 44.9,
+        "position": "top"
+      },
+      {
+        "friend": "karry",
+        "x": 72.3,
+        "y": 48.5,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 222,
+    "tags": [
+      {
+        "friend": "joshy",
+        "x": 33.7,
+        "y": 21.8,
+        "position": "left"
+      },
+      {
+        "friend": "yuma",
+        "x": 33.5,
+        "y": 54.2
+      }
+    ]
+  },
+  {
+    "photo": 223,
+    "tags": [
+      {
+        "friend": "joshy",
+        "x": 41.3,
+        "y": 40.6,
+        "position": "right"
+      },
+      {
+        "friend": "yuma",
+        "x": 25.8,
+        "y": 51,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 224,
+    "tags": [
+      {
+        "friend": "aqua",
+        "x": 30.2,
+        "y": 47
+      },
+      {
+        "friend": "yuma",
+        "x": 81,
+        "y": 61.6
+      },
+      {
+        "friend": "taru",
+        "x": 90,
+        "y": 56.9
+      }
+    ]
+  },
+  {
+    "photo": 225,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 30.2,
+        "y": 41.8,
+        "position": "top"
+      },
+      {
+        "friend": "aqua",
+        "x": 30.8,
+        "y": 73.9
+      },
+      {
+        "friend": "yuma",
+        "x": 60.9,
+        "y": 48.4,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 226,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 28,
+        "y": 41.2,
+        "position": "bottom"
+      },
+      {
+        "friend": "taru",
+        "x": 41,
+        "y": 30.1,
+        "position": "top"
+      },
+      {
+        "friend": "aqua",
+        "x": 72.9,
+        "y": 62.1,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 227,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 37.3,
+        "y": 52.6
+      },
+      {
+        "friend": "yuma",
+        "x": 51.8,
+        "y": 48.3
+      },
+      {
+        "friend": "joshy",
+        "x": 61.8,
+        "y": 55.9
+      }
+    ]
   }
 ]

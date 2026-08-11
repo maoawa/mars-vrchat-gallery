@@ -2104,5 +2104,82 @@
     "description_en": "Hanging out with friends in {{guinea.pig.sanctuary}}!",
     "description_zh": "和朋友们在 {{guinea.pig.sanctuary}} 里一起玩！",
     "friend": ["taru", "aver", "yuma", "joshy"]
+  },
+  {
+    "id": 220,
+    "filename": "VRChat_2026-08-11_23-19-12.jpg",
+    "captured": "2026-08-11T23:19:12",
+    "world": "summer.traces",
+    "description_en": "Old friend [[theo]] again!",
+    "description_zh": "老朋友 [[theo]]！",
+    "friend": ["joshy", "theo", "yuma"]
+  },
+  {
+    "id": 221,
+    "filename": "VRChat_2026-08-12_00-03-40.jpg",
+    "captured": "2026-08-12T00:03:40",
+    "world": "en.jp.language.exchange",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["neru", "karry"]
+  },
+  {
+    "id": 222,
+    "filename": "VRChat_2026-08-12_00-13-46.jpg",
+    "captured": "2026-08-12T00:13:46",
+    "world": "lets.watch.something",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["joshy", "yuma"],
+    "parent": 223
+  },
+  {
+    "id": 223,
+    "filename": "VRChat_2026-08-12_00-16-36.jpg",
+    "captured": "2026-08-12T00:16:36",
+    "world": "lets.watch.something",
+    "description_en": "This is the best art EVER.",
+    "description_zh": "这是史上最伟大的作品。",
+    "friend": ["joshy", "yuma"],
+    "linked": [222]
+  },
+  {
+    "id": 224,
+    "filename": "VRChat_2026-08-12_01-59-49.jpg",
+    "captured": "2026-08-12T01:59:49",
+    "world": "blue.reverie",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["aqua", "yuma", "taru"],
+    "parent": 226
+  },
+  {
+    "id": 225,
+    "filename": "VRChat_2026-08-12_02-00-04.jpg",
+    "captured": "2026-08-12T02:00:04",
+    "world": "blue.reverie",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["taru", "aqua", "yuma"],
+    "parent": 226
+  },
+  {
+    "id": 226,
+    "filename": "VRChat_2026-08-12_02-01-01.jpg",
+    "captured": "2026-08-12T02:01:01",
+    "world": "blue.reverie",
+    "description_en": "Swimming around with friends!",
+    "description_zh": "和朋友们一起到处游泳！",
+    "friend": ["yuma", "taru", "aqua"],
+    "linked": [225, 224]
+  },
+  {
+    "id": 227,
+    "filename": "VRChat_2026-08-12_04-05-11.jpg",
+    "captured": "2026-08-12T04:05:11",
+    "world": "karaoke.in.sync",
+    "description_en": "Sing sing sing!",
+    "description_zh": "唱唱唱！",
+    "friend": ["taru", "yuma", "joshy"]
   }
 ]

@@ -171,6 +171,8 @@ const lightboxTagsVisibleStorageKey = 'gallery-lightbox-tags-visible'
 const tagsToggleTutorialStorageKey = 'gallery-tags-toggle-tutorial-complete'
 const introDismissedStorageKey = 'gallery-intro-dismissed'
 const editModeStorageKey = 'gallery-edit-mode-enabled'
+const editPanelCollapsedStorageKey = 'gallery-edit-panel-collapsed'
+const isDevelopment = import.meta.env.DEV
 
 const zoomLevel = ref(1)
 const isDragging = ref(false)
@@ -184,6 +186,7 @@ const activeImageNaturalSize = ref<{ width: number; height: number } | null>(nul
 const zoomSurfaceSize = ref({ width: 0, height: 0 })
 const swipeOffsetX = ref(0)
 const editModeEnabled = ref(false)
+const editPanelCollapsed = ref(false)
 const tagEditVersion = ref(0)
 const metadataEditVersion = ref(0)
 const draggedPhotoTag = ref<DraggedPhotoTag | null>(null)
@@ -1719,6 +1722,11 @@ function toggleEditMode() {
   return editModeEnabled.value
 }
 
+function toggleEditPanel() {
+  editPanelCollapsed.value = !editPanelCollapsed.value
+  window.localStorage.setItem(editPanelCollapsedStorageKey, String(editPanelCollapsed.value))
+}
+
 function loadLightboxTagsPreference() {
   const savedValue = window.localStorage.getItem(lightboxTagsVisibleStorageKey)
 
@@ -1997,6 +2005,7 @@ watch(lightboxTagsVisible, (isVisible) => {
 onMounted(() => {
   introDismissed.value = window.localStorage.getItem(introDismissedStorageKey) === 'true'
   editModeEnabled.value = window.localStorage.getItem(editModeStorageKey) === 'true'
+  editPanelCollapsed.value = window.localStorage.getItem(editPanelCollapsedStorageKey) === 'true'
   loadLightboxTagsPreference()
   if (editModeEnabled.value) lightboxTagsVisible.value = true
   updateGalleryColumnCount()
@@ -2454,6 +2463,17 @@ onBeforeUnmount(() => {
   </footer>
 
   <Teleport to="body">
+    <button
+      v-if="isDevelopment && !activeQrContact && (!editModeEnabled || !activePhoto)"
+      class="edit-mode-dev-toggle"
+      :class="{ 'is-active': editModeEnabled }"
+      type="button"
+      :aria-pressed="editModeEnabled"
+      @click="toggleEditMode"
+    >
+      Edit mode: {{ editModeEnabled ? 'ON' : 'OFF' }}
+    </button>
+
     <div v-if="activeQrContact" class="qr-modal" role="dialog" aria-modal="true" @click.self="closeQrContact">
       <section class="qr-panel" :aria-label="activeQrContact.label">
         <button class="qr-close" type="button" :aria-label="copy.close" @click="closeQrContact">
@@ -2505,19 +2525,32 @@ onBeforeUnmount(() => {
         <aside
           v-if="editModeEnabled"
           class="edit-panel"
+          :class="{ 'is-collapsed': editPanelCollapsed }"
           aria-label="Photo editor"
           @click.stop
           @dblclick.stop
           @pointerdown.stop
         >
           <header class="edit-panel__header">
+            <button
+              class="edit-panel__collapse"
+              type="button"
+              :aria-label="editPanelCollapsed ? 'Expand edit panel' : 'Collapse edit panel'"
+              :aria-expanded="!editPanelCollapsed"
+              @click="toggleEditPanel"
+            >
+              {{ editPanelCollapsed ? '+' : '−' }}
+            </button>
             <div>
               <span>Edit mode</span>
               <strong>Edit photo #{{ activePhoto.id }}</strong>
             </div>
-            <button type="button" aria-label="Close edit mode" @click="disableEditMode">×</button>
+            <button class="edit-panel__mode-toggle" type="button" aria-label="Turn off edit mode" @click="disableEditMode">
+              ON
+            </button>
           </header>
 
+          <template v-if="!editPanelCollapsed">
           <form v-if="pendingEntityKind" class="edit-new-entity" @submit.prevent="submitNewEntity">
             <div class="edit-new-entity__header">
               <strong>New {{ pendingEntityKind === 'world' ? 'world' : 'friend' }}</strong>
@@ -2655,10 +2688,12 @@ onBeforeUnmount(() => {
                 <button
                   v-for="photo in parentPhotoEditSuggestions"
                   :key="photo.id"
+                  class="edit-photo-suggestion"
                   type="button"
                   @mousedown.prevent="selectParentPhoto(photo)"
                 >
                   <span>#{{ photo.id }}</span>
+                  <img :src="thumbnailPath(photo.filename)" alt="" loading="lazy" />
                 </button>
               </div>
             </div>
@@ -2687,10 +2722,12 @@ onBeforeUnmount(() => {
                 <button
                   v-for="photo in linkedPhotoEditSuggestions"
                   :key="photo.id"
+                  class="edit-photo-suggestion"
                   type="button"
                   @mousedown.prevent="addLinkedPhoto(photo)"
                 >
                   <span>#{{ photo.id }}</span>
+                  <img :src="thumbnailPath(photo.filename)" alt="" loading="lazy" />
                 </button>
               </div>
             </div>
@@ -2746,6 +2783,7 @@ onBeforeUnmount(() => {
               {{ editSaveState === 'saving' ? 'Saving…' : 'Save all changes' }}
             </button>
           </footer>
+          </template>
         </aside>
 
         <div ref="lightboxStage" class="lightbox-stage">
