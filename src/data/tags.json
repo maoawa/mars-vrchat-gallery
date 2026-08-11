@@ -3593,5 +3593,61 @@
         "y": 33.3
       }
     ]
+  },
+  {
+    "photo": 217,
+    "tags": [
+      {
+        "friend": "yuri",
+        "x": 34.9,
+        "y": 51.9,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 218,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 25.7,
+        "y": 33.4,
+        "position": "top"
+      },
+      {
+        "friend": "joshy",
+        "x": 37.1,
+        "y": 51.2,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 219,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 22.9,
+        "y": 61.6,
+        "position": "top"
+      },
+      {
+        "friend": "aver",
+        "x": 38.4,
+        "y": 33
+      },
+      {
+        "friend": "yuma",
+        "x": 50.7,
+        "y": 20.1,
+        "position": "top"
+      },
+      {
+        "friend": "joshy",
+        "x": 67,
+        "y": 41.1,
+        "position": "top"
+      }
+    ]
   }
 ]

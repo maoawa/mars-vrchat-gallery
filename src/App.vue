@@ -14,9 +14,11 @@ import { daysSinceVrchatStart, formatGalleryDate, photoPath, thumbnailPath } fro
 
 declare global {
   interface Window {
-    tagsEdit?: {
+    editmode?: {
       on: () => void
       off: () => void
+      toggle: () => boolean
+      status: () => boolean
       print: () => string
       save: () => Promise<string>
     }
@@ -68,6 +70,8 @@ type DraggedPhotoTag = {
   tagIndex: number
   pointerId: number
 }
+type TagPosition = NonNullable<PhotoTag['position']>
+type PendingEntityKind = 'world' | 'friend' | 'tag'
 
 const monthNames = [
   'January',
@@ -166,6 +170,7 @@ const swipeAnimationDuration = 180
 const lightboxTagsVisibleStorageKey = 'gallery-lightbox-tags-visible'
 const tagsToggleTutorialStorageKey = 'gallery-tags-toggle-tutorial-complete'
 const introDismissedStorageKey = 'gallery-intro-dismissed'
+const editModeStorageKey = 'gallery-edit-mode-enabled'
 
 const zoomLevel = ref(1)
 const isDragging = ref(false)
@@ -178,9 +183,23 @@ const lightboxTagsToggleTutorialVisible = ref(false)
 const activeImageNaturalSize = ref<{ width: number; height: number } | null>(null)
 const zoomSurfaceSize = ref({ width: 0, height: 0 })
 const swipeOffsetX = ref(0)
-const tagEditingEnabled = ref(false)
+const editModeEnabled = ref(false)
 const tagEditVersion = ref(0)
+const metadataEditVersion = ref(0)
 const draggedPhotoTag = ref<DraggedPhotoTag | null>(null)
+const worldEditQuery = ref('')
+const friendEditQuery = ref('')
+const tagFriendEditQuery = ref('')
+const parentPhotoEditQuery = ref('')
+const linkedPhotoEditQuery = ref('')
+const editSaveState = ref<'idle' | 'dirty' | 'saving' | 'saved' | 'error'>('idle')
+const editSaveMessage = ref('')
+const pendingEntityKind = ref<PendingEntityKind | null>(null)
+const newEntityId = ref('')
+const newEntityNameEn = ref('')
+const newEntityNameZh = ref('')
+const newEntityLink = ref('')
+const newEntityError = ref('')
 
 let startClientX = 0
 let startClientY = 0
@@ -329,12 +348,413 @@ function buildGalleryColumns(rows: GalleryRow[]) {
 }
 
 const activePhoto = computed(() => {
+  metadataEditVersion.value
+
   if (activeIndex.value === null) {
     return null
   }
 
   return currentLightboxPhotos.value[activeIndex.value] ?? null
 })
+
+function normaliseSearch(value: string) {
+  return value.trim().toLocaleLowerCase()
+}
+
+function entityMatchesQuery(entity: Friend | World, query: string) {
+  const search = normaliseSearch(query)
+
+  if (!search) {
+    return true
+  }
+
+  return [entity.id, entity.name_en, entity.name_zh ?? ''].some((value) =>
+    normaliseSearch(value).includes(search),
+  )
+}
+
+function exactEntityMatch<T extends Friend | World>(entities: T[], query: string) {
+  const search = normaliseSearch(query)
+  return entities.find((entity) =>
+    [entity.id, entity.name_en, entity.name_zh ?? ''].some((value) => normaliseSearch(value) === search),
+  )
+}
+
+function uniqueEntityId(name: string, separator: '.' | '_', existingIds: Set<string>, prefix: string) {
+  const base = name
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9]+/g, separator)
+    .replace(new RegExp(`\\${separator}+`, 'g'), separator)
+    .replace(new RegExp(`^\\${separator}|\\${separator}$`, 'g'), '') || prefix
+  let id = base
+  let suffix = 2
+
+  while (existingIds.has(id)) {
+    id = `${base}${separator}${suffix}`
+    suffix += 1
+  }
+
+  return id
+}
+
+const worldEditSuggestions = computed(() => {
+  metadataEditVersion.value
+  return worlds.filter((world) => entityMatchesQuery(world, worldEditQuery.value)).slice(0, 7)
+})
+const friendEditSuggestions = computed(() => {
+  metadataEditVersion.value
+  const selected = new Set(activePhoto.value?.friend ?? [])
+  return friends
+    .filter((friend) => !selected.has(friend.id) && entityMatchesQuery(friend, friendEditQuery.value))
+    .slice(0, 7)
+})
+const tagFriendEditSuggestions = computed(() => {
+  tagEditVersion.value
+  metadataEditVersion.value
+  const selected = new Set((activePhoto.value ? editableTagsByPhotoId.get(activePhoto.value.id) : [])?.map((tag) => tag.friend))
+  return friends
+    .filter((friend) => !selected.has(friend.id) && entityMatchesQuery(friend, tagFriendEditQuery.value))
+    .slice(0, 7)
+})
+
+function photoMatchesEditQuery(photo: GalleryImage, query: string) {
+  const search = normaliseSearch(query).replace(/^#/, '')
+
+  if (!search) {
+    return true
+  }
+
+  return String(photo.id).includes(search)
+}
+
+function wouldCreatePhotoCycle(photo: GalleryImage, parent: GalleryImage) {
+  const visited = new Set<number>()
+  let cursor: GalleryImage | undefined = parent
+
+  while (cursor && !visited.has(cursor.id)) {
+    if (cursor.id === photo.id) return true
+    visited.add(cursor.id)
+    cursor = cursor.parent ? photosById.get(cursor.parent) : undefined
+  }
+
+  return false
+}
+
+const availableRelationPhotos = computed(() => {
+  metadataEditVersion.value
+  const activeId = activePhoto.value?.id
+  return photos.filter((photo) => photo.id !== activeId)
+})
+const parentPhotoEditSuggestions = computed(() => {
+  const currentPhoto = activePhoto.value
+  return availableRelationPhotos.value
+    .filter(
+      (photo) =>
+        (!currentPhoto || !wouldCreatePhotoCycle(currentPhoto, photo)) &&
+        photoMatchesEditQuery(photo, parentPhotoEditQuery.value),
+    )
+    .slice(0, 7)
+})
+const linkedPhotoEditSuggestions = computed(() => {
+  const linkedIds = new Set(activePhoto.value?.linked ?? [])
+  const currentPhoto = activePhoto.value
+  return availableRelationPhotos.value
+    .filter(
+      (photo) =>
+        !linkedIds.has(photo.id) &&
+        (!currentPhoto || !wouldCreatePhotoCycle(photo, currentPhoto)) &&
+        photoMatchesEditQuery(photo, linkedPhotoEditQuery.value),
+    )
+    .slice(0, 7)
+})
+const activeParentPhoto = computed(() => {
+  metadataEditVersion.value
+  return activePhoto.value?.parent ? photosById.get(activePhoto.value.parent) ?? null : null
+})
+const activeLinkedPhotos = computed(() => {
+  metadataEditVersion.value
+  return (activePhoto.value?.linked ?? [])
+    .map((photoId) => photosById.get(photoId))
+    .filter((photo): photo is GalleryImage => Boolean(photo))
+})
+
+function markEditDirty() {
+  editSaveState.value = 'dirty'
+  editSaveMessage.value = 'Unsaved changes'
+}
+
+function touchMetadata() {
+  metadataEditVersion.value += 1
+  markEditDirty()
+}
+
+function beginEntityCreation(kind: PendingEntityKind, query: string) {
+  const isWorld = kind === 'world'
+  const entities = isWorld ? worlds : friends
+  pendingEntityKind.value = kind
+  newEntityId.value = uniqueEntityId(
+    query,
+    isWorld ? '.' : '_',
+    new Set(entities.map((entity) => entity.id)),
+    isWorld ? 'world' : 'friend',
+  )
+  newEntityNameEn.value = query.trim()
+  newEntityNameZh.value = ''
+  newEntityLink.value = ''
+  newEntityError.value = ''
+}
+
+function cancelEntityCreation() {
+  pendingEntityKind.value = null
+  newEntityId.value = ''
+  newEntityNameEn.value = ''
+  newEntityNameZh.value = ''
+  newEntityLink.value = ''
+  newEntityError.value = ''
+}
+
+function submitNewEntity() {
+  const kind = pendingEntityKind.value
+  const id = newEntityId.value.trim()
+  const nameEn = newEntityNameEn.value.trim()
+
+  if (!kind || !id || !nameEn) {
+    newEntityError.value = 'ID and name_en are required.'
+    return
+  }
+
+  const isWorld = kind === 'world'
+  const entities = isWorld ? worlds : friends
+  if (entities.some((entity) => entity.id === id)) {
+    newEntityError.value = `The ID “${id}” already exists.`
+    return
+  }
+
+  const entity = {
+    id,
+    name_en: nameEn,
+    ...(newEntityNameZh.value.trim() ? { name_zh: newEntityNameZh.value.trim() } : {}),
+  }
+
+  if (isWorld) {
+    const world: World = {
+      ...entity,
+      ...(newEntityLink.value.trim() ? { link: newEntityLink.value.trim() } : {}),
+    }
+    worlds.push(world)
+    worldsById.set(world.id, world)
+    cancelEntityCreation()
+    selectWorld(world)
+    return
+  }
+
+  const friend = entity as Friend
+  friends.push(friend)
+  friendsById.set(friend.id, friend)
+  cancelEntityCreation()
+  if (kind === 'tag') addPhotoTag(friend)
+  else addPhotoFriend(friend)
+}
+
+function selectWorld(world: World) {
+  if (!activePhoto.value) return
+  activePhoto.value.world = world.id
+  worldEditQuery.value = ''
+  touchMetadata()
+}
+
+function commitWorld() {
+  const query = worldEditQuery.value.trim()
+  if (!query) return
+  const existingWorld = exactEntityMatch(worlds, query)
+  if (existingWorld) selectWorld(existingWorld)
+  else beginEntityCreation('world', query)
+}
+
+function autocompleteWorld(event: KeyboardEvent) {
+  const suggestion = worldEditSuggestions.value[0]
+  if (!suggestion) return
+  event.preventDefault()
+  worldEditQuery.value = suggestion.id
+}
+
+function clearWorld() {
+  if (!activePhoto.value) return
+  activePhoto.value.world = ''
+  touchMetadata()
+}
+
+function addPhotoFriend(friend: Friend) {
+  if (!activePhoto.value || activePhoto.value.friend.includes(friend.id)) return
+  activePhoto.value.friend = [
+    ...new Set([...activePhoto.value.friend.filter((friendId) => friendId.trim()), friend.id]),
+  ]
+  friendEditQuery.value = ''
+  touchMetadata()
+}
+
+function commitPhotoFriend() {
+  const query = friendEditQuery.value.trim()
+  if (!query) return
+  const existingFriend = exactEntityMatch(friends, query)
+  if (existingFriend) addPhotoFriend(existingFriend)
+  else beginEntityCreation('friend', query)
+}
+
+function autocompletePhotoFriend(event: KeyboardEvent) {
+  const suggestion = friendEditSuggestions.value[0]
+  if (!suggestion) return
+  event.preventDefault()
+  friendEditQuery.value = suggestion.id
+}
+
+function removePhotoFriend(friendId: string) {
+  if (!activePhoto.value) return
+  activePhoto.value.friend = activePhoto.value.friend.filter((id) => id !== friendId)
+  const tags = editableTagsByPhotoId.get(activePhoto.value.id)
+  if (tags) {
+    editableTagsByPhotoId.set(activePhoto.value.id, tags.filter((tag) => tag.friend !== friendId))
+    tagEditVersion.value += 1
+  }
+  touchMetadata()
+}
+
+function setPhotoParent(photo: GalleryImage, parent: GalleryImage | null) {
+  if (parent && wouldCreatePhotoCycle(photo, parent)) return
+  const previousParent = photo.parent ? photosById.get(photo.parent) : null
+  if (previousParent) {
+    previousParent.linked = (previousParent.linked ?? []).filter((photoId) => photoId !== photo.id)
+    if (!previousParent.linked.length) delete previousParent.linked
+  }
+
+  if (!parent) {
+    delete photo.parent
+    touchMetadata()
+    return
+  }
+
+  photo.parent = parent.id
+  parent.linked = [...new Set([...(parent.linked ?? []), photo.id])]
+  touchMetadata()
+}
+
+function selectParentPhoto(photo: GalleryImage) {
+  if (!activePhoto.value) return
+  setPhotoParent(activePhoto.value, photo)
+  parentPhotoEditQuery.value = ''
+}
+
+function commitParentPhoto() {
+  const suggestion = parentPhotoEditSuggestions.value[0]
+  if (suggestion) selectParentPhoto(suggestion)
+}
+
+function autocompleteParentPhoto(event: KeyboardEvent) {
+  const suggestion = parentPhotoEditSuggestions.value[0]
+  if (!suggestion) return
+  event.preventDefault()
+  parentPhotoEditQuery.value = `#${suggestion.id}`
+}
+
+function addLinkedPhoto(photo: GalleryImage) {
+  if (!activePhoto.value) return
+  setPhotoParent(photo, activePhoto.value)
+  linkedPhotoEditQuery.value = ''
+}
+
+function commitLinkedPhoto() {
+  const suggestion = linkedPhotoEditSuggestions.value[0]
+  if (suggestion) addLinkedPhoto(suggestion)
+}
+
+function autocompleteLinkedPhoto(event: KeyboardEvent) {
+  const suggestion = linkedPhotoEditSuggestions.value[0]
+  if (!suggestion) return
+  event.preventDefault()
+  linkedPhotoEditQuery.value = `#${suggestion.id}`
+}
+
+function removeLinkedPhoto(photo: GalleryImage) {
+  if (!activePhoto.value) return
+  const parent = activePhoto.value
+  parent.linked = (parent.linked ?? []).filter((photoId) => photoId !== photo.id)
+  if (!parent.linked.length) delete parent.linked
+  if (photo.parent === parent.id) delete photo.parent
+  touchMetadata()
+}
+
+function addPhotoTag(friend: Friend) {
+  if (!activePhoto.value) return
+  const tags = editableTagsByPhotoId.get(activePhoto.value.id) ?? []
+  if (tags.some((tag) => tag.friend === friend.id)) return
+  tags.push({ friend: friend.id, x: 50, y: 50, position: 'bottom' })
+  editableTagsByPhotoId.set(activePhoto.value.id, tags)
+  if (!activePhoto.value.friend.includes(friend.id)) {
+    activePhoto.value.friend = [
+      ...new Set([...activePhoto.value.friend.filter((friendId) => friendId.trim()), friend.id]),
+    ]
+  }
+  tagFriendEditQuery.value = ''
+  tagEditVersion.value += 1
+  touchMetadata()
+}
+
+function commitPhotoTag() {
+  const query = tagFriendEditQuery.value.trim()
+  if (!query) return
+  const existingFriend = exactEntityMatch(friends, query)
+  if (existingFriend) addPhotoTag(existingFriend)
+  else beginEntityCreation('tag', query)
+}
+
+function autocompletePhotoTag(event: KeyboardEvent) {
+  const suggestion = tagFriendEditSuggestions.value[0]
+  if (!suggestion) return
+  event.preventDefault()
+  tagFriendEditQuery.value = suggestion.id
+}
+
+const tagPositionOrder: TagPosition[] = ['bottom', 'top', 'left', 'right']
+const tagPositionLabels: Record<TagPosition, string> = {
+  bottom: 'BOTTOM',
+  top: 'UP',
+  left: 'LEFT',
+  right: 'RIGHT',
+}
+
+function updatePhotoDescription(field: 'description_en' | 'description_zh', event: Event) {
+  if (!activePhoto.value || !(event.target instanceof HTMLTextAreaElement)) return
+  activePhoto.value[field] = event.target.value
+  touchMetadata()
+}
+
+function cycleTagPosition(tagIndex: number) {
+  if (!activePhoto.value) return
+  const tag = editableTagsByPhotoId.get(activePhoto.value.id)?.[tagIndex]
+  if (!tag) return
+  const currentPosition = tag.position ?? 'bottom'
+  tag.position = tagPositionOrder[(tagPositionOrder.indexOf(currentPosition) + 1) % tagPositionOrder.length]
+  tagEditVersion.value += 1
+  markEditDirty()
+}
+
+function removePhotoTag(tagIndex: number) {
+  if (!activePhoto.value) return
+  editableTagsByPhotoId.get(activePhoto.value.id)?.splice(tagIndex, 1)
+  tagEditVersion.value += 1
+  markEditDirty()
+}
+
+function resetEditQueries() {
+  worldEditQuery.value = ''
+  friendEditQuery.value = ''
+  tagFriendEditQuery.value = ''
+  parentPhotoEditQuery.value = ''
+  linkedPhotoEditQuery.value = ''
+  cancelEntityCreation()
+}
 
 const activePosition = computed(() => (activeIndex.value === null ? 0 : activeIndex.value + 1))
 const daysInVrchat = computed(() => daysSinceVrchatStart(now.value))
@@ -426,6 +846,35 @@ const activePhotoTags = computed(() => {
 
   return photoTagList(activePhoto.value)
 })
+
+const activePhotoFriendIds = computed(() => {
+  if (!activePhoto.value) return []
+  return [...new Set(activePhoto.value.friend.map((friendId) => friendId.trim()).filter(Boolean))]
+})
+
+const canGenerateCurrentPhotoTags = computed(
+  () => activePhotoTags.value.length === 0 && activePhotoFriendIds.value.length > 0,
+)
+
+function generateCurrentPhotoTags() {
+  if (!activePhoto.value || !canGenerateCurrentPhotoTags.value) return
+  const friendIds = activePhotoFriendIds.value
+  const left = 38
+  const right = 62
+  const step = friendIds.length > 1 ? (right - left) / (friendIds.length - 1) : 0
+
+  editableTagsByPhotoId.set(
+    activePhoto.value.id,
+    friendIds.map((friendId, index) => ({
+      friend: friendId,
+      x: friendIds.length === 1 ? 50 : Number((left + step * index).toFixed(1)),
+      y: 50,
+    })),
+  )
+  lightboxTagsVisible.value = true
+  tagEditVersion.value += 1
+  markEditDirty()
+}
 
 function hasWorld(photo: GalleryImage) {
   return photo.world.trim().length > 0
@@ -1092,7 +1541,7 @@ function stopDrag(event?: MouseEvent | TouchEvent) {
 }
 
 function startTagDrag(event: PointerEvent, tag: ResolvedPhotoTag) {
-  if (!tagEditingEnabled.value || !activePhoto.value) {
+  if (!editModeEnabled.value || !activePhoto.value) {
     return
   }
 
@@ -1129,6 +1578,7 @@ function updateDraggedTag(clientX: number, clientY: number) {
   tag.x = coordinates.x
   tag.y = coordinates.y
   tagEditVersion.value += 1
+  markEditDirty()
 }
 
 function handleTagDragMove(event: PointerEvent) {
@@ -1179,53 +1629,94 @@ function allPhotoTagGroupsData() {
     .map((photoId) => photoTagGroupData(photoId))
 }
 
-function serialisePhotoTagGroup(photoId: number) {
-  return JSON.stringify(photoTagGroupData(photoId), null, 2)
+function currentPhotoEditData() {
+  if (!activePhoto.value) {
+    return null
+  }
+
+  return {
+    image: activePhoto.value,
+    tags: photoTagGroupData(activePhoto.value.id).tags,
+  }
 }
 
-function printCurrentPhotoTags() {
-  if (!activePhoto.value) {
-    const message = 'Open a photo in the lightbox before running tagsEdit.print().'
+function printCurrentPhotoMetadata() {
+  const currentData = currentPhotoEditData()
+
+  if (!currentData) {
+    const message = 'Open a photo in the lightbox before running editmode.print().'
     console.warn(message)
     return ''
   }
 
-  const payload = serialisePhotoTagGroup(activePhoto.value.id)
+  const payload = JSON.stringify(currentData, null, 2)
   console.log(payload)
   return payload
 }
 
-async function saveEditedPhotoTags() {
-  const payload = allPhotoTagGroupsData()
-  const response = await fetch('/__tags/save', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
+function allGalleryEditData() {
+  return {
+    images: [...photos].sort((a, b) => a.id - b.id),
+    friends,
+    worlds,
+    tags: allPhotoTagGroupsData(),
+  }
+}
 
-  if (!response.ok) {
-    const message = await response.text()
-    throw new Error(message || 'Failed to save tags.')
+async function saveEditedGalleryData() {
+  editSaveState.value = 'saving'
+  editSaveMessage.value = 'Saving…'
+
+  try {
+    const payload = allGalleryEditData()
+    const response = await fetch('/__gallery/save', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+
+    if (!response.ok) {
+      const message = await response.text()
+      throw new Error(message || 'Failed to save gallery metadata.')
+    }
+
+    const serialisedPayload = JSON.stringify(payload, null, 2)
+    editSaveState.value = 'saved'
+    editSaveMessage.value = 'Saved to src/data/*.json'
+    console.info('Saved gallery metadata and tag positions to src/data/*.json.')
+    return serialisedPayload
+  } catch (error) {
+    editSaveState.value = 'error'
+    editSaveMessage.value = error instanceof Error ? error.message : 'Save failed'
+    throw error
+  }
+}
+
+function enableEditMode() {
+  editModeEnabled.value = true
+  window.localStorage.setItem(editModeStorageKey, 'true')
+  lightboxControlsVisible.value = true
+  lightboxTagsVisible.value = true
+  console.info('Edit mode enabled. Run \"await editmode.save()\" to save.')
+}
+
+function disableEditMode() {
+  editModeEnabled.value = false
+  window.localStorage.setItem(editModeStorageKey, 'false')
+  stopTagDrag()
+  console.info('Edit mode disabled.')
+}
+
+function toggleEditMode() {
+  if (editModeEnabled.value) {
+    disableEditMode()
+  } else {
+    enableEditMode()
   }
 
-  const serialisedPayload = JSON.stringify(payload, null, 2)
-  console.info('Saved current tag positions to src/data/tags.json.')
-  console.log(serialisedPayload)
-  return serialisedPayload
-}
-
-function enableTagEditing() {
-  tagEditingEnabled.value = true
-  lightboxControlsVisible.value = true
-  console.info('Tag editing enabled. Run \"await tagsEdit.save()\" to save.')
-}
-
-function disableTagEditing() {
-  tagEditingEnabled.value = false
-  stopTagDrag()
-  console.info('Tag editing disabled.')
+  return editModeEnabled.value
 }
 
 function loadLightboxTagsPreference() {
@@ -1259,18 +1750,20 @@ function toggleLightboxTags() {
   lightboxTagsVisible.value = !lightboxTagsVisible.value
 }
 
-function installGalleryTagConsoleApi() {
-  window.tagsEdit = {
-    on: enableTagEditing,
-    off: disableTagEditing,
-    print: printCurrentPhotoTags,
-    save: saveEditedPhotoTags,
+function installGalleryEditConsoleApi() {
+  window.editmode = {
+    on: enableEditMode,
+    off: disableEditMode,
+    toggle: toggleEditMode,
+    status: () => editModeEnabled.value,
+    print: printCurrentPhotoMetadata,
+    save: saveEditedGalleryData,
   }
 }
 
-function uninstallGalleryTagConsoleApi() {
-  if (window.tagsEdit?.on === enableTagEditing) {
-    delete window.tagsEdit
+function uninstallGalleryEditConsoleApi() {
+  if (window.editmode?.on === enableEditMode) {
+    delete window.editmode
   }
 }
 
@@ -1280,7 +1773,7 @@ function handleLightboxPhotoClick(event: MouseEvent) {
     return
   }
 
-  if (tagEditingEnabled.value) {
+  if (editModeEnabled.value) {
     lightboxControlsVisible.value = true
     return
   }
@@ -1430,6 +1923,16 @@ function handleKeydown(event: KeyboardEvent) {
     return
   }
 
+  const target = event.target
+  if (
+    target instanceof HTMLInputElement ||
+    target instanceof HTMLTextAreaElement ||
+    target instanceof HTMLSelectElement ||
+    (target instanceof HTMLElement && target.isContentEditable)
+  ) {
+    return
+  }
+
   if (event.key === 'Escape') {
     closeLightbox()
   }
@@ -1448,6 +1951,7 @@ watch([activePhoto, activeQrContact], ([photo, qrContact], [previousPhoto]) => {
 
   if (photo?.id !== previousPhoto?.id) {
     activeImageNaturalSize.value = null
+    resetEditQueries()
   }
 
   if (photo) {
@@ -1492,10 +1996,12 @@ watch(lightboxTagsVisible, (isVisible) => {
 
 onMounted(() => {
   introDismissed.value = window.localStorage.getItem(introDismissedStorageKey) === 'true'
+  editModeEnabled.value = window.localStorage.getItem(editModeStorageKey) === 'true'
   loadLightboxTagsPreference()
+  if (editModeEnabled.value) lightboxTagsVisible.value = true
   updateGalleryColumnCount()
   handleHashTarget()
-  installGalleryTagConsoleApi()
+  installGalleryEditConsoleApi()
   lightboxZoomSurfaceObserver = new ResizeObserver(updateZoomSurfaceSize)
 
   if (lightboxZoomSurface.value) {
@@ -1522,7 +2028,7 @@ onBeforeUnmount(() => {
     window.clearTimeout(tagsToggleTutorialTimer)
   }
   stopTagDrag()
-  uninstallGalleryTagConsoleApi()
+  uninstallGalleryEditConsoleApi()
   lightboxZoomSurfaceObserver?.disconnect()
   window.removeEventListener('keydown', handleKeydown)
   window.removeEventListener('resize', updateGalleryColumnCount)
@@ -1996,6 +2502,252 @@ onBeforeUnmount(() => {
           </div>
         </div>
 
+        <aside
+          v-if="editModeEnabled"
+          class="edit-panel"
+          aria-label="Photo editor"
+          @click.stop
+          @dblclick.stop
+          @pointerdown.stop
+        >
+          <header class="edit-panel__header">
+            <div>
+              <span>Edit mode</span>
+              <strong>Edit photo #{{ activePhoto.id }}</strong>
+            </div>
+            <button type="button" aria-label="Close edit mode" @click="disableEditMode">×</button>
+          </header>
+
+          <form v-if="pendingEntityKind" class="edit-new-entity" @submit.prevent="submitNewEntity">
+            <div class="edit-new-entity__header">
+              <strong>New {{ pendingEntityKind === 'world' ? 'world' : 'friend' }}</strong>
+              <button type="button" @click="cancelEntityCreation">Cancel</button>
+            </div>
+            <label>
+              <span>ID *</span>
+              <input v-model="newEntityId" type="text" autocomplete="off" required />
+            </label>
+            <label>
+              <span>name_en *</span>
+              <input v-model="newEntityNameEn" type="text" autocomplete="off" required />
+            </label>
+            <label>
+              <span>name_zh</span>
+              <input v-model="newEntityNameZh" type="text" autocomplete="off" />
+            </label>
+            <label v-if="pendingEntityKind === 'world'">
+              <span>link</span>
+              <input v-model="newEntityLink" type="url" autocomplete="off" placeholder="https://…" />
+            </label>
+            <p v-if="newEntityError" class="edit-new-entity__error">{{ newEntityError }}</p>
+            <button class="edit-new-entity__submit" type="submit">
+              Create {{ pendingEntityKind === 'world' ? 'world' : 'friend' }}
+            </button>
+          </form>
+
+          <section class="edit-field">
+            <label for="edit-world">World</label>
+            <div v-if="hasWorld(activePhoto)" class="edit-chips">
+              <span class="edit-chip">
+                {{ worldName(activePhoto.world) }}
+                <small>{{ activePhoto.world }}</small>
+                <button type="button" aria-label="Remove world" @click="clearWorld">×</button>
+              </span>
+            </div>
+            <div v-else class="edit-autocomplete">
+              <input
+                id="edit-world"
+                v-model="worldEditQuery"
+                type="text"
+                autocomplete="off"
+                placeholder="Search world name or ID"
+                @keydown.tab="autocompleteWorld"
+                @keydown.enter.prevent="commitWorld"
+              />
+              <div v-if="worldEditQuery.trim()" class="edit-suggestions">
+                <button
+                  v-for="world in worldEditSuggestions"
+                  :key="world.id"
+                  type="button"
+                  @mousedown.prevent="selectWorld(world)"
+                >
+                  <span>{{ localisedText(world.name_en, world.name_zh) }}</span>
+                  <small>{{ world.id }}</small>
+                </button>
+                <p>Tab completes the first result · Enter selects or creates</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="edit-field edit-field--descriptions">
+            <label for="edit-description-en">DESCRIPTION (EN)</label>
+            <textarea
+              id="edit-description-en"
+              :value="activePhoto.description_en ?? ''"
+              rows="3"
+              placeholder="English description"
+              @input="updatePhotoDescription('description_en', $event)"
+            ></textarea>
+            <label for="edit-description-zh">DESCRIPTION (ZH)</label>
+            <textarea
+              id="edit-description-zh"
+              :value="activePhoto.description_zh ?? ''"
+              rows="3"
+              placeholder="Chinese description"
+              @input="updatePhotoDescription('description_zh', $event)"
+            ></textarea>
+          </section>
+
+          <section class="edit-field">
+            <label for="edit-friend">Friends</label>
+            <div class="edit-chips">
+              <span v-for="friend in friendList(activePhoto)" :key="friend.id" class="edit-chip">
+                {{ friend.name }}
+                <small>{{ friend.id }}</small>
+                <button type="button" :aria-label="`Remove ${friend.name}`" @click="removePhotoFriend(friend.id)">×</button>
+              </span>
+            </div>
+            <div class="edit-autocomplete">
+              <input
+                id="edit-friend"
+                v-model="friendEditQuery"
+                type="text"
+                autocomplete="off"
+                placeholder="Search friend name or ID"
+                @keydown.tab="autocompletePhotoFriend"
+                @keydown.enter.prevent="commitPhotoFriend"
+              />
+              <div v-if="friendEditQuery.trim()" class="edit-suggestions">
+                <button
+                  v-for="friend in friendEditSuggestions"
+                  :key="friend.id"
+                  type="button"
+                  @mousedown.prevent="addPhotoFriend(friend)"
+                >
+                  <span>{{ localisedText(friend.name_en, friend.name_zh) }}</span>
+                  <small>{{ friend.id }}</small>
+                </button>
+                <p>Tab completes the first result · Enter adds or creates</p>
+              </div>
+            </div>
+          </section>
+
+          <section v-if="!activeLinkedPhotos.length" class="edit-field">
+            <label for="edit-parent">Parent photo</label>
+            <div v-if="activeParentPhoto" class="edit-chips">
+              <span class="edit-chip">
+                #{{ activeParentPhoto.id }}
+                <button type="button" aria-label="Remove parent photo" @click="setPhotoParent(activePhoto, null)">×</button>
+              </span>
+            </div>
+            <div class="edit-autocomplete">
+              <input
+                id="edit-parent"
+                v-model="parentPhotoEditQuery"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                placeholder="Search photo #ID"
+                @keydown.tab="autocompleteParentPhoto"
+                @keydown.enter.prevent="commitParentPhoto"
+              />
+              <div v-if="parentPhotoEditQuery.trim()" class="edit-suggestions">
+                <button
+                  v-for="photo in parentPhotoEditSuggestions"
+                  :key="photo.id"
+                  type="button"
+                  @mousedown.prevent="selectParentPhoto(photo)"
+                >
+                  <span>#{{ photo.id }}</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section v-if="!activeParentPhoto" class="edit-field">
+            <label for="edit-linked">Linked photos</label>
+            <div class="edit-chips">
+              <span v-for="photo in activeLinkedPhotos" :key="photo.id" class="edit-chip">
+                #{{ photo.id }}
+                <button type="button" :aria-label="`Remove photo #${photo.id}`" @click="removeLinkedPhoto(photo)">×</button>
+              </span>
+            </div>
+            <div class="edit-autocomplete">
+              <input
+                id="edit-linked"
+                v-model="linkedPhotoEditQuery"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                placeholder="Add photo #ID"
+                @keydown.tab="autocompleteLinkedPhoto"
+                @keydown.enter.prevent="commitLinkedPhoto"
+              />
+              <div v-if="linkedPhotoEditQuery.trim()" class="edit-suggestions">
+                <button
+                  v-for="photo in linkedPhotoEditSuggestions"
+                  :key="photo.id"
+                  type="button"
+                  @mousedown.prevent="addLinkedPhoto(photo)"
+                >
+                  <span>#{{ photo.id }}</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="edit-field edit-field--tags">
+            <label for="edit-tag-friend">Tags <small>Drag tags directly on the photo</small></label>
+            <button
+              class="edit-generate-tags"
+              type="button"
+              :disabled="!canGenerateCurrentPhotoTags"
+              @click="generateCurrentPhotoTags"
+            >
+              {{ activePhotoTags.length ? 'Tags already exist' : activePhotoFriendIds.length ? 'Generate tags from friends' : 'No friends to generate tags' }}
+            </button>
+            <div class="edit-tag-list">
+              <div v-for="tag in activePhotoTags" :key="`${tag.friendId}-${tag.index}`" class="edit-tag-row">
+                <span>{{ tag.name }}</span>
+                <button type="button" :aria-label="`Change ${tag.name} tag direction`" @click="cycleTagPosition(tag.index)">
+                  {{ tagPositionLabels[tag.position] }}
+                </button>
+                <button type="button" :aria-label="`Delete ${tag.name} tag`" @click="removePhotoTag(tag.index)">×</button>
+              </div>
+            </div>
+            <div class="edit-autocomplete">
+              <input
+                id="edit-tag-friend"
+                v-model="tagFriendEditQuery"
+                type="text"
+                autocomplete="off"
+                placeholder="Add a friend tag"
+                @keydown.tab="autocompletePhotoTag"
+                @keydown.enter.prevent="commitPhotoTag"
+              />
+              <div v-if="tagFriendEditQuery.trim()" class="edit-suggestions edit-suggestions--up">
+                <button
+                  v-for="friend in tagFriendEditSuggestions"
+                  :key="friend.id"
+                  type="button"
+                  @mousedown.prevent="addPhotoTag(friend)"
+                >
+                  <span>{{ localisedText(friend.name_en, friend.name_zh) }}</span>
+                  <small>{{ friend.id }}</small>
+                </button>
+                <p>New tags start in the centre with a BOTTOM label</p>
+              </div>
+            </div>
+          </section>
+
+          <footer class="edit-panel__footer">
+            <p :class="`is-${editSaveState}`" aria-live="polite">{{ editSaveMessage || 'Changes are not saved automatically' }}</p>
+            <button type="button" :disabled="editSaveState === 'saving'" @click="saveEditedGalleryData">
+              {{ editSaveState === 'saving' ? 'Saving…' : 'Save all changes' }}
+            </button>
+          </footer>
+        </aside>
+
         <div ref="lightboxStage" class="lightbox-stage">
           <div
             ref="lightboxZoomSurface"
@@ -2029,7 +2781,7 @@ onBeforeUnmount(() => {
               <div
                 v-if="activeImageNaturalSize && activePhotoTags.length && lightboxTagsVisible"
                 class="lightbox-tags"
-                :class="{ 'is-editing': tagEditingEnabled }"
+                :class="{ 'is-editing': editModeEnabled }"
                 :aria-label="copy.taggedFriends"
               >
                 <button
@@ -2041,7 +2793,7 @@ onBeforeUnmount(() => {
                   type="button"
                   :aria-label="tag.name"
                   @pointerdown="startTagDrag($event, tag)"
-                  @click.stop="tagEditingEnabled || applyFriendFilter(tag.friendId, true)"
+                  @click.stop="editModeEnabled || applyFriendFilter(tag.friendId, true)"
                 >
                   <span class="lightbox-tag__dot" aria-hidden="true"></span>
                   <span class="lightbox-tag__label">{{ tag.name }}</span>

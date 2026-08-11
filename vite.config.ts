@@ -6,6 +6,9 @@ import { fileURLToPath } from 'node:url'
 
 const dataDir = fileURLToPath(new URL('./src/data', import.meta.url))
 const tagsFile = join(dataDir, 'tags.json')
+const imagesFile = join(dataDir, 'images.json')
+const friendsFile = join(dataDir, 'friends.json')
+const worldsFile = join(dataDir, 'worlds.json')
 
 type TagPayload = Array<{
   photo: number
@@ -51,6 +54,109 @@ function isTagPayload(value: unknown): value is TagPayload {
   })
 }
 
+function isNamedEntityPayload(value: unknown) {
+  return (
+    Array.isArray(value) &&
+    value.every((item) => {
+      if (!item || typeof item !== 'object') {
+        return false
+      }
+
+      const record = item as Record<string, unknown>
+      return (
+        typeof record.id === 'string' &&
+        record.id.trim().length > 0 &&
+        typeof record.name_en === 'string' &&
+        (record.name_zh === undefined || typeof record.name_zh === 'string') &&
+        (record.link === undefined || typeof record.link === 'string')
+      )
+    })
+  )
+}
+
+function isImagePayload(value: unknown) {
+  return (
+    Array.isArray(value) &&
+    value.every((item) => {
+      if (!item || typeof item !== 'object') {
+        return false
+      }
+
+      const record = item as Record<string, unknown>
+      return (
+        Number.isFinite(record.id) &&
+        typeof record.filename === 'string' &&
+        typeof record.captured === 'string' &&
+        typeof record.world === 'string' &&
+        Array.isArray(record.friend) &&
+        record.friend.every((friendId) => typeof friendId === 'string') &&
+        (record.linked === undefined ||
+          (Array.isArray(record.linked) && record.linked.every((photoId) => Number.isFinite(photoId)))) &&
+        (record.parent === undefined || Number.isFinite(record.parent))
+      )
+    })
+  )
+}
+
+function isGalleryPayload(value: unknown): value is {
+  images: unknown[]
+  friends: unknown[]
+  worlds: unknown[]
+  tags: TagPayload
+} {
+  if (!value || typeof value !== 'object') {
+    return false
+  }
+
+  const record = value as Record<string, unknown>
+  return (
+    isImagePayload(record.images) &&
+    isNamedEntityPayload(record.friends) &&
+    isNamedEntityPayload(record.worlds) &&
+    isTagPayload(record.tags)
+  )
+}
+
+function dumpJson(value: unknown, indent = 0): string {
+  const space = ' '.repeat(indent)
+  const childSpace = ' '.repeat(indent + 2)
+
+  if (Array.isArray(value)) {
+    if (!value.length) return '[]'
+    if (value.every((item) => item === null || typeof item !== 'object')) {
+      return `[${value.map((item) => JSON.stringify(item)).join(', ')}]`
+    }
+
+    return [
+      '[',
+      ...value.map(
+        (item, index) => `${childSpace}${dumpJson(item, indent + 2)}${index < value.length - 1 ? ',' : ''}`,
+      ),
+      `${space}]`,
+    ].join('\n')
+  }
+
+  if (value && typeof value === 'object') {
+    const entries = Object.entries(value)
+    if (!entries.length) return '{}'
+
+    return [
+      '{',
+      ...entries.map(
+        ([key, item], index) =>
+          `${childSpace}${JSON.stringify(key)}: ${dumpJson(item, indent + 2)}${index < entries.length - 1 ? ',' : ''}`,
+      ),
+      `${space}}`,
+    ].join('\n')
+  }
+
+  return JSON.stringify(value)
+}
+
+function writeJsonFile(filePath: string, payload: unknown) {
+  writeFileSync(filePath, `${dumpJson(payload)}\n`, 'utf8')
+}
+
 function readRequestBody(request: import('node:http').IncomingMessage) {
   return new Promise<string>((resolveBody, rejectBody) => {
     let body = ''
@@ -73,6 +179,34 @@ function exposeGalleryData(): Plugin {
       outputDataDir = resolve(config.root, config.build.outDir, 'data')
     },
     configureServer(server) {
+      server.middlewares.use('/__gallery/save', async (request, response, next) => {
+        if (request.method !== 'POST') {
+          next()
+          return
+        }
+
+        try {
+          const body = await readRequestBody(request)
+          const payload = JSON.parse(body) as unknown
+
+          if (!isGalleryPayload(payload)) {
+            response.statusCode = 400
+            response.end('Invalid gallery payload')
+            return
+          }
+
+          writeJsonFile(imagesFile, payload.images)
+          writeJsonFile(friendsFile, payload.friends)
+          writeJsonFile(worldsFile, payload.worlds)
+          writeJsonFile(tagsFile, payload.tags)
+          response.setHeader('Content-Type', 'application/json; charset=utf-8')
+          response.end(JSON.stringify({ ok: true }))
+        } catch (error) {
+          response.statusCode = 500
+          response.end(error instanceof Error ? error.message : 'Failed to save gallery data')
+        }
+      })
+
       server.middlewares.use('/__tags/save', async (request, response, next) => {
         if (request.method !== 'POST') {
           next()
@@ -89,7 +223,7 @@ function exposeGalleryData(): Plugin {
             return
           }
 
-          writeFileSync(tagsFile, `${JSON.stringify(payload, null, 2)}\n`, 'utf8')
+          writeJsonFile(tagsFile, payload)
           response.setHeader('Content-Type', 'application/json; charset=utf-8')
           response.end(JSON.stringify({ ok: true }))
         } catch (error) {

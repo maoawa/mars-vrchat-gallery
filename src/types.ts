@@ -8,6 +8,7 @@ export interface World {
   id: string
   name_en: string
   name_zh?: string
+  link?: string
 }
 
 export interface PhotoTag {

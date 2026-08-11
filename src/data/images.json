@@ -2065,7 +2065,6 @@
     "world": "karaoke.in.sync",
     "description_en": "It's our first time to see [[waterchan]] finally speaks some English. And he sang really well!",
     "description_zh": "这是我们第一次看到 [[waterchan]] 终于能说英语了。而且他唱得很好！",
-
     "friend": ["waterchan"],
     "parent": 216
   },
@@ -2078,5 +2077,32 @@
     "description_zh": "唱歌！",
     "friend": ["yuma", "waterchan", "joshy", "taru"],
     "linked": [214, 215]
+  },
+  {
+    "id": 217,
+    "filename": "VRChat_2026-08-11_00-48-11.jpg",
+    "captured": "2026-08-11T00:48:11",
+    "world": "japan.shrine",
+    "description_en": "Met two new friends in {{japan.shrine}} and we had great conversations!",
+    "description_zh": "在 {{japan.shrine}} 见到了两个新朋友，我们聊的很开心！",
+    "friend": ["yuri"]
+  },
+  {
+    "id": 218,
+    "filename": "VRChat_2026-08-11_03-14-32.jpg",
+    "captured": "2026-08-11T03:14:32",
+    "world": "taipei.karaoke",
+    "description_en": "Went to the karaoke again with friends!",
+    "description_zh": "又和朋友去了卡拉OK！",
+    "friend": ["yuma", "joshy", "taru"]
+  },
+  {
+    "id": 219,
+    "filename": "VRChat_2026-08-11_06-53-45.jpg",
+    "captured": "2026-08-11T06:53:45",
+    "world": "guinea.pig.sanctuary",
+    "description_en": "Hanging out with friends in {{guinea.pig.sanctuary}}!",
+    "description_zh": "和朋友们在 {{guinea.pig.sanctuary}} 里一起玩！",
+    "friend": ["taru", "aver", "yuma", "joshy"]
   }
 ]
