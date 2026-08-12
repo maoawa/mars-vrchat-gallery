@@ -182,5 +182,11 @@
     "name_en": "Blue Reverie",
     "name_zh": "蓝色遐想",
     "link": "https://vrchat.com/home/world/wrld_d78eefc9-d092-4e03-9da2-13a73ad82c6b"
+  },
+  {
+    "id": "minecraft.vrchat.edition",
+    "name_en": "Minecraft VRChat Edition",
+    "name_zh": "我的世界 VRChat 版",
+    "link": "https://vrchat.com/home/world/wrld_36ee176b-cddc-404c-ac82-45a122507a9e"
   }
 ]

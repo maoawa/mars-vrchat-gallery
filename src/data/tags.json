@@ -3807,5 +3807,68 @@
         "y": 55.9
       }
     ]
+  },
+  {
+    "photo": 228,
+    "tags": [
+      {
+        "friend": "joshy",
+        "x": 19.9,
+        "y": 58.8
+      },
+      {
+        "friend": "taru",
+        "x": 37.3,
+        "y": 30.1,
+        "position": "top"
+      },
+      {
+        "friend": "yuma",
+        "x": 48.4,
+        "y": 38.2
+      },
+      {
+        "friend": "aver",
+        "x": 51.9,
+        "y": 23.9,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 229,
+    "tags": [
+      {
+        "friend": "aver",
+        "x": 32.4,
+        "y": 55.3
+      },
+      {
+        "friend": "taru",
+        "x": 47.9,
+        "y": 47.1
+      },
+      {
+        "friend": "joshy",
+        "x": 63.6,
+        "y": 54.6
+      },
+      {
+        "friend": "yuma",
+        "x": 67,
+        "y": 43.4,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 230,
+    "tags": [
+      {
+        "friend": "aver",
+        "x": 40.3,
+        "y": 45.4
+      }
+    ]
   }
 ]

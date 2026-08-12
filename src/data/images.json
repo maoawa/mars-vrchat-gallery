@@ -2181,5 +2181,35 @@
     "description_en": "Sing sing sing!",
     "description_zh": "唱唱唱！",
     "friend": ["taru", "yuma", "joshy"]
+  },
+  {
+    "id": 228,
+    "filename": "VRChat_2026-08-13_01-43-36.jpg",
+    "captured": "2026-08-13T01:43:36",
+    "world": "minecraft.vrchat.edition",
+    "description_en": "First time playing the {{minecraft.vrchat.edition}}, that's a really cool experience!",
+    "description_zh": "第一次玩 {{minecraft.vrchat.edition}}，真是太酷了！",
+    "friend": ["joshy", "taru", "yuma", "aver"],
+    "linked": [229, 230]
+  },
+  {
+    "id": 229,
+    "filename": "VRChat_2026-08-13_01-43-51.jpg",
+    "captured": "2026-08-13T01:43:51",
+    "world": "minecraft.vrchat.edition",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["aver", "taru", "joshy", "yuma"],
+    "parent": 228
+  },
+  {
+    "id": 230,
+    "filename": "VRChat_2026-08-13_01-52-56.jpg",
+    "captured": "2026-08-13T01:52:56",
+    "world": "minecraft.vrchat.edition",
+    "description_en": "Our plants!",
+    "description_zh": "我们的植物！",
+    "friend": ["aver"],
+    "parent": 228
   }
 ]
