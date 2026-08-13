@@ -3619,6 +3619,18 @@
         "x": 37.1,
         "y": 51.2,
         "position": "top"
+      },
+      {
+        "friend": "taru",
+        "x": 51.6,
+        "y": 42.3,
+        "position": "bottom"
+      },
+      {
+        "friend": "aqua",
+        "x": 43.3,
+        "y": 46.2,
+        "position": "bottom"
       }
     ]
   },
@@ -3783,7 +3795,7 @@
       {
         "friend": "aqua",
         "x": 72.9,
-        "y": 62.1,
+        "y": 62.3,
         "position": "top"
       }
     ]
@@ -3805,6 +3817,18 @@
         "friend": "joshy",
         "x": 61.8,
         "y": 55.9
+      },
+      {
+        "friend": "naru",
+        "x": 28.8,
+        "y": 55.3,
+        "position": "bottom"
+      },
+      {
+        "friend": "kofki",
+        "x": 74.6,
+        "y": 51.6,
+        "position": "top"
       }
     ]
   },
@@ -3868,6 +3892,81 @@
         "friend": "aver",
         "x": 40.3,
         "y": 45.4
+      }
+    ]
+  },
+  {
+    "photo": 231,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 32.2,
+        "y": 48.5
+      }
+    ]
+  },
+  {
+    "photo": 233,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 46.2,
+        "y": 33.6,
+        "position": "top"
+      },
+      {
+        "friend": "aqua",
+        "x": 55.9,
+        "y": 33.3
+      },
+      {
+        "friend": "yuma",
+        "x": 69.8,
+        "y": 45.3,
+        "position": "top"
+      },
+      {
+        "friend": "kofki",
+        "x": 82.5,
+        "y": 64.1
+      }
+    ]
+  },
+  {
+    "photo": 234,
+    "tags": [
+      {
+        "friend": "naru",
+        "x": 28,
+        "y": 60.7
+      },
+      {
+        "friend": "yuma",
+        "x": 52.1,
+        "y": 64.6
+      },
+      {
+        "friend": "taru",
+        "x": 59.1,
+        "y": 31,
+        "position": "top"
+      },
+      {
+        "friend": "joshy",
+        "x": 63.5,
+        "y": 69.6
+      },
+      {
+        "friend": "aqua",
+        "x": 73.8,
+        "y": 74.4,
+        "position": "top"
+      },
+      {
+        "friend": "kofki",
+        "x": 82.7,
+        "y": 35.1,
+        "position": "top"
       }
     ]
   }

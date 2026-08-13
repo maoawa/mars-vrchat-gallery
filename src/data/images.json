@@ -2094,7 +2094,7 @@
     "world": "taipei.karaoke",
     "description_en": "Went to the karaoke again with friends!",
     "description_zh": "又和朋友去了卡拉OK！",
-    "friend": ["yuma", "joshy", "taru"]
+    "friend": ["yuma", "joshy", "taru", "aqua"]
   },
   {
     "id": 219,
@@ -2180,7 +2180,7 @@
     "world": "karaoke.in.sync",
     "description_en": "Sing sing sing!",
     "description_zh": "唱唱唱！",
-    "friend": ["taru", "yuma", "joshy"]
+    "friend": ["taru", "yuma", "joshy", "naru", "kofki"]
   },
   {
     "id": 228,
@@ -2211,5 +2211,44 @@
     "description_zh": "我们的植物！",
     "friend": ["aver"],
     "parent": 228
+  },
+  {
+    "id": 231,
+    "filename": "VRChat_2026-08-14_00-50-03.jpg",
+    "captured": "2026-08-14T00:50:03",
+    "world": "still.garden",
+    "description_en": "The {{still.garden}} is so beautiful.",
+    "description_zh": "这个 {{still.garden}} 好美。",
+    "friend": ["taru"]
+  },
+  {
+    "id": 232,
+    "filename": "VRChat_2026-08-14_01-40-18.jpg",
+    "captured": "2026-08-14T01:40:18",
+    "world": "japan.shrine",
+    "description_en": "Catburger stack attracts many people in {{japan.shrine}}!",
+    "description_zh": "汉堡猫叠叠乐吸引了在{{japan.shrine}}的很多人！",
+    "friend": [""],
+    "parent": 234
+  },
+  {
+    "id": 233,
+    "filename": "VRChat_2026-08-14_02-22-41.jpg",
+    "captured": "2026-08-14T02:22:41",
+    "world": "japan.shrine",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["taru", "aqua", "yuma", "kofki"],
+    "parent": 234
+  },
+  {
+    "id": 234,
+    "filename": "VRChat_2026-08-14_03-21-52.jpg",
+    "captured": "2026-08-14T03:21:52",
+    "world": "japan.shrine",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["naru", "yuma", "taru", "joshy", "aqua", "kofki"],
+    "linked": [232, 233]
   }
 ]
