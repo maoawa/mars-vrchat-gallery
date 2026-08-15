@@ -4092,5 +4092,55 @@
         "y": 35
       }
     ]
+  },
+  {
+    "photo": 242,
+    "tags": [
+      {
+        "friend": "karry",
+        "x": 39.2,
+        "y": 15.3,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 243,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 19.7,
+        "y": 62.1
+      },
+      {
+        "friend": "kurono",
+        "x": 47.6,
+        "y": 23.1,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 244,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 27.1,
+        "y": 27.2,
+        "position": "top"
+      },
+      {
+        "friend": "aver",
+        "x": 75.4,
+        "y": 18,
+        "position": "top"
+      },
+      {
+        "friend": "waterchan",
+        "x": 77.6,
+        "y": 49.5,
+        "position": "top"
+      }
+    ]
   }
 ]

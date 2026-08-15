@@ -2316,5 +2316,32 @@
     "description_en": "Talking about full body tracking stuffs with friends!",
     "description_zh": "和朋友们聊聊全身追踪之类的东西！",
     "friend": ["taru", "waterchan"]
+  },
+  {
+    "id": 242,
+    "filename": "VRChat_2026-08-16_03-51-02.jpg",
+    "captured": "2026-08-16T03:51:02",
+    "world": "crystal.cove",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["karry"]
+  },
+  {
+    "id": 243,
+    "filename": "VRChat_2026-08-16_05-19-55.jpg",
+    "captured": "2026-08-16T05:19:55",
+    "world": "en.jp.language.exchange",
+    "description_en": "Playing with sound effects with friends and it was sooo funny!",
+    "description_zh": "和朋友们一起玩各种音效，真的太好玩了！",
+    "friend": ["taru", "kurono"]
+  },
+  {
+    "id": 244,
+    "filename": "VRChat_2026-08-16_06-13-05.jpg",
+    "captured": "2026-08-16T06:13:05",
+    "world": "japan.shrine",
+    "description_en": "One last night before my school starts... That's really sad not gonna lie...",
+    "description_zh": "开学前最后一晚……说实话，真的挺伤感的……",
+    "friend": ["taru", "aver", "waterchan"]
   }
 ]

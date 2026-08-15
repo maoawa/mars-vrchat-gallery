@@ -188,5 +188,11 @@
     "name_en": "Minecraft VRChat Edition",
     "name_zh": "我的世界 VRChat 版",
     "link": "https://vrchat.com/home/world/wrld_36ee176b-cddc-404c-ac82-45a122507a9e"
+  },
+  {
+    "id": "crystal.cove",
+    "name_en": "Crystal Cove",
+    "name_zh": "水晶湾",
+    "link": "https://vrchat.com/home/world/wrld_c1b3b777-0a17-4ea7-86b0-62812fd39736"
   }
 ]
