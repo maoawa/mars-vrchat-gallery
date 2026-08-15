@@ -3969,5 +3969,128 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 235,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 35.6,
+        "y": 58.5
+      },
+      {
+        "friend": "aver",
+        "x": 58.2,
+        "y": 51.3
+      },
+      {
+        "friend": "chi",
+        "x": 64.1,
+        "y": 38.4,
+        "position": "top"
+      },
+      {
+        "friend": "waterchan",
+        "x": 69.4,
+        "y": 79.4,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 236,
+    "tags": [
+      {
+        "friend": "chi",
+        "x": 50.6,
+        "y": 57.4
+      }
+    ]
+  },
+  {
+    "photo": 237,
+    "tags": [
+      {
+        "friend": "ag",
+        "x": 42.9,
+        "y": 62.8
+      },
+      {
+        "friend": "chi",
+        "x": 58.4,
+        "y": 57.3
+      }
+    ]
+  },
+  {
+    "photo": 238,
+    "tags": [
+      {
+        "friend": "ag",
+        "x": 39.9,
+        "y": 55.6
+      },
+      {
+        "friend": "chi",
+        "x": 59.5,
+        "y": 63.7
+      }
+    ]
+  },
+  {
+    "photo": 239,
+    "tags": [
+      {
+        "friend": "ag",
+        "x": 45,
+        "y": 57.8
+      },
+      {
+        "friend": "chi",
+        "x": 65.2,
+        "y": 67.4,
+        "position": "bottom"
+      }
+    ]
+  },
+  {
+    "photo": 240,
+    "tags": [
+      {
+        "friend": "ag",
+        "x": 33.5,
+        "y": 42.7
+      },
+      {
+        "friend": "chi",
+        "x": 40.1,
+        "y": 45
+      },
+      {
+        "friend": "taru",
+        "x": 48.1,
+        "y": 45.2
+      },
+      {
+        "friend": "waterchan",
+        "x": 71.8,
+        "y": 57.1
+      }
+    ]
+  },
+  {
+    "photo": 241,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 42.4,
+        "y": 46.9
+      },
+      {
+        "friend": "waterchan",
+        "x": 70.2,
+        "y": 35
+      }
+    ]
   }
 ]

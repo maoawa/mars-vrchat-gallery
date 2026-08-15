@@ -2250,5 +2250,71 @@
     "description_zh": "",
     "friend": ["naru", "yuma", "taru", "joshy", "aqua", "kofki"],
     "linked": [232, 233]
+  },
+  {
+    "id": 235,
+    "filename": "VRChat_2026-08-15_07-47-22.jpg",
+    "captured": "2026-08-15T07:47:22",
+    "world": "japan.shrine",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["taru", "aver", "chi", "waterchan"]
+  },
+  {
+    "id": 236,
+    "filename": "VRChat_2026-08-15_07-51-58.jpg",
+    "captured": "2026-08-15T07:51:58",
+    "world": "japan.shrine",
+    "description_en": "🗣️6️⃣7️⃣",
+    "description_zh": "",
+    "friend": ["chi"]
+  },
+  {
+    "id": 237,
+    "filename": "VRChat_2026-08-15_08-09-35.jpg",
+    "captured": "2026-08-15T08:09:35",
+    "world": "japan.shrine",
+    "description_en": "[[ag]]'s kinda shy.",
+    "description_zh": "[[ag]] 有点害羞",
+    "friend": ["ag", "chi"],
+    "parent": 239
+  },
+  {
+    "id": 238,
+    "filename": "VRChat_2026-08-15_08-10-02.jpg",
+    "captured": "2026-08-15T08:10:02",
+    "world": "japan.shrine",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["ag", "chi"],
+    "parent": 239
+  },
+  {
+    "id": 239,
+    "filename": "VRChat_2026-08-15_08-10-20.jpg",
+    "captured": "2026-08-15T08:10:20",
+    "world": "japan.shrine",
+    "description_en": "😺 wow [[chi]] and [[ag]]",
+    "description_zh": "😺 哇哦 [[chi]] 和 [[ag]]",
+    "friend": ["ag", "chi"],
+    "linked": [237, 238]
+  },
+  {
+    "id": 240,
+    "filename": "VRChat_2026-08-15_08-19-12.jpg",
+    "captured": "2026-08-15T08:19:12",
+    "world": "japan.shrine",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["ag", "chi", "taru", "waterchan"]
+  },
+  {
+    "id": 241,
+    "filename": "VRChat_2026-08-15_11-22-56.jpg",
+    "captured": "2026-08-15T11:22:56",
+    "world": "fish",
+    "description_en": "Talking about full body tracking stuffs with friends!",
+    "description_zh": "和朋友们聊聊全身追踪之类的东西！",
+    "friend": ["taru", "waterchan"]
   }
 ]
