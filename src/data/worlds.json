@@ -194,5 +194,17 @@
     "name_en": "Crystal Cove",
     "name_zh": "水晶湾",
     "link": "https://vrchat.com/home/world/wrld_c1b3b777-0a17-4ea7-86b0-62812fd39736"
+  },
+  {
+    "id": "winter.bedroom",
+    "name_en": "Winter Bedroom",
+    "name_zh": "冬日卧室",
+    "link": "https://vrchat.com/home/world/wrld_f63ec493-280c-49ac-8527-12ae933989f8"
+  },
+  {
+    "id": "room.to.relax",
+    "name_en": "Room to relax",
+    "name_zh": "乐居",
+    "link": "https://vrchat.com/home/world/wrld_2f177701-db9a-49d4-9591-d51419d95bb4"
   }
 ]
