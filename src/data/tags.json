@@ -4142,5 +4142,54 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 245,
+    "tags": [
+      {
+        "friend": "moon_beam",
+        "x": 58.8,
+        "y": 34.7,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 246,
+    "tags": [
+      {
+        "friend": "ikeren",
+        "x": 17.5,
+        "y": 55
+      },
+      {
+        "friend": "aqua",
+        "x": 61.8,
+        "y": 46.8,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 247,
+    "tags": [
+      {
+        "friend": "cyan",
+        "x": 44.7,
+        "y": 18.8,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 248,
+    "tags": [
+      {
+        "friend": "karry",
+        "x": 37.9,
+        "y": 35.4,
+        "position": "top"
+      }
+    ]
   }
 ]

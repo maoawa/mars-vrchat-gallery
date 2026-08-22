@@ -2343,5 +2343,41 @@
     "description_en": "One last night before my school starts... That's really sad not gonna lie...",
     "description_zh": "开学前最后一晚……说实话，真的挺伤感的……",
     "friend": ["taru", "aver", "waterchan"]
+  },
+  {
+    "id": 245,
+    "filename": "VRChat_2026-08-23_01-11-53.jpg",
+    "captured": "2026-08-23T01:11:53",
+    "world": "",
+    "description_en": "Finally met [[moon_beam]] again! We talked about many realistic topics!",
+    "description_zh": "终于又见到 [[moon_beam]] 了！我们聊了很多现实的话题！",
+    "friend": ["moon_beam"]
+  },
+  {
+    "id": 246,
+    "filename": "VRChat_2026-08-23_01-46-31.jpg",
+    "captured": "2026-08-23T01:46:31",
+    "world": "english.hub",
+    "description_en": "Haven't been to {{english.hub}} for a while!",
+    "description_zh": "好久没去 {{english.hub}} 了！",
+    "friend": ["ikeren", "aqua"]
+  },
+  {
+    "id": 247,
+    "filename": "VRChat_2026-08-23_02-23-06.jpg",
+    "captured": "2026-08-23T02:23:06",
+    "world": "winter.bedroom",
+    "description_en": "It's [[cyan]] again!",
+    "description_zh": "又见到了 [[cyan]]！",
+    "friend": ["cyan"]
+  },
+  {
+    "id": 248,
+    "filename": "VRChat_2026-08-23_03-06-07.jpg",
+    "captured": "2026-08-23T03:06:07",
+    "world": "room.to.relax",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["karry"]
   }
 ]
