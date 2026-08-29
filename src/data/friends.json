@@ -380,5 +380,13 @@
   {
     "id": "kofki",
     "name_en": "Kofki"
+  },
+  {
+    "id": "zaken",
+    "name_en": "Zaken"
+  },
+  {
+    "id": "ninja",
+    "name_en": "Ninja"
   }
 ]

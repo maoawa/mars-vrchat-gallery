@@ -2379,5 +2379,61 @@
     "description_en": "",
     "description_zh": "",
     "friend": ["karry"]
+  },
+  {
+    "id": 249,
+    "filename": "VRChat_2026-08-23_12-32-02.jpg",
+    "captured": "2026-08-23T12:32:02",
+    "world": "rotating.room.avatars",
+    "description_en": "So many interesting people here!",
+    "description_zh": "这里好多有趣的人啊！",
+    "friend": ["ag", "chi"]
+  },
+  {
+    "id": 250,
+    "filename": "VRChat_2026-08-23_13-31-54.jpg",
+    "captured": "2026-08-23T13:31:54",
+    "world": "english.hub",
+    "description_en": "",
+    "description_zh": "",
+    "friend": [""]
+  },
+  {
+    "id": 251,
+    "filename": "VRChat_2026-08-30_01-05-59.jpg",
+    "captured": "2026-08-30T01:05:59",
+    "world": "next.station",
+    "description_en": "A week is finally over! Got chance to chill with friends!",
+    "description_zh": "一周终于结束了！终于有机会和朋友们好好放松一下了！",
+    "friend": ["taru", "zaken", "yuma"]
+  },
+  {
+    "id": 252,
+    "filename": "VRChat_2026-08-30_02-58-28.jpg",
+    "captured": "2026-08-30T02:58:28",
+    "world": "karaoke.central",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["aqua", "taru"],
+    "parent": 253
+  },
+  {
+    "id": 253,
+    "filename": "VRChat_2026-08-30_03-19-34.jpg",
+    "captured": "2026-08-30T03:19:34",
+    "world": "karaoke.central",
+    "description_en": "Haven't been to karaoke for a while.",
+    "description_zh": "好久没去唱卡拉OK了。",
+    "friend": ["taru", "aqua", "joshy", "zaken", "yuma"],
+    "linked": [252]
+  },
+  {
+    "id": 254,
+    "filename": "VRChat_2026-08-30_06-47-38.jpg",
+    "captured": "2026-08-30T06:47:38",
+    "world": "japan.shrine",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["waterchan", "joshy", "taru", "ninja"]
   }
 ]

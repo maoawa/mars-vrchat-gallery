@@ -206,5 +206,17 @@
     "name_en": "Room to relax",
     "name_zh": "乐居",
     "link": "https://vrchat.com/home/world/wrld_2f177701-db9a-49d4-9591-d51419d95bb4"
+  },
+  {
+    "id": "rotating.room.avatars",
+    "name_en": "Rotating Room & Avatars",
+    "name_zh": "旋转房间&模型",
+    "link": "https://vrchat.com/home/world/wrld_ff0c214e-3c0c-4f48-981c-d5996930925e"
+  },
+  {
+    "id": "next.station",
+    "name_en": "Next Station",
+    "name_zh": "下一站",
+    "link": "https://vrchat.com/home/world/wrld_53630b6e-2a56-4e06-a5e1-42ae8a554ffb"
   }
 ]
