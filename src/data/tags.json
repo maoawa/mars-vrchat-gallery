@@ -4273,5 +4273,104 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 255,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 35,
+        "y": 14.4,
+        "position": "top"
+      },
+      {
+        "friend": "taru",
+        "x": 49.8,
+        "y": 57.1
+      },
+      {
+        "friend": "karry",
+        "x": 73.1,
+        "y": 42.7,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 256,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 42.2,
+        "y": 21.7
+      },
+      {
+        "friend": "yuma",
+        "x": 38.4,
+        "y": 35.5,
+        "position": "left"
+      },
+      {
+        "friend": "karry",
+        "x": 52.6,
+        "y": 55.2,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 257,
+    "tags": [
+      {
+        "friend": "yuma",
+        "x": 34.4,
+        "y": 53.2,
+        "position": "top"
+      },
+      {
+        "friend": "aqua",
+        "x": 60.6,
+        "y": 57.4,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 258,
+    "tags": [
+      {
+        "friend": "karry",
+        "x": 32.6,
+        "y": 47.8
+      },
+      {
+        "friend": "taru",
+        "x": 43.2,
+        "y": 41.4,
+        "position": "top"
+      },
+      {
+        "friend": "yuma",
+        "x": 43,
+        "y": 70.5
+      },
+      {
+        "friend": "aqua",
+        "x": 49.2,
+        "y": 61.9
+      },
+      {
+        "friend": "ninja",
+        "x": 69.3,
+        "y": 39.8,
+        "position": "top"
+      },
+      {
+        "friend": "kofki",
+        "x": 73.4,
+        "y": 59,
+        "position": "top"
+      }
+    ]
   }
 ]

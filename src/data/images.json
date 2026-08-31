@@ -2435,5 +2435,43 @@
     "description_en": "",
     "description_zh": "",
     "friend": ["waterchan", "joshy", "taru", "ninja"]
+  },
+  {
+    "id": 255,
+    "filename": "VRChat_2026-08-31_23-17-59.jpg",
+    "captured": "2026-08-31T23:17:59",
+    "world": "en.jp.language.exchange",
+    "description_en": "\"[[yuma]] your butt smells nasty\"",
+    "description_zh": "“[[yuma]] 你的屁股臭臭的”",
+    "friend": ["yuma", "taru", "karry"],
+    "parent": 256
+  },
+  {
+    "id": 256,
+    "filename": "VRChat_2026-08-31_23-18-07.jpg",
+    "captured": "2026-08-31T23:18:07",
+    "world": "en.jp.language.exchange",
+    "description_en": "Stack up?",
+    "description_zh": "叠高高？",
+    "friend": ["taru", "yuma", "karry"],
+    "linked": [255]
+  },
+  {
+    "id": 257,
+    "filename": "VRChat_2026-09-01_00-22-30.jpg",
+    "captured": "2026-09-01T00:22:30",
+    "world": "en.jp.language.exchange",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["yuma", "aqua"]
+  },
+  {
+    "id": 258,
+    "filename": "VRChat_2026-09-01_00-29-08.jpg",
+    "captured": "2026-09-01T00:29:08",
+    "world": "en.jp.language.exchange",
+    "description_en": "My dad said no PC on weekdays so uh, this is the image quality I got on my iPad...",
+    "description_zh": "我爸说工作日不准用电脑，所以，呃，这就是我用iPad玩的画质……",
+    "friend": ["karry", "taru", "yuma", "aqua", "ninja", "kofki"]
   }
 ]
