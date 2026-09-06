@@ -2360,7 +2360,7 @@
     "world": "english.hub",
     "description_en": "Haven't been to {{english.hub}} for a while!",
     "description_zh": "好久没去 {{english.hub}} 了！",
-    "friend": ["ikeren", "aqua"]
+    "friend": ["ikeren", "crystal", "aqua"]
   },
   {
     "id": 247,
@@ -2473,5 +2473,62 @@
     "description_en": "My dad said no PC on weekdays so uh, this is the image quality I got on my iPad...",
     "description_zh": "我爸说工作日不准用电脑，所以，呃，这就是我用iPad玩的画质……",
     "friend": ["karry", "taru", "yuma", "aqua", "ninja", "kofki"]
+  },
+  {
+    "id": 259,
+    "filename": "VRChat_2026-09-06_04-04-33.jpg",
+    "captured": "2026-09-06T04:04:33",
+    "world": "fish",
+    "description_en": "Weekend! and {{fish}}",
+    "description_zh": "周末！{{fish}}",
+    "friend": ["aver", "taru", "joshy"],
+    "linked": [260, 261]
+  },
+  {
+    "id": 260,
+    "filename": "VRChat_2026-09-06_04-04-56.jpg",
+    "captured": "2026-09-06T04:04:56",
+    "world": "fish",
+    "description_en": "I love the atmosphere!",
+    "description_zh": "我喜欢这里的氛围！",
+    "friend": ["joshy", "taru", "aver"],
+    "parent": 259
+  },
+  {
+    "id": 261,
+    "filename": "VRChat_2026-09-06_04-06-19.jpg",
+    "captured": "2026-09-06T04:06:19",
+    "world": "fish",
+    "description_en": "\"What's this RGB fish\" --[[joshy]]",
+    "description_zh": "“这光污染鱼是什么鬼” ——[[joshy]]",
+    "friend": ["taru", "joshy"],
+    "parent": 259
+  },
+  {
+    "id": 262,
+    "filename": "VRChat_2026-09-06_04-45-37.jpg",
+    "captured": "2026-09-06T04:45:37",
+    "world": "virtual.life.vr",
+    "description_en": "We're playing in a VRChat GTA that's under development.",
+    "description_zh": "我们正在玩一款还在开发中的 VRChat GTA 游戏。",
+    "friend": ["joshy", "aver", "taru"]
+  },
+  {
+    "id": 263,
+    "filename": "VRChat_2026-09-06_06-20-10.jpg",
+    "captured": "2026-09-06T06:20:10",
+    "world": "japan.shrine",
+    "description_en": "I met a cute Japanese friend, she taught me a lot about Japan for my future trips there!",
+    "description_zh": "我遇到了一位可爱的日本朋友，她教了我很多关于日本的知识，这对我以后去日本旅行很有帮助！",
+    "friend": ["aver", "taru", "joshy"]
+  },
+  {
+    "id": 264,
+    "filename": "VRChat_2026-09-06_07-39-26.jpg",
+    "captured": "2026-09-06T07:39:26",
+    "world": "learn.mandarin",
+    "description_en": "Met [[crystal]] again! Talked about some language learning skills.",
+    "description_zh": "又见到 [[crystal]] 了！聊了聊语言学习技巧。",
+    "friend": ["crystal"]
   }
 ]

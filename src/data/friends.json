@@ -388,5 +388,9 @@
   {
     "id": "ninja",
     "name_en": "Ninja"
+  },
+  {
+    "id": "crystal",
+    "name_en": "Crystal"
   }
 ]

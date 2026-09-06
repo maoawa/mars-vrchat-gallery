@@ -4160,12 +4160,19 @@
       {
         "friend": "ikeren",
         "x": 17.5,
-        "y": 55
+        "y": 55,
+        "position": "bottom"
+      },
+      {
+        "friend": "crystal",
+        "x": 61.7,
+        "y": 46.5,
+        "position": "top"
       },
       {
         "friend": "aqua",
-        "x": 83.4,
-        "y": 49.3,
+        "x": 82.7,
+        "y": 48.8,
         "position": "top"
       }
     ]
@@ -4369,6 +4376,118 @@
         "friend": "kofki",
         "x": 73.4,
         "y": 59,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 259,
+    "tags": [
+      {
+        "friend": "aver",
+        "x": 38.6,
+        "y": 32.5
+      },
+      {
+        "friend": "taru",
+        "x": 51.8,
+        "y": 61.4,
+        "position": "bottom"
+      },
+      {
+        "friend": "joshy",
+        "x": 71.8,
+        "y": 52.4,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 260,
+    "tags": [
+      {
+        "friend": "joshy",
+        "x": 31.3,
+        "y": 60.7,
+        "position": "top"
+      },
+      {
+        "friend": "taru",
+        "x": 45.7,
+        "y": 58.5,
+        "position": "top"
+      },
+      {
+        "friend": "aver",
+        "x": 75.4,
+        "y": 53.1
+      }
+    ]
+  },
+  {
+    "photo": 261,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 25,
+        "y": 56.1
+      },
+      {
+        "friend": "joshy",
+        "x": 70.8,
+        "y": 59
+      }
+    ]
+  },
+  {
+    "photo": 262,
+    "tags": [
+      {
+        "friend": "joshy",
+        "x": 12.2,
+        "y": 46.5
+      },
+      {
+        "friend": "aver",
+        "x": 45.8,
+        "y": 56.9
+      },
+      {
+        "friend": "taru",
+        "x": 68.1,
+        "y": 39
+      }
+    ]
+  },
+  {
+    "photo": 263,
+    "tags": [
+      {
+        "friend": "aver",
+        "x": 20.3,
+        "y": 41.3
+      },
+      {
+        "friend": "taru",
+        "x": 52.5,
+        "y": 42.8,
+        "position": "top"
+      },
+      {
+        "friend": "joshy",
+        "x": 63.4,
+        "y": 15.7,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 264,
+    "tags": [
+      {
+        "friend": "crystal",
+        "x": 77.3,
+        "y": 31.3,
         "position": "top"
       }
     ]
