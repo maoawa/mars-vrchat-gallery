@@ -2530,5 +2530,45 @@
     "description_en": "Met [[crystal]] again! Talked about some language learning skills.",
     "description_zh": "又见到 [[crystal]] 了！聊了聊语言学习技巧。",
     "friend": ["crystal"]
+  },
+  {
+    "id": 265,
+    "filename": "VRChat_2026-09-13_01-48-39.jpg",
+    "captured": "2026-09-13T01:48:39",
+    "world": "japan.shrine",
+    "description_en": "Why I got a plate on my face?",
+    "description_zh": "为什么我的脸上有个盘子？",
+    "friend": ["taru"],
+    "parent": 266
+  },
+  {
+    "id": 266,
+    "filename": "VRChat_2026-09-13_02-11-32.jpg",
+    "captured": "2026-09-13T02:11:32",
+    "world": "japan.shrine",
+    "description_en": "Woah!",
+    "description_zh": "哇袄！",
+    "friend": ["aver", "ninja", "taru", "joshy"],
+    "linked": [265]
+  },
+  {
+    "id": 267,
+    "filename": "VRChat_2026-09-13_03-09-09.jpg",
+    "captured": "2026-09-13T03:09:09",
+    "world": "waves",
+    "description_en": "A random friend and I turned all the friends here into little cats >-<",
+    "description_zh": "我和一个朋友把这里所有的朋友都变成了小猫>-<",
+    "friend": ["neru"],
+    "linked": [268]
+  },
+  {
+    "id": 268,
+    "filename": "VRChat_2026-09-13_03-09-16.jpg",
+    "captured": "2026-09-13T03:09:16",
+    "world": "waves",
+    "description_en": "Cute cat [[neru]]!",
+    "description_zh": "可爱的猫猫 [[neru]]！",
+    "friend": ["neru"],
+    "parent": 267
   }
 ]

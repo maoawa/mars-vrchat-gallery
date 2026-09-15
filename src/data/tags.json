@@ -4491,5 +4491,66 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 265,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 13.7,
+        "y": 16.4,
+        "position": "right"
+      }
+    ]
+  },
+  {
+    "photo": 266,
+    "tags": [
+      {
+        "friend": "aver",
+        "x": 40,
+        "y": 14.4,
+        "position": "top"
+      },
+      {
+        "friend": "ninja",
+        "x": 60,
+        "y": 70.4,
+        "position": "top"
+      },
+      {
+        "friend": "taru",
+        "x": 68.7,
+        "y": 46.2,
+        "position": "top"
+      },
+      {
+        "friend": "joshy",
+        "x": 87.8,
+        "y": 43.9,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 267,
+    "tags": [
+      {
+        "friend": "neru",
+        "x": 48.3,
+        "y": 59
+      }
+    ]
+  },
+  {
+    "photo": 268,
+    "tags": [
+      {
+        "friend": "neru",
+        "x": 49,
+        "y": 22.7,
+        "position": "top"
+      }
+    ]
   }
 ]
