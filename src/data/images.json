@@ -2570,5 +2570,14 @@
     "description_zh": "可爱的猫猫 [[neru]]！",
     "friend": ["neru"],
     "parent": 267
+  },
+  {
+    "id": 269,
+    "filename": "VRChat_2026-09-19_01-55-06.jpg",
+    "captured": "2026-09-19T01:55:06",
+    "world": "japan.shrine",
+    "description_en": "It's great to meet [[hajimi]] again!",
+    "description_zh": "很高兴再次见到 [[hajimi]]！",
+    "friend": ["joshy", "hajimi"]
   }
 ]

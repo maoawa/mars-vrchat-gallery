@@ -4552,5 +4552,21 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 269,
+    "tags": [
+      {
+        "friend": "joshy",
+        "x": 29.9,
+        "y": 50.5
+      },
+      {
+        "friend": "hajimi",
+        "x": 43.6,
+        "y": 43,
+        "position": "top"
+      }
+    ]
   }
 ]
