@@ -2579,5 +2579,90 @@
     "description_en": "It's great to meet [[hajimi]] again!",
     "description_zh": "很高兴再次见到 [[hajimi]]！",
     "friend": ["joshy", "hajimi"]
+  },
+  {
+    "id": 270,
+    "filename": "VRChat_2026-09-25_02-45-49.jpg",
+    "captured": "2026-09-25T02:45:49",
+    "world": "lets.watch.something",
+    "description_en": "I know [[taru]] is an alcoholic.",
+    "description_zh": "我知道 [[Taru]] 是酒精享受者。",
+    "friend": ["taru", "joshy"]
+  },
+  {
+    "id": 271,
+    "filename": "VRChat_2026-09-25_03-29-45.jpg",
+    "captured": "2026-09-25T03:29:45",
+    "world": "japan.shrine",
+    "description_en": "That's my first time with the own face tracker I built on myself from scratch! I got rich expressions!",
+    "description_zh": "这是我第一次使用自己从零开始搭建的面部追踪系统！捕捉到的表情非常丰富！",
+    "friend": ["taru", "joshy"]
+  },
+  {
+    "id": 272,
+    "filename": "VRChat_2026-09-26_02-17-47.jpg",
+    "captured": "2026-09-26T02:17:47",
+    "world": "karaoke.in.sync",
+    "description_en": "Haven't been to karaoke for a while, it's great to see long lost [[yuma]] again!",
+    "description_zh": "好久没去唱K了，能再次见到久违的 [[yuma]] 真是太棒了！",
+    "friend": ["disguiser", "zaken", "yuma", "taru", "ninja"]
+  },
+  {
+    "id": 273,
+    "filename": "VRChat_2026-09-26_04-06-54.jpg",
+    "captured": "2026-09-26T04:06:54",
+    "world": "japan.shrine",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["taru", "joshy"],
+    "linked": [274, 275, 276]
+  },
+  {
+    "id": 274,
+    "filename": "VRChat_2026-09-26_04-07-11.jpg",
+    "captured": "2026-09-26T04:07:11",
+    "world": "japan.shrine",
+    "description_en": "HELLO [[JOSHY]]!",
+    "description_zh": "亻尔 女子 [[JOSHY]]！",
+    "friend": ["joshy"],
+    "parent": 273
+  },
+  {
+    "id": 275,
+    "filename": "VRChat_2026-09-26_04-07-24.jpg",
+    "captured": "2026-09-26T04:07:24",
+    "world": "japan.shrine",
+    "description_en": "HELLO [[TARU]]!",
+    "description_zh": "亻尔 女子 [[TARU]]！",
+    "friend": ["taru"],
+    "parent": 273
+  },
+  {
+    "id": 276,
+    "filename": "VRChat_2026-09-26_04-43-23.jpg",
+    "captured": "2026-09-26T04:43:23",
+    "world": "japan.shrine",
+    "description_en": "Our little mouse [[joshy]] is dominating a cat.",
+    "description_zh": "我们的小老鼠 [[joshy]] 正在压制一只猫。",
+    "friend": ["joshy"],
+    "parent": 273
+  },
+  {
+    "id": 277,
+    "filename": "VRChat_2026-09-26_05-33-30.jpg",
+    "captured": "2026-09-26T05:33:30",
+    "world": "japan.shrine",
+    "description_en": "HELLO!",
+    "description_zh": "",
+    "friend": ["aver", "taru"]
+  },
+  {
+    "id": 278,
+    "filename": "VRChat_2026-09-26_05-38-41.jpg",
+    "captured": "2026-09-26T05:38:41",
+    "world": "japan.shrine",
+    "description_en": "Met a guy with the same gun as mines!",
+    "description_zh": "遇到了一个跟我用同款枪的人！",
+    "friend": [""]
   }
 ]
