@@ -221,7 +221,7 @@
     "captured": "2026-06-08T14:07:34",
     "world": "english.hub",
     "friend": [""],
-    "description_en": "I met a polyglot from South Korea. He can speak many languages even Latin.",
+    "description_en": "I met a polyglot from South Korea. He can speak many languages, even includes Latin.",
     "description_zh": "我遇到了一位来自韩国的多语言者。他会说很多语言，甚至包括拉丁语。"
   },
   {
@@ -2664,5 +2664,83 @@
     "description_en": "Met a guy with the same gun as mines!",
     "description_zh": "遇到了一个跟我用同款枪的人！",
     "friend": [""]
+  },
+  {
+    "id": 279,
+    "filename": "VRChat_2026-10-01_01-38-34.jpg",
+    "captured": "2026-10-01T01:38:34",
+    "world": "a.starry.carriage.ride",
+    "description_en": "Finally the national day break! That's gonna be my last long break besides the winter break in my high school life. (cries)",
+    "description_zh": "终于迎来国庆假期了！除了寒假，这将是我高中生涯中最后一个长假。（哭）",
+    "friend": ["taru", "aqua", "exe", "yuma", "disguiser"],
+    "linked": [280]
+  },
+  {
+    "id": 280,
+    "filename": "VRChat_2026-10-01_01-46-32.jpg",
+    "captured": "2026-10-01T01:46:32",
+    "world": "a.starry.carriage.ride",
+    "description_en": "[[exe]] is a biiig dinosaur!",
+    "description_zh": "[[exe]] 是一只超级巨大的恐龙！",
+    "friend": ["taru", "yuma", "aver", "aqua", "exe"],
+    "parent": 279
+  },
+  {
+    "id": 281,
+    "filename": "VRChat_2026-10-01_05-00-40.jpg",
+    "captured": "2026-10-01T05:00:40",
+    "world": "japan.shrine",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["taru", "solis", "aver"]
+  },
+  {
+    "id": 282,
+    "filename": "VRChat_2026-10-02_00-34-01.jpg",
+    "captured": "2026-10-02T00:34:01",
+    "world": "a.doze.in.the.clear.autumn.calm",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["exe", "zaken"],
+    "parent": 283
+  },
+  {
+    "id": 283,
+    "filename": "VRChat_2026-10-02_00-42-43.jpg",
+    "captured": "2026-10-02T00:42:43",
+    "world": "a.doze.in.the.clear.autumn.calm",
+    "description_en": "[[taru]] fell asleep in the middle of the conversation when she's drunk... Is this what average alcoholic does?",
+    "description_zh": "[[taru]] 喝醉后聊着聊着就睡着了……这是普通酒精享受者会做的事吗？",
+    "friend": ["taru"],
+    "linked": [282]
+  },
+  {
+    "id": 284,
+    "filename": "VRChat_2026-10-02_02-12-09.jpg",
+    "captured": "2026-10-02T02:12:09",
+    "world": "en.jp.language.exchange",
+    "description_en": "Met two friendly Japanese *tomodachi* (friends) here, we talked about places to visit in Japan!<br>\nThere was another friend [[genoxy]]*-san*, but sadly his game crashed before we can take a picture ;w;",
+    "description_zh": "在这里遇到了两位友善的日本*友達*(tomodachi, 朋友)，我们聊了聊日本有哪些值得一去的地方！<br>\n本来还有一位叫 [[genoxy]] 的朋友，但遗憾的是，还没来得及合影，他的游戏就崩溃了 ;w;",
+    "friend": ["moshi", "genoxy"]
+  },
+  {
+    "id": 285,
+    "filename": "VRChat_2026-10-02_02-13-11.jpg",
+    "captured": "2026-10-02T02:13:11",
+    "world": "a.doze.in.the.clear.autumn.calm",
+    "description_en": "*GG FUGGING EZ~*",
+    "description_zh": "",
+    "friend": ["taru"],
+    "parent": 286
+  },
+  {
+    "id": 286,
+    "filename": "VRChat_2026-10-02_02-58-02.jpg",
+    "captured": "2026-10-02T02:58:02",
+    "world": "a.doze.in.the.clear.autumn.calm",
+    "description_en": "I can't believe [[taru]]'s still sleeping after almost 2 hours...",
+    "description_zh": "真不敢相信 [[taru]] 睡了快两个小时还在睡……",
+    "friend": ["joshy", "exe", "yuma", "taru", "aqua"],
+    "linked": [285]
   }
 ]

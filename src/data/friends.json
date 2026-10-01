@@ -392,5 +392,22 @@
   {
     "id": "crystal",
     "name_en": "Crystal"
+  },
+  {
+    "id": "exe",
+    "name_en": "Exe",
+    "name_zh": "废白Exe"
+  },
+  {
+    "id": "solis",
+    "name_en": "Solis"
+  },
+  {
+    "id": "moshi",
+    "name_en": "Moshi"
+  },
+  {
+    "id": "genoxy",
+    "name_en": "Genoxy"
   }
 ]
