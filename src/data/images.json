@@ -2751,5 +2751,34 @@
     "description_en": "Met a super cool guy [[ccib]] today! We set up a website together! And nice to [[ethan]] again after a long time!",
     "description_zh": "今天遇到了一位超酷的家伙 [[ccib]]！我们一起搭建了一个网站！另外很高兴时隔许久再次见到 Ethan！",
     "friend": ["disguiser", "ccib", "joshy", "ethan"]
+  },
+  {
+    "id": 288,
+    "filename": "VRChat_2026-10-04_01-08-05.jpg",
+    "captured": "2026-10-04T01:08:05",
+    "world": "popcorn.palace",
+    "description_en": "",
+    "description_zh": "",
+    "friend": ["aver", "taru", "joshy", "exe"]
+  },
+  {
+    "id": 289,
+    "filename": "VRChat_2026-10-04_02-00-49.jpg",
+    "captured": "2026-10-04T02:00:49",
+    "world": "the.curious.telescope",
+    "description_en": "*I believe I can fly~*",
+    "description_zh": "",
+    "friend": ["taru", "exe", "aver"],
+    "linked": [290]
+  },
+  {
+    "id": 290,
+    "filename": "VRChat_2026-10-04_02-11-13.jpg",
+    "captured": "2026-10-04T02:11:13",
+    "world": "the.curious.telescope",
+    "description_en": "",
+    "description_zh": "",
+    "friend": [""],
+    "parent": 289
   }
 ]
