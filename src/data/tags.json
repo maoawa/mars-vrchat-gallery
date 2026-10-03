@@ -4831,5 +4831,34 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 287,
+    "tags": [
+      {
+        "friend": "disguiser",
+        "x": 22.5,
+        "y": 44.2,
+        "position": "top"
+      },
+      {
+        "friend": "ccib",
+        "x": 37.4,
+        "y": 53.8,
+        "position": "top"
+      },
+      {
+        "friend": "joshy",
+        "x": 61.7,
+        "y": 48.4,
+        "position": "top"
+      },
+      {
+        "friend": "ethan",
+        "x": 66.7,
+        "y": 32,
+        "position": "top"
+      }
+    ]
   }
 ]
