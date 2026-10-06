@@ -1,6 +1,6 @@
 # mars-vrchat-gallery
 A gallery of cherished moments shared by Mars and his amazing friends in VRChat.
-[vrc.maao.cc](vrchat.maao.cc)
+[vrchat.maao.cc](https://vrchat.maao.cc/)
 
 ---
 
@@ -27,7 +27,7 @@ Linked moments use the `linked` field with numeric image ids. Child photos use
 `parent` so they stay attached to the parent gallery card instead of appearing
 as standalone outings.
 
-The `captured` field is treated as UTC+8 when it does not include an explicit
+The `captured` field is treated as GMT+8 when it does not include an explicit
 timezone suffix. This keeps gallery dates stable for visitors in other
 timezones while matching the VRChat screenshot filename time.
 
@@ -205,3 +205,38 @@ For a production build:
 ```bash
 npm run build
 ```
+
+## Steam VRChat playtime
+
+The statistics page can display Steam playtime for VRChat (Steam AppID
+`438100`) through the separate Cloudflare Worker in `worker/index.ts`. The
+Steam API key and SteamID64 are Worker secrets and are never sent to the
+browser.
+
+Set the secrets before deploying:
+
+```bash
+npx wrangler secret put STEAM_API_KEY --config wrangler.jsonc
+npx wrangler secret put STEAM_ID --config wrangler.jsonc
+npm run worker:deploy
+```
+
+The Worker serves `GET /api/steam-playtime`. Route that path to the Worker on
+the same site. The deployed endpoint is configured in
+`src/statistics.json` as `steamApiEndpoint`; override it with
+`VITE_STEAM_API_URL` only when needed. If the Steam profile or game details are private, Steam will not
+return the playtime. Mobile playtime is maintained manually in
+`src/statistics.json` and displayed alongside the Steam value. Set
+`"show-mobile-hours": false` there to hide the breakdown and show only the
+VRCHAT PLAYTIME total.
+
+To publish the site after changing gallery data or `src/statistics.json`:
+
+```bash
+npm install
+npm run build
+npx wrangler pages deploy dist --project-name mars-vrchat-gallery
+```
+
+The Pages project is `mars-vrchat-gallery` and its production domain is
+`https://vrchat.maao.cc/`.

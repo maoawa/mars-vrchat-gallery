@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import LazyPhoto from './components/LazyPhoto.vue'
+import StatisticsView from './components/StatisticsView.vue'
 import friendsData from './data/friends.json'
 import imagesData from './data/images.json'
 import specialEventsData from './data/special-events.json'
@@ -149,6 +150,10 @@ const allGalleryRows: GalleryRow[] = photos
 
 const now = ref(Date.now())
 const currentLanguage = ref<Language>(detectPreferredLanguage())
+const isStatisticsPage = ref(typeof window !== 'undefined' && window.location.pathname.replace(/\/+$/, '') === '/statistics')
+const isStatisticsFilter = ref(
+  typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('from') === 'statistics',
+)
 const introExpanded = ref(false)
 const introDismissed = ref(false)
 const activeIndex = ref<number | null>(null)
@@ -1205,7 +1210,7 @@ function formatUtcOffset(date: Date) {
   const hours = Math.floor(absoluteMinutes / 60)
   const minutes = absoluteMinutes % 60
 
-  return minutes === 0 ? `UTC${sign}${hours}` : `UTC${sign}${hours}:${String(minutes).padStart(2, '0')}`
+  return minutes === 0 ? `GMT${sign}${hours}` : `GMT${sign}${hours}:${String(minutes).padStart(2, '0')}`
 }
 
 function openEmail() {
@@ -1868,6 +1873,18 @@ function handleHashTarget() {
   closeLightbox()
   closeQrContact()
 
+  const friendTarget = hashTarget.match(/^friend=(.+)$/)
+  if (friendTarget && friendsById.has(friendTarget[1])) {
+    applyFriendFilter(friendTarget[1])
+    return
+  }
+
+  const worldTarget = hashTarget.match(/^world=(.+)$/)
+  if (worldTarget && worldsById.has(worldTarget[1])) {
+    applyWorldFilter(worldTarget[1])
+    return
+  }
+
   if (/^\d+$/.test(hashTarget)) {
     const photoId = Number(hashTarget)
 
@@ -2010,6 +2027,7 @@ onMounted(() => {
   if (editModeEnabled.value) lightboxTagsVisible.value = true
   updateGalleryColumnCount()
   handleHashTarget()
+  isStatisticsPage.value = window.location.pathname.replace(/\/+$/, '') === '/statistics'
   installGalleryEditConsoleApi()
   lightboxZoomSurfaceObserver = new ResizeObserver(updateZoomSurfaceSize)
 
@@ -2047,7 +2065,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <main class="site-shell">
+  <StatisticsView v-if="isStatisticsPage" :language="currentLanguage" />
+  <main v-else class="site-shell">
     <div class="language-switch">
       <button type="button" :aria-label="copy.languageLabel" @click="toggleLanguage">
         {{ copy.languageToggle }}
@@ -2093,7 +2112,7 @@ onBeforeUnmount(() => {
             <defs v-if="link.icon === 'home'">
               <linearGradient id="personal-home-gradient" x1="88" y1="72" x2="552" y2="576" gradientUnits="userSpaceOnUse">
                 <stop offset="0" stop-color="#f4d6aa" />
-                <stop offset="0.36" stop-color="#9fd2bd" />
+                <stop offset="0.36" stop-color="#c084fc" />
                 <stop offset="0.68" stop-color="#b7c7ff" />
                 <stop offset="1" stop-color="#f0b6d7" />
               </linearGradient>
@@ -2120,6 +2139,7 @@ onBeforeUnmount(() => {
           </svg>
         </button>
       </nav>
+      <a class="statistics-nav" href="/statistics">{{ copy.statistics }}</a>
     </header>
 
     <section v-if="randomOuting" class="random-outing" aria-label="Random outing">
@@ -2220,15 +2240,20 @@ onBeforeUnmount(() => {
       </article>
     </section>
 
-    <div class="section-divider" aria-hidden="true"></div>
+    <div v-if="!activeFilter" class="section-divider" aria-hidden="true"></div>
 
-    <section v-if="activeFilter" class="filter-strip" aria-live="polite">
+  <section v-if="activeFilter" class="filter-strip" aria-live="polite">
       <p>
         {{ copy.showing }} {{ filteredOutingCount }}
         {{ filteredOutingCount === 1 ? copy.outing : copy.outings }} {{ copy.for }}
         <span>{{ activeFilterLabel }}</span>
       </p>
-      <button type="button" @click="clearFilter">{{ copy.clear }}</button>
+      <div class="filter-strip__actions">
+        <a v-if="isStatisticsFilter" href="/statistics">
+          <span class="filter-strip__back-icon" aria-hidden="true">←</span> {{ copy.backToStatistics }}
+        </a>
+        <button v-else type="button" @click="clearFilter">{{ copy.clear }}</button>
+      </div>
     </section>
 
     <template v-for="(item, itemIndex) in gallerySections" :key="item.id">
@@ -2442,7 +2467,7 @@ onBeforeUnmount(() => {
     </template>
   </main>
 
-  <footer class="site-footer">
+  <footer v-if="!isStatisticsPage" class="site-footer">
     <div class="footer-stats">
       <p>{{ footerSummary }}</p>
       <p>{{ footerDays }}</p>
@@ -2464,7 +2489,7 @@ onBeforeUnmount(() => {
 
   <Teleport to="body">
     <button
-      v-if="isDevelopment && !activeQrContact && (!editModeEnabled || !activePhoto)"
+      v-if="!isStatisticsPage && isDevelopment && !activeQrContact && (!editModeEnabled || !activePhoto)"
       class="edit-mode-dev-toggle"
       :class="{ 'is-active': editModeEnabled }"
       type="button"

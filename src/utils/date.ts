@@ -7,7 +7,7 @@ export function parseAsGalleryDate(dateString: string) {
 
   const base = new Date(iso)
 
-  // Keep gallery timestamps as UTC+8 wall-clock time, regardless of the viewer's timezone.
+  // Keep gallery timestamps as GMT+8 wall-clock time, regardless of the viewer's timezone.
   return new Date(
     base.getTime() + (GALLERY_TIMEZONE_OFFSET_MINUTES + base.getTimezoneOffset()) * 60_000,
   )
