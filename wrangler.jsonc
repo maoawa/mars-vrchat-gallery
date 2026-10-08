@@ -4,6 +4,12 @@
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-06",
   "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "vrchat-statistics.marsinside.com",
+      "custom_domain": true
+    }
+  ],
   "observability": {
     "enabled": true,
     "traces": {
@@ -11,6 +17,9 @@
     }
   },
   "vars": {
-    "ALLOWED_ORIGIN": "https://vrchat.maao.cc"
+    "ALLOWED_ORIGINS": [
+      "https://vrchat.maao.cc",
+      "https://vrchat.marsinside.com"
+    ]
   }
 }

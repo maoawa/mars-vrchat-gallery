@@ -1,5 +1,5 @@
 {
-  "mobileHours": 20.8,
+  "mobileHours": 22.8,
   "show-mobile-hours": true,
-  "steamApiEndpoint": "https://mars-vrchat-gallery-api.maoawa.workers.dev/api/steam-playtime"
+  "steamApiEndpoint": "https://vrchat-statistics.marsinside.com/api/steam-playtime"
 }

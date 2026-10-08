@@ -221,10 +221,12 @@ npx wrangler secret put STEAM_ID --config wrangler.jsonc
 npm run worker:deploy
 ```
 
-The Worker serves `GET /api/steam-playtime`. Route that path to the Worker on
-the same site. The deployed endpoint is configured in
-`src/statistics.json` as `steamApiEndpoint`; override it with
-`VITE_STEAM_API_URL` only when needed. If the Steam profile or game details are private, Steam will not
+The Worker serves `GET https://vrchat-statistics.marsinside.com/api/steam-playtime`.
+Its custom domain and `ALLOWED_ORIGINS` list are configured in `wrangler.jsonc`.
+Both `https://vrchat.maao.cc` and `https://vrchat.marsinside.com` are allowed.
+The frontend endpoint is configured in `src/statistics.json` as `steamApiEndpoint`;
+`VITE_STEAM_API_URL` is a fallback when that config value is empty.
+If the Steam profile or game details are private, Steam will not
 return the playtime. Mobile playtime is maintained manually in
 `src/statistics.json` and displayed alongside the Steam value. Set
 `"show-mobile-hours": false` there to hide the breakdown and show only the

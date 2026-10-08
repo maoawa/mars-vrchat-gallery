@@ -1,7 +1,6 @@
-export interface Env {
+export interface Env extends Cloudflare.Env {
   STEAM_API_KEY?: string
   STEAM_ID?: string
-  ALLOWED_ORIGIN?: string
 }
 
 const VRCHAT_APP_ID = 438100
@@ -9,8 +8,8 @@ const CACHE_TTL_SECONDS = 15 * 60
 
 function corsHeaders(request: Request, env: Env) {
   const origin = request.headers.get('Origin')
-  const allowedOrigins = [env.ALLOWED_ORIGIN, 'http://localhost:5173', 'http://localhost:5174'].filter(Boolean)
-  const allowedOrigin = origin && allowedOrigins.includes(origin) ? origin : env.ALLOWED_ORIGIN || '*'
+  const allowedOrigins: string[] = [...env.ALLOWED_ORIGINS, 'http://localhost:5173', 'http://localhost:5174']
+  const allowedOrigin = origin && allowedOrigins.includes(origin) ? origin : allowedOrigins[0]
 
   return {
     'Access-Control-Allow-Origin': allowedOrigin,
@@ -50,7 +49,13 @@ export default {
     const cache = caches.default
     const cacheKey = new Request(`${url.origin}/api/steam-playtime`, request)
     const cached = await cache.match(cacheKey)
-    if (cached) return cached
+    if (cached) {
+      const response = new Response(cached.body, cached)
+      for (const [name, value] of Object.entries(corsHeaders(request, env))) {
+        response.headers.set(name, value)
+      }
+      return response
+    }
 
     const steamUrl = new URL('https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/')
     steamUrl.searchParams.set('key', env.STEAM_API_KEY)
