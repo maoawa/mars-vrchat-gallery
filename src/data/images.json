@@ -2780,5 +2780,34 @@
     "description_zh": "",
     "friend": [""],
     "parent": 289
+  },
+  {
+    "id": 291,
+    "filename": "VRChat_2026-10-09_02-05-09.jpg",
+    "captured": "2026-10-09T02:05:09",
+    "world": "dilucs.tavern.angels.share",
+    "description_en": "We found a world that brought the entire Mondstadt in Genshin Impact to VRChat and it's so cool!",
+    "description_zh": "我们发现了一个将《原神》中整个蒙德城完美复刻到 VRChat 的世界，简直太酷了！",
+    "friend": ["curry", "taru", "exe"]
+  },
+  {
+    "id": 292,
+    "filename": "VRChat_2026-10-11_03-44-40.jpg",
+    "captured": "2026-10-11T03:44:40",
+    "world": "after.glow",
+    "description_en": "Team [[taru]]&Mars celebrating after winning the billiards 😋",
+    "description_zh": "[[taru]]和Mars队在赢得台球比赛后的庆祝时刻 😋",
+    "friend": ["taru"],
+    "parent": 293
+  },
+  {
+    "id": 293,
+    "filename": "VRChat_2026-10-11_03-47-50.jpg",
+    "captured": "2026-10-11T03:47:50",
+    "world": "after.glow",
+    "description_en": "[[taru]] found a cyberpunk world {{after.glow}}, and it's so cool, cozy and entertaining that we decided to hold a little party there. It was such a great time to have many people around, chatting and doing different things.",
+    "description_zh": "[[taru]] 发现了一个叫 {{after.glow}} 的赛博朋克风格世界，那里既酷炫又温馨，而且充满乐趣，于是我们决定在那里举办一场小聚会。能有这么多人聚在一起聊天，做各种各样的事情，感觉真是太棒了。",
+    "friend": ["taru", "joshy", "kofki", "yuma", "solis", "exe", "aver", "curry", "waterchan"],
+    "linked": [292]
   }
 ]

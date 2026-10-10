@@ -254,5 +254,17 @@
     "name_en": "Popcorn Palace",
     "name_zh": "爆米花宫殿",
     "link": "https://vrchat.com/home/world/wrld_266523e8-9161-40da-acd0-6bd82e075833"
+  },
+  {
+    "id": "dilucs.tavern.angels.share",
+    "name_en": "Diluc's Tavern - Angel's Share",
+    "name_zh": "迪卢克的酒馆 - 天使的馈赠",
+    "link": "https://vrchat.com/home/world/wrld_df3e253e-c464-4d4e-bb2e-e57009674add"
+  },
+  {
+    "id": "after.glow",
+    "name_en": "After Glow",
+    "name_zh": "余晖",
+    "link": "https://vrchat.com/home/world/wrld_726a2222-aee7-4b59-bbe0-a6afb1df01da"
   }
 ]

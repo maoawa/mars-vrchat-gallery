@@ -4906,5 +4906,87 @@
         "position": "top"
       }
     ]
+  },
+  {
+    "photo": 291,
+    "tags": [
+      {
+        "friend": "curry",
+        "x": 28.5,
+        "y": 32.3,
+        "position": "top"
+      },
+      {
+        "friend": "taru",
+        "x": 58.3,
+        "y": 67,
+        "position": "top"
+      },
+      {
+        "friend": "exe",
+        "x": 74.2,
+        "y": 28,
+        "position": "top"
+      }
+    ]
+  },
+  {
+    "photo": 292,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 18.1,
+        "y": 47.3
+      }
+    ]
+  },
+  {
+    "photo": 293,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 51.4,
+        "y": 45.8,
+        "position": "top"
+      },
+      {
+        "friend": "joshy",
+        "x": 12.6,
+        "y": 76,
+        "position": "top"
+      },
+      {
+        "friend": "kofki",
+        "x": 26,
+        "y": 62.5,
+        "position": "top"
+      },
+      {
+        "friend": "yuma",
+        "x": 43.9,
+        "y": 36.2,
+        "position": "bottom"
+      },
+      {
+        "friend": "solis",
+        "x": 48.7,
+        "y": 27.5
+      },
+      {
+        "friend": "exe",
+        "x": 47.8,
+        "y": 73.6
+      },
+      {
+        "friend": "aver",
+        "x": 70.1,
+        "y": 47
+      },
+      {
+        "friend": "waterchan",
+        "x": 35.2,
+        "y": 62.6
+      }
+    ]
   }
 ]
