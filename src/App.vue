@@ -2,16 +2,26 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import LazyPhoto from './components/LazyPhoto.vue'
 import StatisticsView from './components/StatisticsView.vue'
+import PhotoProcessingComparison from './components/PhotoProcessingComparison.vue'
 import friendsData from './data/friends.json'
-import imagesData from './data/images.json'
+import photosData from './data/photos.json'
 import specialEventsData from './data/special-events.json'
 import tagsData from './data/tags.json'
+import announcementData from './data/announcement.json'
 import worldsData from './data/worlds.json'
 import { detectPreferredLanguage, languageCopy, type Language } from './i18n'
 import { icons, type Icon } from './icons'
 import type { Friend, GalleryImage, GalleryRow, PhotoTag, PhotoTagGroup, SpecialEvent, World } from './types'
 import { parseAsGalleryDate } from './utils/date'
-import { daysSinceVrchatStart, formatGalleryDate, photoPath, thumbnailPath } from './utils/gallery'
+import { galleryRouteTarget } from './utils/photo-assets'
+import {
+  daysSinceVrchatStart,
+  formatGalleryDate,
+  originalPhotoFilename,
+  originalPhotoPath,
+  photoPath,
+  thumbnailPath,
+} from './utils/gallery'
 
 declare global {
   interface Window {
@@ -73,7 +83,6 @@ type DraggedPhotoTag = {
 }
 type TagPosition = NonNullable<PhotoTag['position']>
 type PendingEntityKind = 'world' | 'friend' | 'tag'
-
 const monthNames = [
   'January',
   'February',
@@ -90,9 +99,10 @@ const monthNames = [
 ]
 const friends = friendsData as Friend[]
 const worlds = worldsData as World[]
-const photos = [...(imagesData as GalleryImage[])].sort((a, b) => b.captured.localeCompare(a.captured))
+const photos = [...(photosData as GalleryImage[])].sort((a, b) => b.captured.localeCompare(a.captured))
 const specialEventRecords = specialEventsData as SpecialEvent[]
 const photoTagRecords = tagsData as PhotoTagGroup[]
+const announcement = announcementData
 
 const friendsById = new Map(friends.map((friend) => [friend.id, friend]))
 const worldsById = new Map(worlds.map((world) => [world.id, world]))
@@ -165,6 +175,7 @@ const lightboxZoomSurface = ref<HTMLElement | null>(null)
 const activeQrContactId = ref<'wechat' | 'qq' | null>(null)
 const highlightedPhotoId = ref<number | null>(null)
 const highlightedSpecialEventId = ref<string | null>(null)
+const announcementOpen = ref(false)
 
 const minZoom = 1
 const maxZoom = 4
@@ -187,6 +198,8 @@ const isSwipeAnimating = ref(false)
 const lightboxControlsVisible = ref(true)
 const lightboxTagsVisible = ref(true)
 const lightboxTagsToggleTutorialVisible = ref(false)
+const originalDownloading = ref(false)
+const originalDownloadFailed = ref(false)
 const activeImageNaturalSize = ref<{ width: number; height: number } | null>(null)
 const zoomSurfaceSize = ref({ width: 0, height: 0 })
 const swipeOffsetX = ref(0)
@@ -1222,6 +1235,14 @@ function openQrContact(contactId: 'wechat' | 'qq') {
   activeQrContactId.value = contactId
 }
 
+function closeAnnouncement() {
+  announcementOpen.value = false
+}
+
+function openAnnouncement() {
+  announcementOpen.value = true
+}
+
 function closeQrContact() {
   activeQrContactId.value = null
 }
@@ -1664,7 +1685,7 @@ function printCurrentPhotoMetadata() {
 
 function allGalleryEditData() {
   return {
-    images: [...photos].sort((a, b) => a.id - b.id),
+    photos: [...photos].sort((a, b) => a.id - b.id),
     friends,
     worlds,
     tags: allPhotoTagGroupsData(),
@@ -1798,6 +1819,36 @@ function handleLightboxPhotoClick(event: MouseEvent) {
   }, 180)
 }
 
+async function downloadOriginal() {
+  const photo = activePhoto.value
+  if (!photo || originalDownloading.value) return
+
+  originalDownloading.value = true
+  originalDownloadFailed.value = false
+  try {
+    const response = await fetch(originalPhotoPath(photo.filename), { mode: 'cors' })
+    if (!response.ok || !response.headers.get('Content-Type')?.startsWith('image/png')) {
+      throw new Error(`Original PNG unavailable (${response.status})`)
+    }
+
+    // A cross-origin <a download> may navigate instead of downloading. Use a
+    // CORS-enabled blob so manual R2 uploads need no Content-Disposition setting.
+    const blobUrl = URL.createObjectURL(await response.blob())
+    const anchor = document.createElement('a')
+    anchor.href = blobUrl
+    anchor.download = originalPhotoFilename(photo.filename)
+    document.body.appendChild(anchor)
+    anchor.click()
+    anchor.remove()
+    window.setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000)
+  } catch (error) {
+    console.error('Unable to download the original PNG.', error)
+    originalDownloadFailed.value = true
+  } finally {
+    originalDownloading.value = false
+  }
+}
+
 function handleLightboxPhotoDoubleClick(event: MouseEvent) {
   clearPhotoClickTimer()
   suppressNextClick = false
@@ -1859,13 +1910,14 @@ function scrollToGalleryTarget(selector: string) {
   })
 }
 
-function handleHashTarget() {
-  const hashTarget = decodeURIComponent(window.location.hash.slice(1)).trim()
+function handleRouteTarget() {
+  isStatisticsPage.value = window.location.pathname.replace(/\/+$/, '') === '/statistics'
+  const routeTarget = galleryRouteTarget(window.location.pathname, window.location.hash)
 
   highlightedPhotoId.value = null
   highlightedSpecialEventId.value = null
 
-  if (!hashTarget) {
+  if (!routeTarget) {
     return
   }
 
@@ -1873,20 +1925,20 @@ function handleHashTarget() {
   closeLightbox()
   closeQrContact()
 
-  const friendTarget = hashTarget.match(/^friend=(.+)$/)
+  const friendTarget = routeTarget.match(/^friend=(.+)$/)
   if (friendTarget && friendsById.has(friendTarget[1])) {
     applyFriendFilter(friendTarget[1])
     return
   }
 
-  const worldTarget = hashTarget.match(/^world=(.+)$/)
+  const worldTarget = routeTarget.match(/^world=(.+)$/)
   if (worldTarget && worldsById.has(worldTarget[1])) {
     applyWorldFilter(worldTarget[1])
     return
   }
 
-  if (/^\d+$/.test(hashTarget)) {
-    const photoId = Number(hashTarget)
+  if (/^\d+$/.test(routeTarget)) {
+    const photoId = Number(routeTarget)
 
     if (!photosById.has(photoId)) {
       return
@@ -1897,12 +1949,12 @@ function handleHashTarget() {
     return
   }
 
-  if (!specialEvents.some((event) => event.id === hashTarget)) {
+  if (!specialEvents.some((event) => event.id === routeTarget)) {
     return
   }
 
-  highlightedSpecialEventId.value = hashTarget
-  scrollToGalleryTarget(`#${CSS.escape(hashTarget)}`)
+  highlightedSpecialEventId.value = routeTarget
+  scrollToGalleryTarget(`#${CSS.escape(routeTarget)}`)
 }
 
 function showPreviousPhoto() {
@@ -1939,6 +1991,11 @@ function updateGalleryColumnCount() {
 }
 
 function handleKeydown(event: KeyboardEvent) {
+  if (announcementOpen.value && event.key === 'Escape') {
+    closeAnnouncement()
+    return
+  }
+
   if (activeQrContact.value && event.key === 'Escape') {
     closeQrContact()
     return
@@ -1971,10 +2028,11 @@ function handleKeydown(event: KeyboardEvent) {
   }
 }
 
-watch([activePhoto, activeQrContact], ([photo, qrContact], [previousPhoto]) => {
-  document.body.classList.toggle('lightbox-open', Boolean(photo) || Boolean(qrContact))
+watch([activePhoto, activeQrContact, announcementOpen], ([photo, qrContact, isAnnouncementOpen], [previousPhoto]) => {
+  document.body.classList.toggle('lightbox-open', Boolean(photo) || Boolean(qrContact) || isAnnouncementOpen)
 
   if (photo?.id !== previousPhoto?.id) {
+    originalDownloadFailed.value = false
     activeImageNaturalSize.value = null
     resetEditQueries()
   }
@@ -2026,7 +2084,7 @@ onMounted(() => {
   loadLightboxTagsPreference()
   if (editModeEnabled.value) lightboxTagsVisible.value = true
   updateGalleryColumnCount()
-  handleHashTarget()
+  handleRouteTarget()
   isStatisticsPage.value = window.location.pathname.replace(/\/+$/, '') === '/statistics'
   installGalleryEditConsoleApi()
   lightboxZoomSurfaceObserver = new ResizeObserver(updateZoomSurfaceSize)
@@ -2041,7 +2099,8 @@ onMounted(() => {
 
   window.addEventListener('resize', updateGalleryColumnCount)
   window.addEventListener('keydown', handleKeydown)
-  window.addEventListener('hashchange', handleHashTarget)
+  window.addEventListener('hashchange', handleRouteTarget)
+  window.addEventListener('popstate', handleRouteTarget)
 })
 
 onBeforeUnmount(() => {
@@ -2059,7 +2118,8 @@ onBeforeUnmount(() => {
   lightboxZoomSurfaceObserver?.disconnect()
   window.removeEventListener('keydown', handleKeydown)
   window.removeEventListener('resize', updateGalleryColumnCount)
-  window.removeEventListener('hashchange', handleHashTarget)
+  window.removeEventListener('hashchange', handleRouteTarget)
+  window.removeEventListener('popstate', handleRouteTarget)
   document.body.classList.remove('lightbox-open')
 })
 </script>
@@ -2067,10 +2127,19 @@ onBeforeUnmount(() => {
 <template>
   <StatisticsView v-if="isStatisticsPage" :language="currentLanguage" />
   <main v-else class="site-shell">
-    <div class="language-switch">
-      <button type="button" :aria-label="copy.languageLabel" @click="toggleLanguage">
-        {{ copy.languageToggle }}
+    <div class="top-controls">
+      <button class="announcement-nav" type="button" @click="openAnnouncement">
+        <svg aria-hidden="true" class="announcement-icon" :viewBox="icons.announcement.viewBox">
+          <path v-for="path in icons.announcement.paths" :key="path" :d="path" />
+        </svg>
+        <span>{{ copy.recentChanges }}:</span>
+        <strong>{{ currentLanguage === 'zh' ? announcement.summary_zh : announcement.summary_en }}</strong>
       </button>
+      <div class="language-switch">
+        <button type="button" :aria-label="copy.languageLabel" @click="toggleLanguage">
+          {{ copy.languageToggle }}
+        </button>
+      </div>
     </div>
 
     <header class="site-header">
@@ -2499,6 +2568,24 @@ onBeforeUnmount(() => {
       Edit mode: {{ editModeEnabled ? 'ON' : 'OFF' }}
     </button>
 
+    <div v-if="announcementOpen" class="announcement-modal" role="dialog" aria-modal="true" :aria-label="currentLanguage === 'zh' ? announcement.title_zh : announcement.title_en" @click.self="closeAnnouncement">
+      <section class="announcement-panel">
+        <button class="announcement-close" type="button" :aria-label="copy.closeAnnouncement" @click="closeAnnouncement">×</button>
+        <p class="announcement-kicker">{{ copy.recentChanges }}</p>
+        <time class="announcement-date" :datetime="announcement.date_en">
+          {{ currentLanguage === 'zh' ? announcement.date_zh : announcement.date_en }}
+        </time>
+        <h2>{{ currentLanguage === 'zh' ? announcement.title_zh : announcement.title_en }}</h2>
+        <p class="announcement-body">{{ currentLanguage === 'zh' ? announcement.body_zh : announcement.body_en }}</p>
+        <PhotoProcessingComparison
+          :original-label="copy.originalVersion"
+          :processed-label="copy.processedVersion"
+          :unavailable-label="copy.announcementUnavailable"
+          :caption="copy.comparisonCaption"
+        />
+      </section>
+    </div>
+
     <div v-if="activeQrContact" class="qr-modal" role="dialog" aria-modal="true" @click.self="closeQrContact">
       <section class="qr-panel" :aria-label="activeQrContact.label">
         <button class="qr-close" type="button" :aria-label="copy.close" @click="closeQrContact">
@@ -2529,19 +2616,36 @@ onBeforeUnmount(() => {
         </button>
 
         <div class="lightbox-toolbar">
-          <div v-if="lightboxTagsToggleTutorialVisible" class="lightbox-tags-hint" aria-live="polite">
-            {{ copy.toggleTagsHint }}
-          </div>
           <button
-            class="lightbox-tags-toggle"
-            :class="{ 'is-active': lightboxTagsVisible, 'is-tutorial': lightboxTagsToggleTutorialVisible }"
+            class="lightbox-tags-toggle lightbox-download"
             type="button"
-            :aria-pressed="lightboxTagsVisible"
-            :aria-label="copy.showTagsLabel"
-            @click.stop="toggleLightboxTags"
+            :aria-label="copy.downloadOriginalLabel"
+            :disabled="originalDownloading"
+            :aria-busy="originalDownloading"
+            :title="copy.downloadOriginalLabel"
+            @click.stop.prevent="downloadOriginal"
           >
-            {{ copy.showTags }}
+            <svg class="download-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5" />
+            </svg>
+            <span>{{ originalDownloading ? copy.downloading : copy.downloadOriginal }}</span>
           </button>
+          <span v-if="originalDownloadFailed" class="lightbox-download-error" role="alert">{{ copy.downloadFailed }}</span>
+          <div class="lightbox-tags-control">
+            <div v-if="lightboxTagsToggleTutorialVisible" class="lightbox-tags-hint" aria-live="polite">
+              {{ copy.toggleTagsHint }}
+            </div>
+            <button
+              class="lightbox-tags-toggle"
+              :class="{ 'is-active': lightboxTagsVisible, 'is-tutorial': lightboxTagsToggleTutorialVisible }"
+              type="button"
+              :aria-pressed="lightboxTagsVisible"
+              :aria-label="copy.showTagsLabel"
+              @click.stop="toggleLightboxTags"
+            >
+              {{ copy.showTags }}
+            </button>
+          </div>
           <div class="lightbox-title">
             <span>{{ activePosition }} / {{ currentLightboxPhotos.length }}</span>
           </div>

@@ -1,0 +1,18 @@
+{
+  "rules": [
+    {
+      "allowed": {
+        "origins": [
+          "https://vrchat.maao.cc",
+          "https://vrchat.marsinside.com",
+          "http://localhost:5173",
+          "http://localhost:5174"
+        ],
+        "methods": ["GET", "HEAD"],
+        "headers": ["Range"]
+      },
+      "exposeHeaders": ["Content-Length", "Content-Range", "Accept-Ranges", "Content-Disposition"],
+      "maxAgeSeconds": 86400
+    }
+  ]
+}

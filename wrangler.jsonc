@@ -4,6 +4,12 @@
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-06",
   "workers_dev": true,
+  "r2_buckets": [
+    {
+      "binding": "PHOTOS_BUCKET",
+      "bucket_name": "mars-vrchat-gallery-photos"
+    }
+  ],
   "routes": [
     {
       "pattern": "vrchat-statistics.marsinside.com",

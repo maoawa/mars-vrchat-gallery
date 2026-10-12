@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Union
 
 
-DEFAULT_IMAGES = Path(__file__).resolve().parent.parent / "src/data/images.json"
+DEFAULT_PHOTOS = Path(__file__).resolve().parent.parent / "src/data/photos.json"
 DEFAULT_TAGS = Path(__file__).resolve().parent.parent / "src/data/tags.json"
 
 JsonObject = dict[str, object]
@@ -32,8 +32,8 @@ def read_json_array(path: Path, label: str) -> list[JsonObject]:
     return data
 
 
-def friend_ids(image: JsonObject) -> list[str]:
-    friends = image.get("friend")
+def friend_ids(photo: JsonObject) -> list[str]:
+    friends = photo.get("friend")
 
     if not isinstance(friends, list):
         return []
@@ -67,7 +67,7 @@ def tag_points(count: int) -> list[tuple[float, float]]:
     return [(round(left + step * index, 1), 50.0) for index in range(count)]
 
 
-def build_tag_templates(images: list[JsonObject], existing_tags: list[JsonObject]) -> list[JsonObject]:
+def build_tag_templates(photos: list[JsonObject], existing_tags: list[JsonObject]) -> list[JsonObject]:
     tagged_photo_ids = {
         tag_group.get("photo")
         for tag_group in existing_tags
@@ -75,13 +75,13 @@ def build_tag_templates(images: list[JsonObject], existing_tags: list[JsonObject
     }
     new_tag_groups: list[JsonObject] = []
 
-    for image in images:
-        photo_id = image.get("id")
+    for photo in photos:
+        photo_id = photo.get("id")
 
         if not isinstance(photo_id, int) or photo_id in tagged_photo_ids:
             continue
 
-        friends = friend_ids(image)
+        friends = friend_ids(photo)
 
         if not friends:
             continue
@@ -142,13 +142,13 @@ def dump_json(value: JsonValue, indent: int = 0) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Create tag templates for images that list friends but do not yet have tags."
+        description="Create tag templates for photos that list friends but do not yet have tags."
     )
     parser.add_argument(
-        "--images",
+        "--photos",
         type=Path,
-        default=DEFAULT_IMAGES,
-        help="Path to images.json.",
+        default=DEFAULT_PHOTOS,
+        help="Path to photos.json.",
     )
     parser.add_argument(
         "--tags",
@@ -165,9 +165,9 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    images = read_json_array(args.images, "images")
+    photos = read_json_array(args.photos, "photos")
     existing_tags = read_json_array(args.tags, "tags")
-    tag_groups = build_tag_templates(images, existing_tags)
+    tag_groups = build_tag_templates(photos, existing_tags)
     payload = dump_json(tag_groups) + "\n"
     added_count = len(tag_groups) - len(existing_tags)
 

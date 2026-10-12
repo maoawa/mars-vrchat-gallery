@@ -1,12 +1,12 @@
 import { defineConfig, type Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { cpSync, copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { basename, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const dataDir = fileURLToPath(new URL('./src/data', import.meta.url))
 const tagsFile = join(dataDir, 'tags.json')
-const imagesFile = join(dataDir, 'images.json')
+const photosFile = join(dataDir, 'photos.json')
 const friendsFile = join(dataDir, 'friends.json')
 const worldsFile = join(dataDir, 'worlds.json')
 
@@ -74,7 +74,7 @@ function isNamedEntityPayload(value: unknown) {
   )
 }
 
-function isImagePayload(value: unknown) {
+function isPhotoPayload(value: unknown) {
   return (
     Array.isArray(value) &&
     value.every((item) => {
@@ -99,7 +99,7 @@ function isImagePayload(value: unknown) {
 }
 
 function isGalleryPayload(value: unknown): value is {
-  images: unknown[]
+  photos: unknown[]
   friends: unknown[]
   worlds: unknown[]
   tags: TagPayload
@@ -110,7 +110,7 @@ function isGalleryPayload(value: unknown): value is {
 
   const record = value as Record<string, unknown>
   return (
-    isImagePayload(record.images) &&
+    isPhotoPayload(record.photos) &&
     isNamedEntityPayload(record.friends) &&
     isNamedEntityPayload(record.worlds) &&
     isTagPayload(record.tags)
@@ -172,6 +172,7 @@ function readRequestBody(request: import('node:http').IncomingMessage) {
 
 function exposeGalleryData(): Plugin {
   let outputDataDir = ''
+  let outputDir = ''
   const editorSavedFiles = new Map<string, number>()
 
   function writeEditorJsonFile(filePath: string, payload: unknown) {
@@ -182,7 +183,8 @@ function exposeGalleryData(): Plugin {
   return {
     name: 'expose-gallery-data',
     configResolved(config) {
-      outputDataDir = resolve(config.root, config.build.outDir, 'data')
+      outputDir = resolve(config.root, config.build.outDir)
+      outputDataDir = join(outputDir, 'data')
     },
     handleHotUpdate(context) {
       const filePath = resolve(context.file)
@@ -211,7 +213,7 @@ function exposeGalleryData(): Plugin {
             return
           }
 
-          writeEditorJsonFile(imagesFile, payload.images)
+          writeEditorJsonFile(photosFile, payload.photos)
           writeEditorJsonFile(friendsFile, payload.friends)
           writeEditorJsonFile(worldsFile, payload.worlds)
           writeEditorJsonFile(tagsFile, payload.tags)
@@ -268,6 +270,19 @@ function exposeGalleryData(): Plugin {
       })
     },
     closeBundle() {
+      const publicDir = fileURLToPath(new URL('./public', import.meta.url))
+      for (const fileName of readdirSync(publicDir)) {
+        if (fileName === 'photos' || fileName.startsWith('.')) continue
+        cpSync(join(publicDir, fileName), join(outputDir, fileName), { recursive: true })
+      }
+
+      // Keep only the legacy #293 demo image in the deployment; all other
+      // photo binaries are served from R2 and are intentionally omitted.
+      const comparisonDemo = join(publicDir, 'photos', 'VRChat_2026-10-11_03-47-50.jpg')
+      if (existsSync(comparisonDemo)) {
+        mkdirSync(join(outputDir, 'photos'), { recursive: true })
+        copyFileSync(comparisonDemo, join(outputDir, 'photos', 'VRChat_2026-10-11_03-47-50.jpg'))
+      }
       mkdirSync(outputDataDir, { recursive: true })
 
       readdirSync(dataDir)
@@ -283,5 +298,6 @@ export default defineConfig({
   define: {
     __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
   },
+  build: { copyPublicDir: false },
   plugins: [vue(), exposeGalleryData()],
 })

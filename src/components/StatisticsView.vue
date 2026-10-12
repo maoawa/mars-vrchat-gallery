@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import friendsData from '../data/friends.json'
-import imagesData from '../data/images.json'
+import photosData from '../data/photos.json'
 import specialEventsData from '../data/special-events.json'
 import worldsData from '../data/worlds.json'
 import statisticsConfig from '../statistics.json'
@@ -20,7 +20,7 @@ type RankedItem = {
 
 const friends = friendsData as Friend[]
 const worlds = worldsData as World[]
-const photos = imagesData as GalleryImage[]
+const photos = photosData as GalleryImage[]
 const events = specialEventsData as SpecialEvent[]
 const metric = ref<Metric>('outings')
 const mobileHours = Number((statisticsConfig as { mobileHours?: number }).mobileHours) || 0

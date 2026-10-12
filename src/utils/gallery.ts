@@ -1,4 +1,5 @@
 import { parseAsGalleryDate } from './date'
+import { mirrorAssetBase, photoAssetFilename, photoAssetUrl } from './photo-assets'
 
 const monthNames = [
   'January',
@@ -27,12 +28,30 @@ const zhDateFormatter = new Intl.DateTimeFormat('zh-CN', {
 const vrchatStartUtc = Date.UTC(2026, 5, 3, 18, 0, 0)
 const millisecondsPerDay = 24 * 60 * 60 * 1000
 
+const assetBaseUrl = mirrorAssetBase
+
+export function originalPhotoFilename(filename: string) {
+  return photoAssetFilename(filename, 'png')
+}
+
 export function photoPath(filename: string) {
-  return `/photos/${filename}`
+  return photoAssetUrl(assetBaseUrl, 'full', filename)
 }
 
 export function thumbnailPath(filename: string) {
-  return `/photos/thumbnails/${filename}`
+  return photoAssetUrl(assetBaseUrl, 'thumbnail', filename)
+}
+
+export function processedPhotoPath(filename: string) {
+  return photoAssetUrl(assetBaseUrl, 'full', filename)
+}
+
+export function remoteOriginalPhotoPath(filename: string) {
+  return photoAssetUrl(assetBaseUrl, 'original', filename)
+}
+
+export function originalPhotoPath(filename: string) {
+  return photoAssetUrl(assetBaseUrl, 'original', filename)
 }
 
 export function formatGalleryDate(capturedAt: string, language: 'en' | 'zh' = 'en') {

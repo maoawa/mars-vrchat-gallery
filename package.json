@@ -9,7 +9,9 @@
     "preview": "vite preview --host 0.0.0.0",
     "worker:dev": "wrangler dev --config wrangler.jsonc",
     "worker:deploy": "wrangler deploy --config wrangler.jsonc",
-    "worker:dry-run": "wrangler deploy --config wrangler.jsonc --dry-run"
+    "worker:dry-run": "wrangler deploy --config wrangler.jsonc --dry-run",
+    "test": "node --test tests/*.test.ts && python3 -m unittest discover -s tests -p \"test_*.py\"",
+    "photos:upload": "python3 scripts/upload_photos.py"
   },
   "dependencies": {
     "vue": "^3.5.13"

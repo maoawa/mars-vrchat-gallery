@@ -1,0 +1,12 @@
+{
+  "label_en": "Recent changes",
+  "label_zh": "最近更新",
+  "summary_en": "Post-processing has been introduced for better photo qualities.",
+  "summary_zh": "后期处理正在被引入，以提升照片质量。",
+  "title_en": "Why post-process VRChat photos?",
+  "title_zh": "为什么要给 VRChat 照片做后期处理？",
+  "body_en": "VRChat worlds and avatar have extremely inconsistent lighting setups, so brightness levels can vary dramatically. In that situation, a bright avatar can become clipped and lose detail, while a darker avatar can disappear into the shadows.\n\nThat's why I'm introducing post-processing to the gallery. It lets me balance exposure, highlights, shadows, and other tonal values so everyone remains visible and group photos feel more consistent.\n\nGallery post-processing never changes the colours. The original atmosphere and vibe remain intact while image quality is improved.\n\nAlso, totally uncompressed PNGs are now available for download from the upper-right corner of the lightbox.  And of course, I still have the original photos without post-processing, feel free to reach out if you need them!\n\nThe comparison below shows how post-processing can enhance both image quality and visual appeal.",
+  "body_zh": "VRChat 世界和模型的光照设置极其不一致，因此不同场景中的亮度可能差异很大。在这种情况下，明亮的模型可能会过曝并丢失细节，而较暗的模型则可能消失在阴影中。\n\n因此，我开始为相册引入后期处理。它可以调整曝光、高光、阴影以及其他明暗层次，让每个人都保持清晰可见，也让合照的观感更加统一。\n\n相册后期处理绝不会调整或改变颜色，因此原本的氛围和感觉会保持不变，同时获得更好的画质。\n\n同时，现在可以通过灯箱右上角下载完全无压缩的 PNG 图片。当然，我手里还保留着未经后期处理的原始照片，如果需要，随时联系我！\n\n下方的对比展示了后期处理如何提升照片的画质和视觉吸引力。",
+  "date_en": "October 13, 2026",
+  "date_zh": "2026 年 10 月 13 日"
+}
