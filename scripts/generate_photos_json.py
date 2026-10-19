@@ -15,6 +15,7 @@ PHOTO_PATTERN = re.compile(
     r"^VRChat_(?P<date>\d{4}-\d{2}-\d{2})_(?P<hour>\d{2})-(?P<minute>\d{2})-(?P<second>\d{2})\.(?:png|jpe?g)$",
     re.IGNORECASE,
 )
+DEFAULT_INPUT = Path.home() / "Downloads"
 DEFAULT_OUTPUT = Path(__file__).resolve().parent.parent / "src/data/photos.json"
 
 
@@ -135,7 +136,7 @@ def dump_json(value: JsonValue, indent: int = 0) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Create photo metadata templates from public/photos/VRChat_*.png/.jpg files."
+        description="Create photo metadata templates from VRChat screenshots in ~/Downloads."
     )
     parser.add_argument(
         "--input",
@@ -143,8 +144,8 @@ def main() -> None:
         "--photos-dir",
         dest="input_dir",
         type=Path,
-        default=Path("public/photos"),
-        help="Directory containing full-size VRChat screenshots.",
+        default=DEFAULT_INPUT,
+        help=f"Directory containing VRChat screenshots. Defaults to {DEFAULT_INPUT}.",
     )
     parser.add_argument(
         "--output",

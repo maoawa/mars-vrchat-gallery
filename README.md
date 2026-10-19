@@ -7,6 +7,19 @@ A gallery of cherished moments shared by Mars and his amazing friends in VRChat.
 You may feel free to create your own gallery based on this project, regardless the game.
 *(whispers)* VRChat is such a nice game that you should definitely try!
 
+---
+
+## Local photo process commands
+
+Just for notes.
+
+```
+process-photos
+upload-photos
+```
+
+---
+
 ## Prototype
 
 This prototype is a Vue, Vite, and TypeScript personal gallery. Metadata lives in JSON files:
@@ -235,8 +248,8 @@ Use a different source directory with `--input /path/to/folder`.
 
 ## Scripts
 
-`generate_photos_json.py` creates metadata templates from a staging folder. It
-normalizes new entries to the JPG display filename and keeps existing metadata
+`generate_photos_json.py` creates metadata templates from `~/Downloads` by
+default. It normalizes new entries to the JPG display filename and keeps existing metadata
 (including photo ids and annotations) unchanged:
 
 ```bash
@@ -250,6 +263,8 @@ python3 scripts/batch_resize.py --input /path/to/staging
 The normal production workflow is to upload the three generated variants to R2
 under `original/`, `full/`, and `thumbnail/`, then commit only metadata changes
 to Git. Do not add `public/photos/` to Git; it is ignored after the R2 migration.
+
+When no `--input` is provided, it reads `~/Downloads`. Use `--input` for another folder.
 
 Preview metadata generation without writing:
 

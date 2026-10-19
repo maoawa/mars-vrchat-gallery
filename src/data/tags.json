@@ -4988,5 +4988,32 @@
         "y": 62.6
       }
     ]
+  },
+  {
+    "photo": 294,
+    "tags": [
+      {
+        "friend": "taru",
+        "x": 59.5,
+        "y": 56.3
+      },
+      {
+        "friend": "exe",
+        "x": 35.7,
+        "y": 28.4
+      },
+      {
+        "friend": "karry",
+        "x": 49.8,
+        "y": 84.1,
+        "position": "top"
+      },
+      {
+        "friend": "curry",
+        "x": 89.1,
+        "y": 34,
+        "position": "top"
+      }
+    ]
   }
 ]

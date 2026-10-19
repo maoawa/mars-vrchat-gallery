@@ -2809,5 +2809,14 @@
     "description_zh": "[[taru]] 发现了一个叫 {{after.glow}} 的赛博朋克风格世界，那里既酷炫又温馨，而且充满乐趣，于是我们决定在那里举办一场小聚会。能有这么多人聚在一起聊天，做各种各样的事情，感觉真是太棒了。",
     "friend": ["taru", "joshy", "kofki", "yuma", "solis", "exe", "aver", "curry", "waterchan"],
     "linked": [292]
+  },
+  {
+    "id": 294,
+    "filename": "VRChat_2026-10-19_00-14-09.jpg",
+    "captured": "2026-10-19T00:14:09",
+    "world": "japan.shrine",
+    "description_en": "I miss VRChat so much.",
+    "description_zh": "我好想 VRChat。",
+    "friend": ["taru", "exe", "karry", "curry"]
   }
 ]
