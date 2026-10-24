@@ -2818,5 +2818,45 @@
     "description_en": "I miss VRChat so much.",
     "description_zh": "我好想 VRChat。",
     "friend": ["taru", "exe", "karry", "curry"]
+  },
+  {
+    "id": 295,
+    "filename": "VRChat_2026-10-25_00-09-50.jpg",
+    "captured": "2026-10-25T00:09:50",
+    "world": "japan.shrine",
+    "description_en": "[[tony]] put random weird stuffs on my face..",
+    "description_zh": "[[tony]] 把随机奇怪的东西放在我脸上..",
+    "friend": ["tony"],
+    "parent": 296
+  },
+  {
+    "id": 296,
+    "filename": "VRChat_2026-10-25_00-17-27.jpg",
+    "captured": "2026-10-25T00:17:27",
+    "world": "japan.shrine",
+    "description_en": "Nice to meet a friend with so many Melusine (Genshin) avatars, and they're sooo cute!",
+    "description_zh": "很高兴见到一个有这么多美露莘(原神)模型的朋友，真的太可爱了！",
+    "friend": ["joshy", "taru", "aqua", "waterchan"],
+    "linked": [295]
+  },
+  {
+    "id": 297,
+    "filename": "VRChat_2026-10-25_01-51-09.jpg",
+    "captured": "2026-10-25T01:51:09",
+    "world": "karaoke.central",
+    "description_en": "Karaoke! Today we got soo many friends!",
+    "description_zh": "卡拉OK！今天来了好多朋友！",
+    "friend": ["taru", "uncle.yev", "solis", "waterchan", "ninja", "kofki", "shiro", "yuma", "joshy", "zaken"],
+    "linked": [298]
+  },
+  {
+    "id": 298,
+    "filename": "VRChat_2026-10-25_02-36-40.jpg",
+    "captured": "2026-10-25T02:36:40",
+    "world": "",
+    "description_en": "",
+    "description_zh": "",
+    "friend": [""],
+    "parent": 297
   }
 ]
